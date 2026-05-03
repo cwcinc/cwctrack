@@ -821,7 +821,7 @@
         settings_saveButton = new WeakMap,
         settings_onKeyDown = new WeakMap;
         const TrackSettingsUI = class {
-            constructor(t, e, n, s, o, a, r, h) {
+            constructor(t, e, n, trackAuthorName, editorLastModified, o, a, updateTrackMetadata, updateMetadateAndSave) {
                 settings_uiRoot.set(this, void 0),
                 settings_element.set(this, void 0),
                 settings_saveButton.set(this, null),
@@ -866,25 +866,73 @@
                 p.appendChild(m),
                 null != n && 0 != n.length || (p.classList.add("error"),
                 m.focus());
-                const v = document.createElement("div");
-                v.className = "setting",
-                f.appendChild(v);
-                const w = document.createElement("label");
-                w.className = "title",
-                w.append(document.createTextNode(e.get("Author"))),
-                v.appendChild(w);
-                const b = document.createElement("input");
-                b.type = "text",
-                b.maxLength = 64,
-                b.spellcheck = !1,
-                b.value = s ?? "",
-                b.placeholder = e.get("Unknown"),
-                b.addEventListener("input", ( () => {
-                    const t = b.value.trim();
-                    s = 0 == t.length ? null : t
+
+                const authorSettingDiv = document.createElement("div");
+                authorSettingDiv.className = "setting",
+                f.appendChild(authorSettingDiv);
+                const authorSettingLabel = document.createElement("label");
+                authorSettingLabel.className = "title",
+                authorSettingLabel.append(document.createTextNode(e.get("Author"))),
+                authorSettingDiv.appendChild(authorSettingLabel);
+                const authorSettingInput = document.createElement("input");
+                authorSettingInput.type = "text",
+                authorSettingInput.maxLength = 64,
+                authorSettingInput.spellcheck = !1,
+                authorSettingInput.value = trackAuthorName ?? "",
+                authorSettingInput.placeholder = e.get("Unknown"),
+                authorSettingInput.addEventListener("input", ( () => {
+                    const cleanAuthorInput = authorSettingInput.value.trim();
+                    trackAuthorName = 0 == cleanAuthorInput.length ? null : cleanAuthorInput
                 }
                 )),
-                v.appendChild(b);
+                authorSettingDiv.appendChild(authorSettingInput);
+
+                const createdDateSettingDiv = document.createElement("div");
+                createdDateSettingDiv.className = "setting",
+                f.appendChild(createdDateSettingDiv);
+                const createdDateSettingLabel = document.createElement("label");
+                createdDateSettingLabel.className = "title",
+                createdDateSettingLabel.append(document.createTextNode(e.get("Creation Date"))),
+                createdDateSettingDiv.appendChild(createdDateSettingLabel);
+                const createdDateSettingInput = document.createElement("input");
+                createdDateSettingInput.type = "text",
+                createdDateSettingInput.maxLength = 64,
+                createdDateSettingInput.spellcheck = !1;
+                editorLastModified = new Date(editorLastModified);
+                const lastModifiedFormatted = editorLastModified.toLocaleDateString() + " " + editorLastModified.toLocaleTimeString(void 0, {
+                    hour: "numeric",
+                    minute: "2-digit"
+                });
+                createdDateSettingInput.value = lastModifiedFormatted ?? "",
+                createdDateSettingInput.placeholder = "1/1/2000 12:00 AM",
+                createdDateSettingInput.addEventListener("input", ( () => {
+                    const cleancreatedDateInput = createdDateSettingInput.value.trim();
+                    const newDateObj = new Date(cleancreatedDateInput);
+                    if (isNaN(newDateObj.getTime())) {
+                        return;
+                    }
+                    editorLastModified = newDateObj;
+                }
+                )),
+                createdDateSettingInput.style.width = "420px",
+                createdDateSettingDiv.appendChild(createdDateSettingInput);
+
+                const createdDateSettingNowButton = document.createElement("button");
+                createdDateSettingNowButton.className = "button now-button",
+                // createdDateSettingNowButton.innerHTML = '<img class="button-icon" src="images/now.svg"> ',
+                createdDateSettingNowButton.append(document.createTextNode(e.get("Now"))),
+                createdDateSettingNowButton.addEventListener("click", ( () => {
+                    const now = new Date();
+                    editorLastModified = now;
+                    const nowFormatted = now.toLocaleDateString() + " " + now.toLocaleTimeString(void 0, {
+                        hour: "numeric",
+                        minute: "2-digit"
+                    });
+                    createdDateSettingInput.value = nowFormatted;
+                }
+                )),
+                createdDateSettingDiv.appendChild(createdDateSettingNowButton);
+
                 const k = document.createElement("div");
                 k.className = "setting",
                 f.appendChild(k);
@@ -984,11 +1032,11 @@
                 z.addEventListener("click", ( () => {
                     t.playUIClick();
                     const e = m.value.trim();
-                    0 == e.length ? r(null, s) : r(e, s)
+                    0 == e.length ? updateTrackMetadata(null, trackAuthorName, editorLastModified) : updateTrackMetadata(e, trackAuthorName, editorLastModified)
                 }
                 )),
                 P.appendChild(z),
-                null != h && (set(this, settings_saveButton, document.createElement("button"), "f"),
+                null != updateMetadateAndSave && (set(this, settings_saveButton, document.createElement("button"), "f"),
                 get(this, settings_saveButton, "f").disabled = null == n || 0 == n.length,
                 get(this, settings_saveButton, "f").className = "button",
                 get(this, settings_saveButton, "f").innerHTML = '<img class="button-icon" src="images/save.svg"> ',
@@ -996,14 +1044,14 @@
                 get(this, settings_saveButton, "f").addEventListener("click", ( () => {
                     t.playUIClick();
                     const e = m.value.trim();
-                    0 == e.length || h(e, s)
+                    0 == e.length || updateMetadateAndSave(e, trackAuthorName, editorLastModified)
                 }
                 )),
                 P.appendChild(get(this, settings_saveButton, "f"))),
                 window.addEventListener("keydown", set(this, settings_onKeyDown, (t => {
                     if ("Escape" == t.code) {
                         const e = m.value.trim();
-                        0 == e.length ? r(null, s) : r(e, s),
+                        0 == e.length ? updateTrackMetadata(null, trackAuthorName, editorLastModified) : updateTrackMetadata(e, trackAuthorName, editorLastModified),
                         t.preventDefault()
                     }
                 }
@@ -1073,7 +1121,7 @@
             }
             return n
         }
-        var Ft, editor_audioManager, editor_lastEditSoundTime, editor_localization, editor_renderer, editor_transitionManager, editor_track, editor_partRegistry, editor_trackStorage, editor_customTrackManager, editor_networkManager, editor_userProfileManager, editor_dialogManager, editor_inputManager, editor_settingsManager, editor_testCallback, editor_isActive, editor_containerElement, editor_topBar, editor_toastElement, editor_toastTimeout, editor_pasteButton, editor_undoButton, editor_redoButton, editor_partPanelContainer, editor_categoryBar, editor_heightSelectorUI, editor_checkpointOrderUI, editor_exportUI, editor_loadingScreen, editor_helpUI, editor_sideToolbar, editor_trackSettingsUI, editor_activeModal, editor_settingsButton, editor_onMouseMove, editor_onMouseDown, editor_onMouseUp, editor_onMouseOut, editor_onTouchStart, editor_onClick, editor_onKeyDown, editor_onKeyUp, editor_onWheel, editor_onBeforeUnload, editor_cameraRig, editor_orbitControls, editor_isHeightModifierHeld, editor_keyForward, editor_keyRight, editor_keyBackward, editor_keyLeft, editor_keyPitchUp, editor_keyPitchDown, editor_keyYawLeft, editor_keyYawRight, editor_isSaved, editor_raycaster, editor_gridPlane, editor_previewGroup, editor_ghostMaterial, editor_previewMeshes, editor_tileIndicatorMaterial, editor_tileIndicatorGeometry, editor_tileIndicatorMesh, editor_isDeleteKeyHeld, editor_isLeftMouseDown, editor_mouseNDC, editor_lastTouchTimestamp, editor_isTapPending, editor_cursorGridPos, editor_minYOffset, editor_currentRotation, editor_currentAxis, editor_isLargeGrid, editor_isDeleteMode, editor_lastPlacement, editor_lastDeletion, editor_trackName, editor_trackAuthor, editor_lastModified, editor_undoStack, editor_redoStack, editor_checkpointLabels3D, editor_partEntries, editor_selectedPartIndex, editor_selectedColor, editor_isCopyMode, editor_isCutMode, editor_selectionStart, editor_clipboard, editor_activePlacement, editor_selectionBoxMeshes, editor_lastOverlapCheckPos, editor_categoryEntries, editor_selectedCategory, editor_isTyping, updateSelectionBoxVisual, copyOrCutRegion, activatePaste, placeActiveParts, loadTrackMetadata, setTrackName, setTrackAuthor, confirmExit, testTrack, pickPartUnderCursor, undo, redo, showToast, initPartPalette, getEffectiveColor, setEnvironment, refreshAllThumbnails, rebuildPreviewMesh, selectCategory, selectPart, getCurrentHeight, setHeight, recalcMinYOffset, refreshTrackAfterEdit, playEditSound, getCursorGridPosition, findOverlappingParts, hasOverlappingParts, deletePartsAndRecord, updateKeyboardCamera, isKeyboardInputActive, TrackLoadError = n(6223).A, LoadingScreenUI = n(5302).A;
+        var Ft, editor_audioManager, editor_lastEditSoundTime, editor_localization, editor_renderer, editor_transitionManager, editor_track, editor_partRegistry, editor_trackStorage, editor_customTrackManager, editor_networkManager, editor_userProfileManager, editor_dialogManager, editor_inputManager, editor_settingsManager, editor_testCallback, editor_isActive, editor_containerElement, editor_topBar, editor_toastElement, editor_toastTimeout, editor_pasteButton, editor_undoButton, editor_redoButton, editor_partPanelContainer, editor_categoryBar, editor_heightSelectorUI, editor_checkpointOrderUI, editor_exportUI, editor_loadingScreen, editor_helpUI, editor_sideToolbar, editor_trackSettingsUI, editor_activeModal, editor_settingsButton, editor_onMouseMove, editor_onMouseDown, editor_onMouseUp, editor_onMouseOut, editor_onTouchStart, editor_onClick, editor_onKeyDown, editor_onKeyUp, editor_onWheel, editor_onBeforeUnload, editor_cameraRig, editor_orbitControls, editor_isHeightModifierHeld, editor_keyForward, editor_keyRight, editor_keyBackward, editor_keyLeft, editor_keyPitchUp, editor_keyPitchDown, editor_keyYawLeft, editor_keyYawRight, editor_isSaved, editor_raycaster, editor_gridPlane, editor_previewGroup, editor_ghostMaterial, editor_previewMeshes, editor_tileIndicatorMaterial, editor_tileIndicatorGeometry, editor_tileIndicatorMesh, editor_isDeleteKeyHeld, editor_isLeftMouseDown, editor_mouseNDC, editor_lastTouchTimestamp, editor_isTapPending, editor_cursorGridPos, editor_minYOffset, editor_currentRotation, editor_currentAxis, editor_isLargeGrid, editor_isDeleteMode, editor_lastPlacement, editor_lastDeletion, editor_trackName, editor_trackAuthor, editor_lastModified, editor_undoStack, editor_redoStack, editor_checkpointLabels3D, editor_partEntries, editor_selectedPartIndex, editor_selectedColor, editor_isCopyMode, editor_isCutMode, editor_selectionStart, editor_clipboard, editor_activePlacement, editor_selectionBoxMeshes, editor_lastOverlapCheckPos, editor_categoryEntries, editor_selectedCategory, editor_isTyping, updateSelectionBoxVisual, copyOrCutRegion, activatePaste, placeActiveParts, loadTrackMetadata, setTrackName, setTrackAuthor, setTrackCreationDate, confirmExit, testTrack, pickPartUnderCursor, undo, redo, showToast, initPartPalette, getEffectiveColor, setEnvironment, refreshAllThumbnails, rebuildPreviewMesh, selectCategory, selectPart, getCurrentHeight, setHeight, recalcMinYOffset, refreshTrackAfterEdit, playEditSound, getCursorGridPosition, findOverlappingParts, hasOverlappingParts, deletePartsAndRecord, updateKeyboardCamera, isKeyboardInputActive, TrackLoadError = n(6223).A, LoadingScreenUI = n(5302).A;
         editor_audioManager = new WeakMap,
         editor_lastEditSoundTime = new WeakMap,
         editor_localization = new WeakMap,
@@ -1393,19 +1441,30 @@
         loadTrackMetadata = function(t) {
             get(this, Ft, "m", setTrackName).call(this, t.name),
             get(this, Ft, "m", setTrackAuthor).call(this, t.author),
-            set(this, editor_lastModified, t.lastModified, "f")
+            get(this, Ft, "m", setTrackCreationDate).call(this, t.lastModified);
         }
         ,
         setTrackName = function(t) {
             get(this, editor_trackName, "f") != t && (set(this, editor_trackName, t, "f"),
-            set(this, editor_lastModified, new Date, "f"),
+            // set(this, editor_lastModified, new Date, "f"),
             get(this, editor_settingsButton, "f").innerHTML = '<img class="button-icon" src="images/settings.svg"> ',
             get(this, editor_settingsButton, "f").append(document.createTextNode(get(this, editor_trackName, "f") ?? get(this, editor_localization, "f").get("Unnamed Track"))))
         }
         ,
         setTrackAuthor = function(t) {
-            get(this, editor_trackAuthor, "f") != t && (set(this, editor_trackAuthor, t, "f"),
-            set(this, editor_lastModified, new Date, "f"))
+            get(this, editor_trackAuthor, "f") != t && set(this, editor_trackAuthor, t, "f");
+            // set(this, editor_lastModified, new Date, "f"))
+        }
+        ,
+        setTrackCreationDate = function(t) {
+            const newDate = new Date(t);
+            if (isNaN(newDate.getTime())) {
+                console.warn("Invalid creation date:", t);
+                return;
+            }
+            if (get(this, editor_lastModified, "f").getTime() != newDate.getTime()) {
+                set(this, editor_lastModified, newDate, "f");
+            }
         }
         ,
         confirmExit = function(t) {
@@ -2750,19 +2809,21 @@
                       , e = get(this, editor_trackName, "f");
                     if (null == e)
                         get(this, editor_containerElement, "f").className = "hidden",
-                        set(this, editor_activeModal, new TrackSettingsUI(get(this, editor_audioManager, "f"),get(this, editor_localization, "f"),get(this, editor_trackName, "f"),get(this, editor_trackAuthor, "f"),get(this, editor_track, "f"),(t => {
+                        set(this, editor_activeModal, new TrackSettingsUI(get(this, editor_audioManager, "f"),get(this, editor_localization, "f"),get(this, editor_trackName, "f"),get(this, editor_trackAuthor, "f"),get(this, editor_lastModified, "f"),get(this, editor_track, "f"),(t => {
                             get(this, Ft, "m", setEnvironment).call(this, t)
                         }
-                        ),( (t, e) => {
+                        ),( (t, e, newDate) => {
                             get(this, Ft, "m", setTrackName).call(this, t),
                             get(this, Ft, "m", setTrackAuthor).call(this, e),
+                            get(this, Ft, "m", setTrackCreationDate).call(this, newDate),
                             get(this, editor_activeModal, "f")?.dispose(),
                             set(this, editor_activeModal, null, "f"),
                             get(this, editor_containerElement, "f").className = "editor-ui"
                         }
-                        ),( (e, n) => {
+                        ),( (e, n, newDate) => {
                             get(this, Ft, "m", setTrackName).call(this, e),
                             get(this, Ft, "m", setTrackAuthor).call(this, n),
+                            get(this, Ft, "m", setTrackCreationDate).call(this, newDate),
                             get(this, editor_activeModal, "f")?.dispose(),
                             set(this, editor_activeModal, null, "f"),
                             t(e),
@@ -2792,19 +2853,21 @@
                     const t = get(this, editor_trackName, "f");
                     if (null == t)
                         get(this, editor_containerElement, "f").className = "hidden",
-                        set(this, editor_activeModal, new TrackSettingsUI(get(this, editor_audioManager, "f"),get(this, editor_localization, "f"),get(this, editor_trackName, "f"),get(this, editor_trackAuthor, "f"),get(this, editor_track, "f"),(t => {
+                        set(this, editor_activeModal, new TrackSettingsUI(get(this, editor_audioManager, "f"),get(this, editor_localization, "f"),get(this, editor_trackName, "f"),get(this, editor_trackAuthor, "f"),get(this, editor_lastModified, "f"),get(this, editor_track, "f"),(t => {
                             get(this, Ft, "m", setEnvironment).call(this, t)
                         }
-                        ),( (t, e) => {
+                        ),( (t, e, newDate) => {
                             get(this, Ft, "m", setTrackName).call(this, t),
                             get(this, Ft, "m", setTrackAuthor).call(this, e),
+                            get(this, Ft, "m", setTrackCreationDate).call(this, newDate),
                             get(this, editor_activeModal, "f")?.dispose(),
                             set(this, editor_activeModal, null, "f"),
                             get(this, editor_containerElement, "f").className = "editor-ui"
                         }
-                        ),( (t, e) => {
+                        ),( (t, e, newDate) => {
                             get(this, Ft, "m", setTrackName).call(this, t),
                             get(this, Ft, "m", setTrackAuthor).call(this, e),
+                            get(this, Ft, "m", setTrackCreationDate).call(this, newDate),
                             get(this, editor_activeModal, "f")?.dispose(),
                             set(this, editor_activeModal, null, "f");
                             const n = {
@@ -2888,12 +2951,13 @@
                 get(this, editor_settingsButton, "f").addEventListener("click", ( () => {
                     get(this, editor_audioManager, "f").playUIClick(),
                     get(this, editor_containerElement, "f").className = "hidden",
-                    set(this, editor_activeModal, new TrackSettingsUI(get(this, editor_audioManager, "f"),get(this, editor_localization, "f"),get(this, editor_trackName, "f"),get(this, editor_trackAuthor, "f"),get(this, editor_track, "f"),(t => {
+                    set(this, editor_activeModal, new TrackSettingsUI(get(this, editor_audioManager, "f"),get(this, editor_localization, "f"),get(this, editor_trackName, "f"),get(this, editor_trackAuthor, "f"),get(this, editor_lastModified, "f"),get(this, editor_track, "f"),(t => {
                         get(this, Ft, "m", setEnvironment).call(this, t)
                     }
-                    ),( (t, e) => {
+                    ),( (t, e, newDate) => {
                         get(this, Ft, "m", setTrackName).call(this, t),
                         get(this, Ft, "m", setTrackAuthor).call(this, e),
+                        get(this, Ft, "m", setTrackCreationDate).call(this, newDate),
                         get(this, editor_activeModal, "f")?.dispose(),
                         set(this, editor_activeModal, null, "f"),
                         get(this, editor_containerElement, "f").className = "editor-ui"

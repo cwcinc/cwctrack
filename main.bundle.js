@@ -9054,10 +9054,10 @@ window.GLOBAL_SUN_LIGHT = -0.1;
                 m.src = g,
                 u.appendChild(m);
 
-                if (dateCreated != null) {
+                if (trackMetadata.lastModified != null) {
                     const dateCreatedPanel = document.createElement("div");
                     dateCreatedPanel.className = "date-created";
-                    const dateCreatedObj = new Date(dateCreated);
+                    const dateCreatedObj = new Date(trackMetadata.lastModified);
                     dateCreatedPanel.textContent = dateCreatedObj.toLocaleDateString();
                     u.appendChild(dateCreatedPanel);
                 }
@@ -28689,7 +28689,7 @@ window.GLOBAL_SUN_LIGHT = -0.1;
                     const legacy = TrackDataImporterLegacy.withMetadata(exportString);
                     if (null != legacy)
                         return legacy;
-                    console.warn("Failed to parse track data from export string");
+                    console.warn("Failed to parse track data from export string: " + exportString.slice(0, 20) + (exportString.length > 100 ? "..." : ""));
                     return null;
                 }
                 createThumbnail() {
