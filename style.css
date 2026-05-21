@@ -223,6 +223,10 @@
     -moz-appearance: none;
 }
 
+.sort-dropdown:focus {
+    outline: none;
+}
+
 .sort-dropdown::-ms-expand {
     display: none;
 }
