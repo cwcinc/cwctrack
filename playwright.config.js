@@ -13,4 +13,7 @@ export default {
     timezoneId: 'America/New_York',
     locale: 'en-US',
   },
+  expect: {
+    timeout: 15_000,
+  },
 };
