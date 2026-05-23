@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { bootGame } from './helpers/setup.js';
 
-test.describe.configure({ timeout: 20_000 });
-
 test.beforeEach(async ({ page }) => {
   await bootGame(page);
 });

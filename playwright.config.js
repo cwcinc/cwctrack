@@ -5,5 +5,12 @@ export default {
     reuseExistingServer: !process.env.CI,
   },
   testDir: './tests',
-  use: { baseURL: 'http://localhost:8080' },
+  use: {
+    baseURL: 'http://localhost:8080',
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    timezoneId: 'America/New_York',
+    locale: 'en-US',
+  },
 };
