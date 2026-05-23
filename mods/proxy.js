@@ -1,1 +1,1 @@
-const POLYTRACK_API_REQUEST_URL = "https://polyproxy.polymodloader.com/"; // "https://vps.kodub.com/"
+const POLYTRACK_API_REQUEST_URL = "https://ptproxy.cwcinc.dev/"; // "https://vps.kodub.com/"
