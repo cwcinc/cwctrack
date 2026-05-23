@@ -36,8 +36,18 @@
     "win": {
       "icon": "build/icons/win/icon.ico",
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
     },
     "nsis": {
@@ -54,16 +64,38 @@
     },
     "linux": {
       "target": [
-        { "target": "AppImage", "arch": ["x64"] },
-        { "target": "zip", "arch": ["x64"] }
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
       "category": "Game",
       "icon": "build/icons/png"
     },
     "mac": {
       "target": [
-        { "target": "dmg", "arch": ["x64", "arm64"] },
-        { "target": "zip", "arch": ["x64", "arm64"] }
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
       ],
       "category": "public.app-category.games",
       "icon": "build/icons/mac/icon.icns"
@@ -76,5 +108,10 @@
     "build:win": "electron-builder --win --x64",
     "build:linux": "electron-builder --linux",
     "build:mac": "electron-builder --mac"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "electron": "^42.2.0",
+    "electron-builder": "^26.8.1"
   }
 }
