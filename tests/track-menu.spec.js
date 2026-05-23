@@ -7,6 +7,11 @@ test.beforeEach(async ({ page }) => {
 
 test('track menu [Desert 5]', async ({ page }) => {
   test.setTimeout(100_000);
+  
+  const leaderboardResponse = page.waitForResponse(
+    res => res.url().includes('/leaderboard') && res.status() === 200,
+    { timeout: 60_000 }
+  );
 
   await test.step('navigate to track menu', async () => {
     await page.getByRole('button', { name: 'Play', exact: true }).click();
@@ -34,10 +39,6 @@ test('track menu [Desert 5]', async ({ page }) => {
     await expect(desert5menu.locator('.opponents-container.no-opponents')).toBeVisible();
   });
 
-  const leaderboardResponse = page.waitForResponse(
-    res => res.url().includes('/leaderboard') && res.status() === 200,
-    { timeout: 60_000 }
-  );
   await leaderboardResponse;
 
   await test.step('leaderboard shows 20 entries', async () => {
