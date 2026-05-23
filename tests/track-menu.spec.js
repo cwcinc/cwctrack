@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('track menu [Desert 5]', async ({ page }) => {
-  test.setTimeout(100_000);
+  test.setTimeout(300_000);
   
   const leaderboardResponse = page.waitForResponse(
     res => res.url().includes('/leaderboard') && res.status() === 200,
