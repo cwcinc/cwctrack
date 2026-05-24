@@ -1,12 +1,12 @@
 {
-	"name": "PolyTrack",
+	"name": "CWCTrack",
 	"icons": [
-		{
-			"src": "images/icon.svg",
-			"sizes": "any",
-			"type": "image/svg+xml",
-			"purpose": "any"
-		}
+			{
+					"src": "mods/kocube.png",
+					"sizes": "512x512",
+					"type": "image/png",
+					"purpose": "any"
+			}
 	],
 	"background_color": "#28346a",
 	"theme_color": "#28346a",

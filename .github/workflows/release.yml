@@ -39,6 +39,7 @@ jobs:
           cp forced_square.* staging/
           cp favicon.ico index.html style.css staging/
           cp polytrack_physics.wasm staging/
+          cp manifest.json staging/
           cp -r mods models images lib audio electron tracks staging/
           cp mods/proxy.release.js staging/mods/proxy.js
           rm staging/mods/proxy.release.js
