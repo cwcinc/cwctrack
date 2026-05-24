@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { bootGame } from './helpers/setup.js';
+import { mockLeaderboard, mockRecording } from './helpers/mocks.js';
 
 test.beforeEach(async ({ page }) => {
+  await mockLeaderboard(page);
+  await mockRecording(page);
   await bootGame(page);
 });
 
