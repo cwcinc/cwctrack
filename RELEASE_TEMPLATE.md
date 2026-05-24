@@ -1,3 +1,6 @@
+## Web
+The latest web release can always be found at https://cwctrack.cwcinc.dev/
+
 ## Download
 
 ### Windows
