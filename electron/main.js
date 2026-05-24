@@ -7,20 +7,25 @@ singleInstanceLockSucessful ? app.on("second-instance", ( () => {
     browserWindow.focus())
 }
 )) : app.quit(),
-app.on("web-contents-created", ( (e, n) => {
-    n.setWindowOpenHandler(( ({url: e}) => ("https://www.kodub.com/" != e && "https://opengameart.org/content/sci-fi-theme-1" != e && "https://www.kodub.com/terms/polytrack" != e && "https://www.kodub.com/privacy/polytrack" != e && "https://www.kodub.com/discord/polytrack" != e || setImmediate(( () => {
-        shell.openExternal(e)
-    }
-    )),
-    {
-        action: "deny"
-    }))),
-    n.on("will-navigate", ( (e, n) => {
+app.on("web-contents-created", ((e, n) => {
+    n.setWindowOpenHandler((({url}) => {
+      const allowed = [
+        "https://www.kodub.com/",
+        "https://www.kodub.com/terms/polytrack",
+        "https://www.kodub.com/privacy/polytrack",
+        "https://www.kodub.com/discord/polytrack",
+        "https://cwcinc.dev/",
+        "https://www.youtube.com/watch?v=jTalhVYlpIY"
+      ];
+      if (allowed.includes(url)) {
+        setImmediate(() => shell.openExternal(url));
+      }
+      return { action: "deny" };
+    })),
+    n.on("will-navigate", ((e, n) => {
         e.preventDefault()
-    }
-    ))
-}
-)),
+    }))
+}));
 ipcMain.on("get-argv", (e => {
     e.returnValue = process.argv
 }
@@ -47,17 +52,23 @@ app.whenReady().then(( () => {
         useContentSize: !0,
         autoHideMenuBar: !0,
         webPreferences: {
-            devTools: !1,
+            devTools: !0,
             preload: path.join(__dirname, "preload.js"),
             backgroundThrottling: !1
         }
     }),
     browserWindow.removeMenu(),
-    browserWindow.webContents.on("before-input-event", ( (e, n) => {
-        n.isAutoRepeat || "keyDown" != n.type || ("F11" == n.code || n.alt && "Enter" == n.code) && (browserWindow.setFullScreen(!browserWindow.isFullScreen()),
-        e.preventDefault())
-    }
-    )),
+    browserWindow.webContents.on("before-input-event", ((e, n) => {
+        if (n.isAutoRepeat || "keyDown" != n.type) return;
+        if ("F11" == n.code || (n.alt && "Enter" == n.code)) {
+            browserWindow.setFullScreen(!browserWindow.isFullScreen());
+            e.preventDefault();
+        }
+        if ("F12" == n.code) {
+            browserWindow.webContents.toggleDevTools();
+            e.preventDefault();
+        }
+    })),
     browserWindow.webContents.on("will-prevent-unload", (e => {
         e.preventDefault()
     }
