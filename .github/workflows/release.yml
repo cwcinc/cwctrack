@@ -84,6 +84,8 @@ jobs:
     needs: [asar, build]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v6
+
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
@@ -91,9 +93,21 @@ jobs:
       - name: Flatten artifacts
         run: |
           mkdir release
-          find artifacts -type f \( -name '*.exe' -o -name '*.dmg' -o -name '*.AppImage' -o -name '*.zip' -o -name 'app.asar' -o -name 'latest*.yml' \) -exec cp {} release/ \;
+          find artifacts -type f \( -name '*.exe' -o -name '*.dmg' -o -name '*.AppImage' -o -name '*.zip' -o -name 'app.asar' \) -exec cp {} release/ \;
           ls -la release/
+
+      - name: Build release notes
+        run: |
+          TAG="${{ github.ref_name }}"
+          VERSION="${TAG#v}"
+          sed -e "s|{{VERSION}}|${VERSION}|g" \
+              -e "s|{{TAG}}|${TAG}|g" \
+              -e "s|{{REPO}}|${{ github.repository }}|g" \
+              RELEASE_TEMPLATE.md > release-notes.md
+          cat release-notes.md
 
       - uses: softprops/action-gh-release@v3
         with:
           files: release/*
+          body_path: release-notes.md
+          generate_release_notes: true
