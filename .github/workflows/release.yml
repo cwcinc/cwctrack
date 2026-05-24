@@ -23,6 +23,13 @@ jobs:
 
       - name: Install asar
         run: npm install -g @electron/asar
+        
+      - name: Set mod version
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          sed -i.bak -E "s/MOD_VERSION = \"[^\"]*\";/MOD_VERSION = \"${VERSION}\";/" mods/kodub_mod_config.js
+          rm mods/kodub_mod_config.js.bak
 
       - name: Stage build
         run: |
@@ -58,6 +65,13 @@ jobs:
         with:
           node-version: 'latest'
           cache: 'npm'
+
+      - name: Set mod version
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          sed -i.bak -E "s/MOD_VERSION = \"[^\"]*\";/MOD_VERSION = \"${VERSION}\";/" mods/kodub_mod_config.js
+          rm mods/kodub_mod_config.js.bak
 
       - name: Install dependencies
         run: npm ci
