@@ -52342,7 +52342,10 @@ var GLOBAL_LEADERBOARD_API = null;
                         u.show(e.get("Computer determinism check failed.") + " " + e.get("Some leaderboard features are disabled.") + "\n\n" + e.get("Please try another browser or device."), e.get("Ok"), ( () => {
                             i()
                         }
-                        ))) : u.showNoButtons(e.get("You already have another instance of PolyTrack open.") + "\n\n" + e.get("Please switch to that tab or window to continue.")));
+                        ))) : u.show(e.get("You already have another instance of PolyTrack open.") + "\n\n" + e.get("Proceed at your own risk."), e.get("Ok"), ( () => {
+                            i()
+                        }
+                        )));
                         for (let e = 0; e < C.get(this, Dc, "f").length; e++) {
                             const t = C.get(this, Dc, "f")[e];
                             t.classList.add("button-spawn"),
