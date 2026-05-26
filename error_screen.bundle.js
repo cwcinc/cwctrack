@@ -284,7 +284,7 @@
                 e.appendChild(n);
                 const t = document.createElement("div");
                 t.className = "version",
-                t.textContent = "Version: 0.6.0",
+                t.textContent = "Version: 0.6.1",
                 null != window.polytrackModConfiguration?.modName && (t.textContent += " (Modded)"),
                 e.appendChild(t);
                 const r = document.createElement("div");

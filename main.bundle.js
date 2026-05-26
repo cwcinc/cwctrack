@@ -45312,22 +45312,22 @@ var GLOBAL_LEADERBOARD_API = null;
                 "zh-CN": "请确保在浏览器设置中启用硬件加速。",
                 "zh-TW": "請確保在瀏覽器設定中啟用硬體加速。"
             },
-            "Update 0.6.0": {
-                ar: "تحديث 0.6.0",
-                "de-DE": "Update 0.6.0",
-                "es-ES": "Actualización 0.6.0",
-                "fr-FR": "Mise à jour 0.6.0",
-                "it-IT": "Aggiornamento 0.6.0",
-                "ja-JP": "アップデート 0.6.0",
-                "ko-KR": "업데이트 0.6.0",
-                "pl-PL": "Aktualizacja 0.6.0",
-                "pt-BR": "Atualização 0.6.0",
-                "pt-PT": "Atualização 0.6.0",
-                "ru-RU": "Обновление 0.6.0",
-                "tr-TR": "Güncelleme 0.6.0",
-                "uk-UA": "Оновлення 0.6.0",
-                "zh-CN": "更新 0.6.0",
-                "zh-TW": "更新 0.6.0"
+            "Update 0.6.1": {
+                ar: "تحديث 0.6.1",
+                "de-DE": "Update 0.6.1",
+                "es-ES": "Actualización 0.6.1",
+                "fr-FR": "Mise à jour 0.6.1",
+                "it-IT": "Aggiornamento 0.6.1",
+                "ja-JP": "アップデート 0.6.1",
+                "ko-KR": "업데이트 0.6.1",
+                "pl-PL": "Aktualizacja 0.6.1",
+                "pt-BR": "Atualização 0.6.1",
+                "pt-PT": "Atualização 0.6.1",
+                "ru-RU": "Обновление 0.6.1",
+                "tr-TR": "Güncelleme 0.6.1",
+                "uk-UA": "Оновлення 0.6.1",
+                "zh-CN": "更新 0.6.1",
+                "zh-TW": "更新 0.6.1"
             },
             "Multiplayer & More Customization": {
                 ar: "العب الجماعي والمزيد من التخصيص",
@@ -45346,22 +45346,22 @@ var GLOBAL_LEADERBOARD_API = null;
                 "zh-CN": "多人游戏和更多自定义",
                 "zh-TW": "多人遊戲和更多自訂"
             },
-            "Welcome to PolyTrack 0.6.0! This update introduces experimental multiplayer support, more car customization, editor copy/paste, optimizations and more!": {
-                ar: "مرحبًا بك في PolyTrack 0.6.0! يقدم هذا التحديث دعمًا تجريبيًا للعب الجماعي، المزيد من تخصيص السيارات، النسخ/اللصق في المحرر، تحسينات والمزيد!",
-                "de-DE": "Willkommen zu PolyTrack 0.6.0! Dieses Update führt experimentelle Mehrspieler-Unterstützung, mehr Fahrzeuganpassung, Kopieren/Einfügen im Editor, Optimierungen und mehr ein!",
-                "es-ES": "¡Bienvenido a PolyTrack 0.6.0! Esta actualización introduce soporte multijugador experimental, más personalización de autos, copiar/pegar en el editor, optimizaciones y más.",
-                "fr-FR": "Bienvenue dans PolyTrack 0.6.0 ! Cette mise à jour introduit un support multijoueur expérimental, plus de personnalisation de voiture, copier/coller dans l'éditeur, des optimisations et plus encore !",
-                "it-IT": "Benvenuto in PolyTrack 0.6.0! Questo aggiornamento introduce il supporto multiplayer sperimentale, più personalizzazione dell'auto, copia/incolla nell'editor, ottimizzazioni e altro ancora!",
-                "ja-JP": "PolyTrack 0.6.0へようこそ！このアップデートでは、実験的なマルチプレイヤーサポート、より多くの車のカスタマイズ、エディタのコピー/ペースト、最適化などが導入されます！",
-                "ko-KR": "PolyTrack 0.6.0에 오신 것을 환영합니다! 이번 업데이트에서는 실험적인 멀티플레이어 지원, 더 많은 자동차 커스터마이징, 에디터 복사/붙여넣기, 최적화 등이 도입됩니다!",
-                "pl-PL": "Witamy w PolyTrack 0.6.0! Ta aktualizacja wprowadza eksperymentalne wsparcie dla trybu wieloosobowego, więcej personalizacji samochodów, kopiowanie/wklejanie w edytorze, optymalizacje i więcej!",
-                "pt-BR": "Bem-vindo ao PolyTrack 0.6.0! Esta atualização introduz suporte multiplayer experimental, mais personalização de carros, copiar/colar no editor, otimizações e muito mais!",
-                "pt-PT": "Bem-vindo ao PolyTrack 0.6.0! Esta atualização introduz suporte multiplayer experimental, mais personalização de carros, copiar/colar no editor, otimizações e muito mais!",
-                "ru-RU": "Добро пожаловать в PolyTrack 0.6.0! Это обновление вводит экспериментальную поддержку многопользовательского режима, больше настроек автомобилей, копирование/вставку в редакторе, оптимизации и многое другое!",
-                "tr-TR": "PolyTrack 0.6.0'a hoş geldiniz! Bu güncelleme, deneysel çok oyunculu desteği, daha fazla araba özelleştirmesi, editörde kopyala/yapıştır, optimizasyonlar ve daha fazlasını sunar!",
-                "uk-UA": "Ласкаво просимо до PolyTrack 0.6.0! Це оновлення вводить експериментальну підтримку багатокористувацького режиму, більше налаштувань автомобілів, копіювання/вставку в редакторі, оптимізації та багато іншого!",
-                "zh-CN": "欢迎来到PolyTrack 0.6.0！此更新引入了实验性的多人游戏支持、更多的汽车定制、编辑器复制/粘贴、优化等功能！",
-                "zh-TW": "歡迎來到 PolyTrack 0.6.0！此更新引入了實驗性的多人遊戲支持、更多的汽車定制、編輯器複製/粘貼、優化等功能！"
+            "Welcome to PolyTrack 0.6.1! This update introduces experimental multiplayer support, more car customization, editor copy/paste, optimizations and more!": {
+                ar: "مرحبًا بك في PolyTrack 0.6.1! يقدم هذا التحديث دعمًا تجريبيًا للعب الجماعي، المزيد من تخصيص السيارات، النسخ/اللصق في المحرر، تحسينات والمزيد!",
+                "de-DE": "Willkommen zu PolyTrack 0.6.1! Dieses Update führt experimentelle Mehrspieler-Unterstützung, mehr Fahrzeuganpassung, Kopieren/Einfügen im Editor, Optimierungen und mehr ein!",
+                "es-ES": "¡Bienvenido a PolyTrack 0.6.1! Esta actualización introduce soporte multijugador experimental, más personalización de autos, copiar/pegar en el editor, optimizaciones y más.",
+                "fr-FR": "Bienvenue dans PolyTrack 0.6.1 ! Cette mise à jour introduit un support multijoueur expérimental, plus de personnalisation de voiture, copier/coller dans l'éditeur, des optimisations et plus encore !",
+                "it-IT": "Benvenuto in PolyTrack 0.6.1! Questo aggiornamento introduce il supporto multiplayer sperimentale, più personalizzazione dell'auto, copia/incolla nell'editor, ottimizzazioni e altro ancora!",
+                "ja-JP": "PolyTrack 0.6.1へようこそ！このアップデートでは、実験的なマルチプレイヤーサポート、より多くの車のカスタマイズ、エディタのコピー/ペースト、最適化などが導入されます！",
+                "ko-KR": "PolyTrack 0.6.1에 오신 것을 환영합니다! 이번 업데이트에서는 실험적인 멀티플레이어 지원, 더 많은 자동차 커스터마이징, 에디터 복사/붙여넣기, 최적화 등이 도입됩니다!",
+                "pl-PL": "Witamy w PolyTrack 0.6.1! Ta aktualizacja wprowadza eksperymentalne wsparcie dla trybu wieloosobowego, więcej personalizacji samochodów, kopiowanie/wklejanie w edytorze, optymalizacje i więcej!",
+                "pt-BR": "Bem-vindo ao PolyTrack 0.6.1! Esta atualização introduz suporte multiplayer experimental, mais personalização de carros, copiar/colar no editor, otimizações e muito mais!",
+                "pt-PT": "Bem-vindo ao PolyTrack 0.6.1! Esta atualização introduz suporte multiplayer experimental, mais personalização de carros, copiar/colar no editor, otimizações e muito mais!",
+                "ru-RU": "Добро пожаловать в PolyTrack 0.6.1! Это обновление вводит экспериментальную поддержку многопользовательского режима, больше настроек автомобилей, копирование/вставку в редакторе, оптимизации и многое другое!",
+                "tr-TR": "PolyTrack 0.6.1'e hoş geldiniz! Bu güncelleme, deneysel çok oyunculu desteği, daha fazla araba özelleştirmesi, editörde kopyala/yapıştır, optimizasyonlar ve daha fazlasını sunar!",
+                "uk-UA": "Ласкаво просимо до PolyTrack 0.6.1! Це оновлення вводить експериментальну підтримку багатокористувацького режиму, більше налаштувань автомобілів, копіювання/вставку в редакторі, оптимізації та багато іншого!",
+                "zh-CN": "欢迎来到PolyTrack 0.6.1！此更新引入了实验性的多人游戏支持、更多的汽车定制、编辑器复制/粘贴、优化等功能！",
+                "zh-TW": "歡迎來到 PolyTrack 0.6.1！此更新引入了實驗性的多人遊戲支持、更多的汽車定制、編輯器複製/粘貼、優化等功能！"
             },
             "Note: As with every major PolyTrack update, physics changes mean that records from previous versions are not compatible.": {
                 ar: "ملاحظة: كما هو الحال مع كل تحديث رئيسي لـ PolyTrack، تعني تغييرات الفيزياء أن السجلات من الإصدارات السابقة غير متوافقة.",
@@ -51788,7 +51788,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, pc, "f").className = "news-popup-ui",
                 C.get(this, gc, "f").appendChild(C.get(this, pc, "f"));
                 const r = document.createElement("h2");
-                r.textContent = n.get("Update 0.6.0"),
+                r.textContent = n.get("Update 0.6.1"),
                 C.get(this, pc, "f").appendChild(r);
                 const a = document.createElement("h3");
                 a.textContent = n.get("Multiplayer & More Customization"),
@@ -52196,7 +52196,7 @@ var GLOBAL_LEADERBOARD_API = null;
             const t = document.createElement("a");
             t.href = "https://www.kodub.com",
             t.target = "_blank",
-            t.textContent = "© 2026 kodub.com - " + e.get("PolyTrack") + " 0.6.0",
+            t.textContent = "© 2026 kodub.com - " + e.get("PolyTrack") + " 0.6.1",
             C.get(this, Mc, "f").appendChild(t);
 
             const n = document.createElement("a");
