@@ -53041,6 +53041,116 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
                 )),
                 C.set(this, loadedCommunityTracks, [{
+                    id: "5159a8dac6a1f397407a7b5233ad570613531f6609f7dc897490c28c9f2c7a4e",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Apostle",
+                        author: "BonnieBeans",
+                        lastModified: new Date("2026-03-16T11:51:42.000Z")
+                    },
+                    environment: TrackEnvironment.Desert,
+                    trackUrl: "tracks/community/apostle.track",
+                    thumbnail: "tracks/community/thumbnails/apostle.png"
+                }, {
+                    id: "1783b7b6c30e7fddf7ffb7c8a4a8a3b65c1ef6ec317d908d6eb05e6c905a57f6",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Stardust",
+                        author: "zihut",
+                        lastModified: new Date("2026-05-17T03:23:04.000Z")
+                    },
+                    environment: TrackEnvironment.Summer,
+                    trackUrl: "tracks/community/stardust.track",
+                    thumbnail: "tracks/community/thumbnails/stardust.png"
+                }, {
+                    id: "ddfe00045807e2786552d1e31e1363384c365487180f65d4eff1aa41e334a8e8",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Overclocked",
+                        author: "Zihcx",
+                        lastModified: new Date("2026-03-15T19:31:56.000Z")
+                    },
+                    environment: TrackEnvironment.Summer,
+                    trackUrl: "tracks/community/overclocked.track",
+                    thumbnail: "tracks/community/thumbnails/overclocked.png"
+                }, {
+                    id: "4058e3616fbd79b848e70037adde4f12b4413011050aaf1c9d875cdbe2e33d68",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Amberbound",
+                        author: "Hero <3",
+                        lastModified: null
+                    },
+                    environment: TrackEnvironment.Summer,
+                    trackUrl: "tracks/community/amberbound.track",
+                    thumbnail: "tracks/community/thumbnails/amberbound.png"
+                }, {
+                    id: "2ec74a179c8aba94354e3c6dee2a2920bedd7d84adf4d0a691f4a7453afdb1e8",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "The Eldritch Estate",
+                        author: "HummusHere",
+                        lastModified: new Date("2026-04-03T04:55:09.000Z")
+                    },
+                    environment: TrackEnvironment.Summer,
+                    trackUrl: "tracks/community/the_eldritch_estate.track",
+                    thumbnail: "tracks/community/thumbnails/the_eldritch_estate.png"
+                }, {
+                    id: "76e1920a3ca015033a0b21156848def2c248c95d97ccf4aab2312a0302beefe0",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Star Bound",
+                        author: "skrdh & Zihcx",
+                        lastModified: null
+                    },
+                    environment: TrackEnvironment.Desert,
+                    trackUrl: "tracks/community/star_bound.track",
+                    thumbnail: "tracks/community/thumbnails/star_bound.png"
+                }, {
+                    id: "b3ebc0effd774ddfb625debd8deee79ddebb2769dadcd362f22f767485dc31cb",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Natsu",
+                        author: "ben, 10quo07, BLAK3",
+                        lastModified: new Date("2026-03-22T11:39:00.000Z")
+                    },
+                    environment: TrackEnvironment.Summer,
+                    trackUrl: "tracks/community/natsu.track",
+                    thumbnail: "tracks/community/thumbnails/natsu.png"
+                }, {
+                    id: "76269faf38e8726671c05b2b9044f7aa3e66c4313cb4fa5d0fbb23fc8524fe9e",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Lenore",
+                        author: "Td.blox",
+                        lastModified: new Date("2026-02-16T03:58:31.000Z")
+                    },
+                    environment: TrackEnvironment.Summer,
+                    trackUrl: "tracks/community/lenore.track",
+                    thumbnail: "tracks/community/thumbnails/lenore.png"
+                }, {
+                    id: "151f12fd3ebc8942f7aaef669024a0fc149bc220f370753efe14d9371acc9c87",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "sandy lanes II",
+                        author: "2xi and qwertyuiop",
+                        lastModified: new Date("2026-05-17T01:13:27.000Z")
+                    },
+                    environment: TrackEnvironment.Desert,
+                    trackUrl: "tracks/community/sandy_lanes_ii.track",
+                    thumbnail: "tracks/community/thumbnails/sandy_lanes_ii.png"
+                }, {
+                    id: "f9283607ecec9c89583205cf08715c8f504cc271eec51209bb6fc0cc37ddc915",
+                    group: "0.6.1",
+                    trackMetadata: {
+                        name: "Planet 97",
+                        author: "BonnieBeans",
+                        lastModified: new Date("2026-05-25T04:04:14.000Z")
+                    },
+                    environment: TrackEnvironment.Summer,
+                    trackUrl: "tracks/community/planet_97.track",
+                    thumbnail: "tracks/community/thumbnails/planet_97.png"
+                }, {
                     id: "64bf7efaed2a47dfb03a6b152e3aef637ac251b68a725a28352f3376ff1384d7",
                     group: "0.6.0",
                     trackMetadata: {
