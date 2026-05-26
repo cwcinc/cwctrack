@@ -4470,7 +4470,7 @@ var GLOBAL_LEADERBOARD_API = null;
               , r = n.n(i)
               , a = n(6314)
               , s = n.n(a)()(r());
-            s.push([e.id, ".track-info-ui {\n\tposition: absolute;\n\tleft: calc(50% - 1050px / 2);\n\ttop: 0;\n\tz-index: 2;\n\tdisplay: flex;\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 1000px;\n\theight: 100%;\n}\n.track-info-ui.hidden {\n\tdisplay: none;\n}\n\n.track-info-ui > .side-panel {\n\tposition: relative;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmin-height: 0;\n\tmargin-left: 50px;\n\twidth: 400px;\n\tbackground-color: var(--surface-color);\n}\n\n.track-info-ui > .side-panel > h2 {\n\tmargin: 8px 8px 0 8px;\n\tpadding: 0;\n\tflex-shrink: 0;\n\twhite-space: nowrap;\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n\tfont-weight: normal;\n\tfont-size: 32px;\n\ttext-align: center;\n\tcolor: var(--text-color);\n}\n\n\n.track-info-ui > .side-panel > .thumbnail {\n\tposition: relative;\n\tmargin: 10px 0 0 0;\n\tpadding: 45px;\n\tflex-grow: 1;\n\tmin-height: 0;\n\tmax-height: 300px;\n\tbox-sizing: border-box;\n\tbackground-color: var(--surface-secondary-color);\n}\n\n.track-info-ui > .side-panel > .thumbnail > canvas, .track-info-ui > .side-panel > .thumbnail > img:not(.environment) {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tobject-fit: contain;\n\t-webkit-filter: drop-shadow(0 0 3px #000);\n\tfilter: drop-shadow(0 0 3px #000);\n\timage-rendering: pixelated;\n}\n\n.track-info-ui > .side-panel > .thumbnail > .share {\n\tdisplay: inline-block;\n\tposition: absolute;\n\tleft: 0;\n\tbottom: 0;\n\tmargin: 8px;\n\tpadding: 0 9px;\n\tclip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);\n}\n.track-info-ui > .side-panel > .thumbnail > .share > img {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 16px;\n\tpointer-events: none;\n}\n\n.track-info-ui > .side-panel > .thumbnail > .environment {\n\tposition: absolute;\n\tright: 0;\n\tbottom: 0;\n\tmargin: 8px;\n\twidth: 32px;\n\topacity: 0.2;\n\tpointer-events: none;\n}\n\n.track-info-ui > .side-panel > .track-author {\n\tmargin: 8px 8px 0 8px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\toverflow-wrap: anywhere;\n\tfont-weight: bold;\n}\n\n.track-info-ui > .side-panel > .last-modified {\n\tmargin: 0 8px 8px 8px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\toverflow-wrap: anywhere;\n\tfont-weight: bold;\n}\n\n.track-info-ui > .side-panel > .track-author > span, .track-info-ui > .side-panel > .last-modified > span {\n\tfont-weight: normal;\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .divider {\n\tborder-top: 1px solid var(--text-color);\n}\n\n.track-info-ui > .side-panel > .personal-best-title, .track-info-ui > .side-panel > .opponents-title {\n\tmargin: 10px 0 0 0;\n\tfont-size: 32px;\n\tcolor: var(--text-color);\n}\n\n.track-info-ui > .side-panel > .personal-best {\n\tmargin: 0 0 16px 0;\n\tfont-size: 28px;\n\tcolor: var(--text-color);\n}\n.track-info-ui > .side-panel > .personal-best.no-record {\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .personal-best > div {\n\tmargin: 8px 0;\n\tpadding: 0 30px;\n\twidth: 100%;\n\tbox-sizing: border-box;\n\tfont-size: 26px;\n\ttext-align: left;\n\tline-height: 30px;;\n}\n\n.track-info-ui > .side-panel > .personal-best > div > img {\n\tmargin: -1px 8px 1px 0;\n\twidth: 30px;\n\theight: 30px;\n\tvertical-align: top;\n}\n\n.track-info-ui > .side-panel > .personal-best > div > .faded {\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .opponents-container {\n\tmargin: 8px 16px 16px 16px;\n\tflex-grow: 1;\n\tmin-height: 50px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .opponents-container.no-opponents {\n\tmargin: 8px 16px 16px 16px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .button.watch, .track-info-ui > .side-panel > .button.play {\n\tflex-shrink: 0;\n\tmargin: 0 10px 10px 10px;\n\tpadding: 0 0 0 30px;\n\tbox-sizing: border-box;\n\twidth: calc(100% - 2 * 10px);\n\theight: 100px;\n\tclip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n\ttext-align: center;\n\tfont-size: 50px;\n}\n.track-info-ui > .side-panel > .button.watch {\n\theight: 50px;\n\tfont-size: 40px;\n}\n\n.track-info-ui > .side-panel > .button.watch > img, .track-info-ui > .side-panel > .button.play > img {\n\tmargin: 0 0 0 10px;\n\tpadding: 0;\n\tvertical-align: middle;\n\twidth: 48px;\n\theight: 48px;\n\ttransition: transform 0.2s ease-in-out;\n\tpointer-events: none;\n}\n.track-info-ui > .side-panel > .button.watch > img {\n\twidth: 36px;\n\theight: 36px;\n}\n.track-info-ui > .side-panel > .button.watch:disabled > img {\n\topacity: 0.3;\n}\n\n.track-info-ui > .side-panel > .button.watch:hover > img, .track-info-ui > .side-panel > .button.play:hover > img {\n\ttransform: translateX(10px);\n}\n.track-info-ui > .side-panel > .button.watch:disabled:hover > img {\n\ttransform: none;\n}\n\n@media (hover: none) {\n\t.track-info-ui > .side-panel > .button.watch:hover > img, .track-info-ui > .side-panel > .button.play:hover > img {\n\t\ttransform: none;\n\t}\n}\n\n.track-info-ui > .side-panel > .back {\n\tmargin: 10px;\n}\n\n.track-info-ui > .side-panel > .leaderboard-button {\n\tmargin: 10px;\n\tfloat: right;\n}\n", ""]);
+            s.push([e.id, ".track-info-ui {\n\tposition: absolute;\n\tleft: calc(50% - 1050px / 2);\n\ttop: 0;\n\tz-index: 2;\n\tdisplay: flex;\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 1000px;\n\theight: 100%;\n}\n.track-info-ui.hidden {\n\tdisplay: none;\n}\n\n.track-info-ui > .side-panel {\n\tposition: relative;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmin-height: 0;\n\tmargin-left: 50px;\n\twidth: 400px;\n\tbackground-color: var(--surface-color);\n}\n\n.track-info-ui > .side-panel > h2 {\n\tmargin: 8px 8px 0 8px;\n\tpadding: 0;\n\tflex-shrink: 0;\n\twhite-space: nowrap;\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n\tfont-weight: normal;\n\tfont-size: 32px;\n\ttext-align: center;\n\tcolor: var(--text-color);\n}\n\n\n.track-info-ui > .side-panel > .thumbnail {\n\tposition: relative;\n\tmargin: 10px 0 0 0;\n\tpadding: 45px;\n\tflex-grow: 1;\n\tmin-height: 0;\n\tmax-height: 300px;\n\tbox-sizing: border-box;\n\tbackground-color: var(--surface-secondary-color);\n}\n\n.track-info-ui > .side-panel > .thumbnail > canvas, .track-info-ui > .side-panel > .thumbnail > img:not(.environment) {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tobject-fit: contain;\n\t-webkit-filter: drop-shadow(0 0 3px #000);\n\tfilter: drop-shadow(0 0 3px #000);\n\timage-rendering: pixelated;\n}\n\n.track-info-ui > .side-panel > .thumbnail > .delete, .track-info-ui > .side-panel > .thumbnail > .share {\n\tdisplay: inline-block;\n\tposition: absolute;\n\tmargin: 8px;\n\tpadding: 0 9px;\n\tclip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);\n}\n.track-info-ui > .side-panel > .thumbnail > .delete {\n\tright: 0;\n\ttop: 42px;\n}\n.track-info-ui > .side-panel > .thumbnail > .share {\n\tright: 0;\n\ttop: 0;\n}\n.track-info-ui > .side-panel > .thumbnail > .delete > img, .track-info-ui > .side-panel > .thumbnail > .share > img {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 16px;\n\theight: 16px;\n\tpointer-events: none;\n}\n\n.track-info-ui > .side-panel > .thumbnail > .environment {\n\tposition: absolute;\n\tright: 0;\n\tbottom: 0;\n\tmargin: 8px;\n\twidth: 32px;\n\topacity: 0.2;\n\tpointer-events: none;\n}\n\n.track-info-ui > .side-panel > .track-author {\n\tmargin: 8px 8px 0 8px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\toverflow-wrap: anywhere;\n\tfont-weight: bold;\n}\n\n.track-info-ui > .side-panel > .last-modified {\n\tmargin: 0 8px 8px 8px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\toverflow-wrap: anywhere;\n\tfont-weight: bold;\n}\n\n.track-info-ui > .side-panel > .track-author > span, .track-info-ui > .side-panel > .last-modified > span {\n\tfont-weight: normal;\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .divider {\n\tborder-top: 1px solid var(--text-color);\n}\n\n.track-info-ui > .side-panel > .personal-best-title, .track-info-ui > .side-panel > .opponents-title {\n\tmargin: 10px 0 0 0;\n\tfont-size: 32px;\n\tcolor: var(--text-color);\n}\n\n.track-info-ui > .side-panel > .personal-best {\n\tmargin: 0 0 16px 0;\n\tfont-size: 28px;\n\tcolor: var(--text-color);\n}\n.track-info-ui > .side-panel > .personal-best.no-record {\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .personal-best > div {\n\tmargin: 8px 0;\n\tpadding: 0 30px;\n\twidth: 100%;\n\tbox-sizing: border-box;\n\tfont-size: 26px;\n\ttext-align: left;\n\tline-height: 30px;;\n}\n\n.track-info-ui > .side-panel > .personal-best > div > img {\n\tmargin: -1px 8px 1px 0;\n\twidth: 30px;\n\theight: 30px;\n\tvertical-align: top;\n}\n\n.track-info-ui > .side-panel > .personal-best > div > .faded {\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .opponents-container {\n\tmargin: 8px 16px 16px 16px;\n\tflex-grow: 1;\n\tmin-height: 50px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .opponents-container.no-opponents {\n\tmargin: 8px 16px 16px 16px;\n\tfont-size: 18px;\n\tcolor: var(--text-color);\n\topacity: 0.5;\n}\n\n.track-info-ui > .side-panel > .button.watch, .track-info-ui > .side-panel > .button.play {\n\tflex-shrink: 0;\n\tmargin: 0 10px 10px 10px;\n\tpadding: 0 0 0 30px;\n\tbox-sizing: border-box;\n\twidth: calc(100% - 2 * 10px);\n\theight: 100px;\n\tclip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n\ttext-align: center;\n\tfont-size: 50px;\n}\n.track-info-ui > .side-panel > .button.watch {\n\theight: 50px;\n\tfont-size: 40px;\n}\n\n.track-info-ui > .side-panel > .button.watch > img, .track-info-ui > .side-panel > .button.play > img {\n\tmargin: 0 0 0 10px;\n\tpadding: 0;\n\tvertical-align: middle;\n\twidth: 48px;\n\theight: 48px;\n\ttransition: transform 0.2s ease-in-out;\n\tpointer-events: none;\n}\n.track-info-ui > .side-panel > .button.watch > img {\n\twidth: 36px;\n\theight: 36px;\n}\n.track-info-ui > .side-panel > .button.watch:disabled > img {\n\topacity: 0.3;\n}\n\n.track-info-ui > .side-panel > .button.watch:hover > img, .track-info-ui > .side-panel > .button.play:hover > img {\n\ttransform: translateX(10px);\n}\n.track-info-ui > .side-panel > .button.watch:disabled:hover > img {\n\ttransform: none;\n}\n\n@media (hover: none) {\n\t.track-info-ui > .side-panel > .button.watch:hover > img, .track-info-ui > .side-panel > .button.play:hover > img {\n\t\ttransform: none;\n\t}\n}\n\n.track-info-ui > .side-panel > .back {\n\tmargin: 10px;\n}\n\n.track-info-ui > .side-panel > .leaderboard-button {\n\tmargin: 10px;\n\tfloat: right;\n}\n", ""]);
             const o = s
         }
         ,
@@ -9076,7 +9076,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 null != deleteTrackCallback) {
                     const e = document.createElement("button");
                     e.className = "delete-button",
-                    e.innerHTML = '<img src="images/erase.svg">',
+                    e.innerHTML = '<img src="images/delete.svg">',
                     e.addEventListener("click", ( () => {
                         i.get(this, w, "f").playUIClick(),
                         deleteTrackCallback()
@@ -28449,7 +28449,7 @@ var GLOBAL_LEADERBOARD_API = null;
               , p = l()(c)
               , f = l()(h)
               , g = l()(d);
-            u.push([e.id, `.track-selection-ui {\n\tposition: absolute;\n\tbottom: 0;\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 100%;\n\theight: 100%;\n\toverflow: hidden;\n\ttext-align: left;\n}\n.track-selection-ui.hidden {\n\tdisplay: none;\n}\n\n.track-selection-ui > .safe-area-left {\n\tposition: absolute;\n\tleft: 0;\n\ttop: 0;\n\tz-index: 1;\n\twidth: var(--safe-area-left);\n\theight: 100%;\n\tbackground-color: var(--surface-color);\n}\n\n.track-selection-ui > .safe-area-right {\n\tposition: absolute;\n\tright: 0;\n\ttop: 0;\n\tz-index: 1;\n\twidth: var(--safe-area-right);\n\theight: 100%;\n\tbackground-color: var(--surface-color);\n}\n\n.track-selection-ui > .bar {\n\tdisplay: flex;\n\tmargin: 0;\n\tpadding: 0 var(--safe-area-right) 0 var(--safe-area-left);\n\twidth: 100%;\n\tbox-sizing: border-box;\n\tbackground-color: var(--surface-color);\n\ttext-align: left;\n\n\tpointer-events:auto;\n}\n.track-selection-ui > .bar > .button {\n\tmargin: 8px 12px;\n}\n\n.track-selection-ui > .bar > .search-bar-container {\n\tposition: relative;\n\tdisplay: flex;\n\tflex-grow: 1;\n}\n.track-selection-ui > .bar > .search-bar-container > input {\n\tmargin: 8px -10px;\n\tpadding: 0 20px;\n\tflex-grow: 1;\n\tclip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n\tcolor: var(--text-color);\n\ttext-indent: 2px; /* Without this the italic text will be cut off on the left side. */\n}\n.track-selection-ui > .bar > .search-bar-container > img {\n\tmargin: 8px -10px 8px 0;\n\tpadding: 0 16px;\n\twidth: 24px;\n\tbackground-color: var(--button-hover-color);\n\tclip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n}\n\n.track-selection-ui .category-container {\n\tdisplay: flex;\n\tpadding: 0 var(--safe-area-right) 0 var(--safe-area-left);\n\tbackground-color: var(--surface-secondary-color);\n}\n.track-selection-ui .category-container > button {\n\tposition: relative;\n\tmargin: 0 -3px;\n\tpadding: 0.6em 0;\n\tflex-grow: 1;\n\tbackground-color: transparent;\n\tfont-size: 2.8vw;\n\tfont-weight: bold;\n\ttext-shadow: 2px 2px 0 #112052, 0 0 10px #000, 0 0 10px #000;\n\tclip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n}\n.track-selection-ui .category-container > button:first-of-type {\n\tclip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n}\n.track-selection-ui .category-container > button:last-of-type {\n\tclip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%);\n}\n.track-selection-ui .category-container > button::before {\n\tcontent: "";\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tz-index: -1;\n\twidth: 100%;\n\theight: 100%;\n\tbackground-position: center;\n\tbackground-size: cover;\n\tfilter: blur(2px);\n\ttransition: filter 0.2s ease-in-out,  0.2s ease-in-out;\n}\n.track-selection-ui .category-container > button.official::before {\n\tbackground-image: url(${p});\n}\n.track-selection-ui .category-container > button.community::before {\n\tbackground-image: url(${f});\n}\n.track-selection-ui .category-container > button.custom::before {\n\tbackground-image: url(${g});\n}\n.track-selection-ui .category-container > button:hover::before {\n\tfilter: none;\n\ttransform: scale(1.1);\n}\n@media (hover: none) {\n\t.track-selection-ui .category-container > button:hover::before {\n\t\tfilter: blur(2px);\n\t\ttransform: none;\n\t}\n\n\t.track-selection-ui .category-container > button:active::before {\n\t\tfilter: none;\n\t\ttransform: scale(1.1);\n\t}\n}\n.track-selection-ui .category-container > button.selected::before {\n\tfilter: none;\n}\n.track-selection-ui .category-container > button::after {\n\tbackground-color: transparent;\n}\n.track-selection-ui .category-container > button.selected::after {\n\twidth: 100%;\n}\n\n.track-selection-ui .category-container > button > .cover {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tz-index: -1;\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgba(17, 32, 82, 0.75);\n\ttransition: background-color 0.2s ease-in-out;\n}\n.track-selection-ui .category-container > button:hover > .cover {\n\tbackground-color: rgba(51, 75, 119, 0.5);\n}\n@media (hover: none) {\n\t.track-selection-ui .category-container > button:hover > .cover {\n\t\tbackground-color: rgba(17, 32, 82, 0.75);\n\t}\n}\n.track-selection-ui .category-container > button:active > .cover {\n\tbackground-color: rgba(21, 31, 65, 0.5);\n}\n.track-selection-ui .category-container > button.selected > .cover {\n\tbackground-color: transparent;\n}\n\n@media (max-width: 1150px) {\n\t.track-selection-ui .category-container > button {\n\t\tfont-size: 32.2px;\n\t}\n}\n\n.track-selection-ui .tracks-container {\n\tmargin: 0;\n\tpadding: 20px calc(60px + var(--safe-area-right)) 20px calc(60px + var(--safe-area-left));\n\tbox-sizing: border-box;\n\twidth: 100%;\n\tflex-grow: 1;\n\toverflow-y: auto;\n\tpointer-events: auto;\n\tdisplay: none;\n}\n.track-selection-ui .tracks-container.open {\n\tdisplay: block;\n}\n.track-selection-ui.with-background .tracks-container {\n\tbackground-color: rgba(20, 20, 45, 0.8);\n\t-webkit-backdrop-filter: blur(4px);\n\tbackdrop-filter: blur(4px);\n}\n\n.track-selection-ui .tracks-container.no-group-containers {\n\tpadding-top: 50px;\n}\n\n.track-selection-ui .tracks-container > .empty {\n\tmargin: 100px;\n\tcolor: var(--text-color);\n\ttext-align: center;\n}\n.track-selection-ui .tracks-container > .empty > .title {\n\tfont-size: 48px;\n}\n.track-selection-ui .tracks-container > .empty > .description {\n\tmargin: 20px 0 0 0;\n\tfont-size: 32px;\n\topacity: 0.75;\n}\n\n.track-selection-ui .group-title {\n\tmargin: 0.5em 0.4em;\n\tpadding: 0;\n\tfont-size: 50px;\n\tfont-weight: normal;\n\tborder-bottom-width: 4px;\n\tborder-bottom-style: solid;\n\tcolor: var(--text-color);\n\tborder-image: linear-gradient(to right, var(--text-color), transparent) 1;\n\t\n}\n.track-selection-ui .group-title.winter {\n\tcolor: #bed8f7;\n\tborder-image: linear-gradient(to right, #bed8f7, transparent) 1;\n}\n.track-selection-ui .group-title.desert {\n\tcolor: #ede2af;\n\tborder-image: linear-gradient(to right, #ede2af, transparent) 1;\n}\n\n.track-selection-ui .group-title > img {\n\tmargin: 6px 8px;\n\twidth: 36px;\n\theight: 36px;\n\tvertical-align: bottom;\n}\n\n.track-selection-ui .tracks-container .track {\n\tposition: relative;\n\tdisplay: inline-block;\n}\n\n.track-selection-ui .tracks-container .track button {\n\tmargin: 10px;\n\tpadding: 0;\n\tcolor: var(--text-color);\n\tfont-size: 32px;\n}\n.track-selection-ui .tracks-container .track button:after {\n\tborder-bottom: none;\n}\n.track-selection-ui .tracks-container .track button:focus-visible {\n\ttext-decoration: none;\n}\n\n.track-selection-ui .track-title {\n\tmargin: 0;\n\tpadding: 4px;\n\tfont-size: 25px;\n\tbackground-color: var(--surface-secondary-color);\n}\n.track-selection-ui .tracks-container .track button:focus-visible .track-title {\n\ttext-decoration: underline;\n}\n.track-selection-ui .track-title > p {\n\tmargin: 0;\n\tpadding: 0 22px;\n\twidth: 208px;\n\tbox-sizing: border-box;\n\twhite-space: nowrap;\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n}\n\n.track-selection-ui .track > .button > canvas, .track-selection-ui .track > .button > img:not(.environment) {\n\tmargin: 0;\n\tpadding: 20px 40px;\n\twidth: 128px;\n\theight: 128px;\n\tobject-fit: contain;\n\t-webkit-filter: drop-shadow(0 0 3px #000);\n\tfilter: drop-shadow(0 0 3px #000);\n\timage-rendering: pixelated;\n\tpointer-events: none;\n}\n.track-selection-ui .track > .button > img:not(.environment) {\n\ttransition: opacity 0.25s ease-out;\n}\n.track-selection-ui .track > .button > img:not(.environment).loading {\n\topacity: 0;\n}\n\n.track-selection-ui .track .environment {\n\tposition: absolute;\n\tright: 14px;\n\tbottom: 40px;\n\twidth: 24px;\n\topacity: 0.2;\n\tpointer-events: none;\n}\n\n.track-selection-ui .record {\n\tmargin: 0;\n\tpadding: 4px;\n\tfont-size: 24px;\n\tbackground-color: var(--surface-secondary-color);\n\tcolor: var(--text-color);\n}\n\n.track-selection-ui .delete-button {\n\tposition: absolute;\n\ttop: 7px;\n\tright: 6px;\n\tmargin: 0;\n\tpadding: 0;\n\tline-height: 0;\n\tborder-radius: 2px;\n\tborder: none;\n\tbackground-color: var(--button-color);\n\n\tpointer-events: auto;\n\tcursor: pointer;\n}\n.track-selection-ui .delete-button:hover {\n\tbackground-color: var(--button-hover-color);\n}\n@media (hover: none) {\n\t.track-selection-ui .delete-button:hover {\n\t\tbackground-color: var(--button-color);\n\t}\n}\n.track-selection-ui .delete-button:active {\n\tbackground-color: var(--button-active-color);\n}\n.track-selection-ui .delete-button > img {\n\tmargin: 0;\n\tpadding: 0;\n\theight: 20px;\n\tvertical-align: top;\n\tpointer-events: none;\n}\n`, ""]);
+            u.push([e.id, `.track-selection-ui {\n\tposition: absolute;\n\tbottom: 0;\n\tdisplay: flex;\n\tflex-direction: column;\n\twidth: 100%;\n\theight: 100%;\n\toverflow: hidden;\n\ttext-align: left;\n}\n.track-selection-ui.hidden {\n\tdisplay: none;\n}\n\n.track-selection-ui > .safe-area-left {\n\tposition: absolute;\n\tleft: 0;\n\ttop: 0;\n\tz-index: 1;\n\twidth: var(--safe-area-left);\n\theight: 100%;\n\tbackground-color: var(--surface-color);\n}\n\n.track-selection-ui > .safe-area-right {\n\tposition: absolute;\n\tright: 0;\n\ttop: 0;\n\tz-index: 1;\n\twidth: var(--safe-area-right);\n\theight: 100%;\n\tbackground-color: var(--surface-color);\n}\n\n.track-selection-ui > .bar {\n\tdisplay: flex;\n\tmargin: 0;\n\tpadding: 0 var(--safe-area-right) 0 var(--safe-area-left);\n\twidth: 100%;\n\tbox-sizing: border-box;\n\tbackground-color: var(--surface-color);\n\ttext-align: left;\n\n\tpointer-events:auto;\n}\n.track-selection-ui > .bar > .button {\n\tmargin: 8px 12px;\n}\n\n.track-selection-ui > .bar > .search-bar-container {\n\tposition: relative;\n\tdisplay: flex;\n\tflex-grow: 1;\n}\n.track-selection-ui > .bar > .search-bar-container > input {\n\tmargin: 8px -10px;\n\tpadding: 0 20px;\n\tflex-grow: 1;\n\tclip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n\tcolor: var(--text-color);\n\ttext-indent: 2px; /* Without this the italic text will be cut off on the left side. */\n}\n.track-selection-ui > .bar > .search-bar-container > img {\n\tmargin: 8px -10px 8px 0;\n\tpadding: 0 16px;\n\twidth: 24px;\n\tbackground-color: var(--button-hover-color);\n\tclip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n}\n\n.track-selection-ui .category-container {\n\tdisplay: flex;\n\tpadding: 0 var(--safe-area-right) 0 var(--safe-area-left);\n\tbackground-color: var(--surface-secondary-color);\n}\n.track-selection-ui .category-container > button {\n\tposition: relative;\n\tmargin: 0 -3px;\n\tpadding: 0.6em 0;\n\tflex-grow: 1;\n\tbackground-color: transparent;\n\tfont-size: 2.8vw;\n\tfont-weight: bold;\n\ttext-shadow: 2px 2px 0 #112052, 0 0 10px #000, 0 0 10px #000;\n\tclip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n}\n.track-selection-ui .category-container > button:first-of-type {\n\tclip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);\n}\n.track-selection-ui .category-container > button:last-of-type {\n\tclip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%);\n}\n.track-selection-ui .category-container > button::before {\n\tcontent: "";\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tz-index: -1;\n\twidth: 100%;\n\theight: 100%;\n\tbackground-position: center;\n\tbackground-size: cover;\n\tfilter: blur(2px);\n\ttransition: filter 0.2s ease-in-out,  0.2s ease-in-out;\n}\n.track-selection-ui .category-container > button.official::before {\n\tbackground-image: url(${f});\n}\n.track-selection-ui .category-container > button.community::before {\n\tbackground-image: url(${p});\n}\n.track-selection-ui .category-container > button.custom::before {\n\tbackground-image: url(${g});\n}\n.track-selection-ui .category-container > button:hover::before {\n\tfilter: none;\n\ttransform: scale(1.1);\n}\n@media (hover: none) {\n\t.track-selection-ui .category-container > button:hover::before {\n\t\tfilter: blur(2px);\n\t\ttransform: none;\n\t}\n\n\t.track-selection-ui .category-container > button:active::before {\n\t\tfilter: none;\n\t\ttransform: scale(1.1);\n\t}\n}\n.track-selection-ui .category-container > button.selected::before {\n\tfilter: none;\n}\n.track-selection-ui .category-container > button::after {\n\tbackground-color: transparent;\n}\n.track-selection-ui .category-container > button.selected::after {\n\twidth: 100%;\n}\n\n.track-selection-ui .category-container > button > .cover {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tz-index: -1;\n\twidth: 100%;\n\theight: 100%;\n\tbackground-color: rgba(17, 32, 82, 0.75);\n\ttransition: background-color 0.2s ease-in-out;\n}\n.track-selection-ui .category-container > button:hover > .cover {\n\tbackground-color: rgba(51, 75, 119, 0.5);\n}\n@media (hover: none) {\n\t.track-selection-ui .category-container > button:hover > .cover {\n\t\tbackground-color: rgba(17, 32, 82, 0.75);\n\t}\n}\n.track-selection-ui .category-container > button:active > .cover {\n\tbackground-color: rgba(21, 31, 65, 0.5);\n}\n.track-selection-ui .category-container > button.selected > .cover {\n\tbackground-color: transparent;\n}\n\n@media (max-width: 1150px) {\n\t.track-selection-ui .category-container > button {\n\t\tfont-size: 32.2px;\n\t}\n}\n\n.track-selection-ui .tracks-container {\n\tmargin: 0;\n\tpadding: 20px calc(60px + var(--safe-area-right)) 20px calc(60px + var(--safe-area-left));\n\tbox-sizing: border-box;\n\twidth: 100%;\n\tflex-grow: 1;\n\toverflow-y: auto;\n\tpointer-events: auto;\n\tdisplay: none;\n}\n.track-selection-ui .tracks-container.open {\n\tdisplay: block;\n}\n.track-selection-ui.with-background .tracks-container {\n\tbackground-color: rgba(20, 20, 45, 0.8);\n\t-webkit-backdrop-filter: blur(4px);\n\tbackdrop-filter: blur(4px);\n}\n\n.track-selection-ui .tracks-container.no-group-containers {\n\tpadding-top: 50px;\n}\n\n.track-selection-ui .tracks-container > .empty {\n\tmargin: 100px;\n\tcolor: var(--text-color);\n\ttext-align: center;\n}\n.track-selection-ui .tracks-container > .empty > .title {\n\tfont-size: 48px;\n}\n.track-selection-ui .tracks-container > .empty > .description {\n\tmargin: 20px 0 0 0;\n\tfont-size: 32px;\n\topacity: 0.75;\n}\n\n.track-selection-ui .group-title {\n\tmargin: 0.5em 0.4em;\n\tpadding: 0;\n\tfont-size: 50px;\n\tfont-weight: normal;\n\tborder-bottom-width: 4px;\n\tborder-bottom-style: solid;\n\tcolor: var(--text-color);\n\tborder-image: linear-gradient(to right, var(--text-color), transparent) 1;\n\t\n}\n.track-selection-ui .group-title.winter {\n\tcolor: #bed8f7;\n\tborder-image: linear-gradient(to right, #bed8f7, transparent) 1;\n}\n.track-selection-ui .group-title.desert {\n\tcolor: #ede2af;\n\tborder-image: linear-gradient(to right, #ede2af, transparent) 1;\n}\n\n.track-selection-ui .group-title > img {\n\tmargin: 6px 8px;\n\twidth: 36px;\n\theight: 36px;\n\tvertical-align: bottom;\n}\n\n.track-selection-ui .tracks-container .track {\n\tposition: relative;\n\tdisplay: inline-block;\n}\n\n.track-selection-ui .tracks-container .track button {\n\tmargin: 10px;\n\tpadding: 0;\n\tcolor: var(--text-color);\n\tfont-size: 32px;\n}\n.track-selection-ui .tracks-container .track button:after {\n\tborder-bottom: none;\n}\n.track-selection-ui .tracks-container .track button:focus-visible {\n\ttext-decoration: none;\n}\n\n.track-selection-ui .track-title {\n\tmargin: 0;\n\tpadding: 4px;\n\tfont-size: 25px;\n\tbackground-color: var(--surface-secondary-color);\n}\n.track-selection-ui .tracks-container .track button:focus-visible .track-title {\n\ttext-decoration: underline;\n}\n.track-selection-ui .track-title > p {\n\tmargin: 0;\n\tpadding: 0 22px;\n\twidth: 208px;\n\tbox-sizing: border-box;\n\twhite-space: nowrap;\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n}\n\n.track-selection-ui .track > .button > canvas, .track-selection-ui .track > .button > img:not(.environment) {\n\tmargin: 0;\n\tpadding: 20px 40px;\n\twidth: 128px;\n\theight: 128px;\n\tobject-fit: contain;\n\t-webkit-filter: drop-shadow(0 0 3px #000);\n\tfilter: drop-shadow(0 0 3px #000);\n\timage-rendering: pixelated;\n\tpointer-events: none;\n}\n.track-selection-ui .track > .button > img:not(.environment) {\n\ttransition: opacity 0.25s ease-out;\n}\n.track-selection-ui .track > .button > img:not(.environment).loading {\n\topacity: 0;\n}\n\n.track-selection-ui .track .environment {\n\tposition: absolute;\n\tright: 14px;\n\tbottom: 40px;\n\twidth: 24px;\n\topacity: 0.2;\n\tpointer-events: none;\n}\n\n.track-selection-ui .record {\n\tmargin: 0;\n\tpadding: 4px;\n\tfont-size: 24px;\n\tbackground-color: var(--surface-secondary-color);\n\tcolor: var(--text-color);\n}\n\n.track-selection-ui .delete-button {\n\tposition: absolute;\n\ttop: 5px;\n\tright: 5px;\n\tmargin: 0;\n\tpadding: 0;\n\tline-height: 0;\n\tborder-radius: 2px;\n\tborder: none;\n\tbackground-color: var(--button-color);\n\n\tpointer-events: auto;\n\tcursor: pointer;\n}\n.track-selection-ui .delete-button:hover {\n\tbackground-color: var(--button-hover-color);\n}\n@media (hover: none) {\n\t.track-selection-ui .delete-button:hover {\n\t\tbackground-color: var(--button-color);\n\t}\n}\n.track-selection-ui .delete-button:active {\n\tbackground-color: var(--button-active-color);\n}\n.track-selection-ui .delete-button > img {\n\tmargin: 0;\n\tpadding: 4px;\n\tbox-sizing: border-box;\n\twidth: 24px;\n\theight: 24px;\n\tvertical-align: top;\n\tpointer-events: none;\n}\n`, ""]);
             const m = u
         }
         ,
@@ -50086,7 +50086,7 @@ var GLOBAL_LEADERBOARD_API = null;
         }
         ;
         const TrackInfoUI = class {
-            constructor(e, t, n, i, r, a, s, o, l, c, h, d, u, p, f, g, m, A) {
+            constructor(menuUIDiv, languageMap, serverAPI, profileManager, recordManager, audioLoader, confirmBox, trackMetadata, environment, trackdataGetter, trackId, d, tracksManager, p, f, g, m, A, trackCategory) {
                 Uo.add(this),
                 zo.set(this, void 0),
                 No.set(this, void 0),
@@ -50105,17 +50105,17 @@ var GLOBAL_LEADERBOARD_API = null;
                 Jo.set(this, []),
                 Xo.set(this, !1),
                 Yo.set(this, []),
-                C.set(this, zo, t, "f"),
-                C.set(this, No, n, "f"),
-                C.set(this, Do, r, "f"),
-                C.set(this, Bo, i, "f"),
-                C.set(this, Go, h, "f"),
-                C.set(this, Fo, e, "f"),
+                C.set(this, zo, languageMap, "f"),
+                C.set(this, No, serverAPI, "f"),
+                C.set(this, Do, recordManager, "f"),
+                C.set(this, Bo, profileManager, "f"),
+                C.set(this, Go, trackId, "f"),
+                C.set(this, Fo, menuUIDiv, "f"),
                 C.set(this, Oo, document.createElement("div"), "f"),
                 C.get(this, Oo, "f").className = "track-info-ui",
-                e.appendChild(C.get(this, Oo, "f"));
-                const v = r.getRecord(i.profileSlot, h);
-                C.set(this, Ko, new LeaderboardUI(C.get(this, Oo, "f"),h,t,n,a,i,r,u,p,(e => {
+                menuUIDiv.appendChild(C.get(this, Oo, "f"));
+                const v = recordManager.getRecord(profileManager.profileSlot, trackId);
+                C.set(this, Ko, new LeaderboardUI(C.get(this, Oo, "f"),trackId,languageMap,serverAPI,audioLoader,profileManager,recordManager,tracksManager,p,(e => {
                     C.set(this, Jo, e, "f"),
                     C.get(this, Uo, "m", $o).call(this)
                 }
@@ -50130,7 +50130,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Wo, "f").className = "side-panel",
                 C.get(this, Oo, "f").appendChild(C.get(this, Wo, "f"));
                 const y = document.createElement("h2");
-                y.textContent = o.name,
+                y.textContent = trackMetadata.name,
                 C.get(this, Wo, "f").appendChild(y);
                 const b = document.createElement("div");
                 if (b.className = "thumbnail",
@@ -50147,35 +50147,58 @@ var GLOBAL_LEADERBOARD_API = null;
                     e.src = d,
                     b.appendChild(e)
                 }
+                if ("custom" == trackCategory) {
+                    const e = document.createElement("button");
+                    e.className = "button delete",
+                    e.innerHTML = '<img src="images/delete.svg">',
+                    e.addEventListener("click", ( () => {
+                        audioLoader.playUIClick(),
+                        C.get(this, Oo, "f").className = "hidden",
+                        confirmBox.showConfirm(
+                            C.get(this, zo, "f").get('Are you sure you want to delete "{0}"?', [trackMetadata.name]), 
+                            C.get(this, zo, "f").get("Cancel"), 
+                            C.get(this, zo, "f").get("Delete"), 
+                            ( () => {
+                                C.get(this, Oo, "f").className = "track-info-ui"
+                            }), 
+                            ( () => {
+                                tracksManager.deleteCustomTrack(trackMetadata.name),
+                                p()
+                            })
+                        )
+                    }
+                    )),
+                    b.appendChild(e)
+                }
                 const w = document.createElement("button");
                 let x;
                 switch (w.className = "button share",
                 w.innerHTML = '<img src="images/share.svg">',
                 w.addEventListener("click", ( () => {
-                    a.playUIClick(),
+                    audioLoader.playUIClick(),
                     C.get(this, Oo, "f").className = "hidden",
                     (async () => {
                         try {
                             let e;
-                            if (e = c instanceof Function ? await c() : c,
+                            if (e = trackdataGetter instanceof Function ? await trackdataGetter() : trackdataGetter,
                             C.get(this, Xo, "f"))
                                 return;
-                            const n = e.toExportString(o);
+                            const n = e.toExportString(trackMetadata);
                             const getCwcExportString = () => {
-                                return e.toCwcExportString(o);
+                                return e.toCwcExportString(trackMetadata);
                             };
                             C.set(this, Qo, new TrackExportUI(n,( () => {
                                 C.get(this, Qo, "f")?.dispose(),
                                 C.set(this, Qo, null, "f"),
                                 C.get(this, Oo, "f").className = "track-info-ui"
                             }
-                            ),null,t,a,u,s, getCwcExportString), "f")
+                            ),null,languageMap,audioLoader,tracksManager,confirmBox, getCwcExportString), "f")
                         } catch (e) {
                             if (C.get(this, Xo, "f"))
                                 return;
                             if (!(e instanceof TrackLoadError))
                                 throw e;
-                            s.show(t.get("Failed to load track"), t.get("Ok"), ( () => {
+                            confirmBox.show(languageMap.get("Failed to load track"), languageMap.get("Ok"), ( () => {
                                 C.get(this, Oo, "f").className = "track-info-ui"
                             }
                             ))
@@ -50185,7 +50208,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
                 )),
                 b.appendChild(w),
-                l) {
+                environment) {
                 case TrackEnvironment.Summer:
                     x = "images/summer.svg";
                     break;
@@ -50201,23 +50224,23 @@ var GLOBAL_LEADERBOARD_API = null;
                 b.appendChild(S);
                 const k = document.createElement("div");
                 k.className = "track-author",
-                k.textContent = t.get("Author") + ": ";
+                k.textContent = languageMap.get("Author") + ": ";
                 const E = document.createElement("span");
-                E.textContent = o.author ?? t.get("Unknown"),
+                E.textContent = trackMetadata.author ?? languageMap.get("Unknown"),
                 k.appendChild(E),
                 C.get(this, Wo, "f").appendChild(k);
                 const T = document.createElement("div");
                 T.className = "last-modified",
-                T.textContent = t.get("Created") + ": ";
+                T.textContent = languageMap.get("Created") + ": ";
                 const M = document.createElement("span");
-                if (null != o.lastModified) {
-                    const e = new Date(o.lastModified);
+                if (null != trackMetadata.lastModified) {
+                    const e = new Date(trackMetadata.lastModified);
                     M.textContent += e.toLocaleDateString() + " " + e.toLocaleTimeString(void 0, {
                         hour: "numeric",
                         minute: "2-digit"
                     })
                 } else
-                    M.textContent += t.get("Unknown");
+                    M.textContent += languageMap.get("Unknown");
                 T.appendChild(M),
                 C.get(this, Wo, "f").appendChild(T);
                 const _ = document.createElement("div");
@@ -50225,7 +50248,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Wo, "f").appendChild(_);
                 const R = document.createElement("div");
                 R.className = "personal-best-title",
-                R.textContent = t.get("Personal best"),
+                R.textContent = languageMap.get("Personal best"),
                 C.get(this, Wo, "f").appendChild(R),
                 C.set(this, Vo, document.createElement("div"), "f"),
                 C.get(this, Vo, "f").className = "personal-best",
@@ -50236,7 +50259,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Wo, "f").appendChild(P);
                 const I = document.createElement("div");
                 I.className = "opponents-title",
-                I.textContent = t.get("Opponents"),
+                I.textContent = languageMap.get("Opponents"),
                 C.get(this, Wo, "f").appendChild(I),
                 C.set(this, Ho, document.createElement("div"), "f"),
                 C.get(this, Ho, "f").className = "opponents-container",
@@ -50245,9 +50268,9 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, jo, "f").className = "button watch",
                 C.get(this, jo, "f").innerHTML = '<img src="images/preview.svg">',
                 C.get(this, jo, "f").disabled = !0,
-                C.get(this, jo, "f").prepend(document.createTextNode(t.get("Watch"))),
+                C.get(this, jo, "f").prepend(document.createTextNode(languageMap.get("Watch"))),
                 C.get(this, jo, "f").addEventListener("click", ( () => {
-                    a.playUIClick();
+                    audioLoader.playUIClick();
                     const e = C.get(this, Jo, "f");
                     if (e.length > 0)
                         m(C.get(this, No, "f").getRecordings(e.map((e => e.recordingId))).then((t => {
@@ -50263,9 +50286,9 @@ var GLOBAL_LEADERBOARD_API = null;
                         }
                         )));
                     else {
-                        const e = r.getRecord(i.profileSlot, h);
+                        const e = recordManager.getRecord(profileManager.profileSlot, trackId);
                         if (null != e) {
-                            const t = i.getCurrentUserProfile();
+                            const t = profileManager.getCurrentUserProfile();
                             A([{
                                 recording: e.recording,
                                 carStyle: t.carStyle,
@@ -50282,9 +50305,9 @@ var GLOBAL_LEADERBOARD_API = null;
                 const L = document.createElement("button");
                 L.className = "button play",
                 L.innerHTML = '<img src="images/play.svg">',
-                L.prepend(document.createTextNode(t.get("Play"))),
+                L.prepend(document.createTextNode(languageMap.get("Play"))),
                 L.addEventListener("click", ( () => {
-                    a.playUIClick();
+                    audioLoader.playUIClick();
                     const e = C.get(this, Jo, "f");
                     if (e.length > 0)
                         f(C.get(this, No, "f").getRecordings(e.map((e => e.recordingId))).then((t => {
@@ -50300,9 +50323,9 @@ var GLOBAL_LEADERBOARD_API = null;
                         }
                         )));
                     else {
-                        const e = r.getRecord(i.profileSlot, h);
+                        const e = recordManager.getRecord(profileManager.profileSlot, trackId);
                         if (null != e) {
-                            const t = i.getCurrentUserProfile();
+                            const t = profileManager.getCurrentUserProfile();
                             g([{
                                 recording: e.recording,
                                 carStyle: t.carStyle,
@@ -51840,7 +51863,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     C.set(this, Ic, new LoadingScreenUI(!1), "f"),
                     d().then((d => {
                         d.hasStartingPoint() ? l(s, d, u, c, null) : a.show(e.get("Track is missing starting point"), e.get("Ok"), ( () => {
-                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                         }
                         ))
                     }
@@ -51848,7 +51871,7 @@ var GLOBAL_LEADERBOARD_API = null;
                         if (!(l instanceof TrackLoadError))
                             throw l;
                         a.show(e.get("Failed to load track"), e.get("Ok"), ( () => {
-                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                         }
                         ))
                     }
@@ -51862,12 +51885,12 @@ var GLOBAL_LEADERBOARD_API = null;
                     C.get(this, Pc, "f")?.dispose(),
                     C.set(this, Pc, null, "f"),
                     o.determinismState != Js.Ok ? a.show(e.get("Cannot load recordings due to non-determinism"), e.get("Ok"), ( () => {
-                        C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                        C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                     }
                     )) : c.then((c => {
                         d().then((d => {
                             d.hasStartingPoint() ? l(s, d, u, c, null) : a.show(e.get("Track is missing starting point"), e.get("Ok"), ( () => {
-                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                             }
                             ))
                         }
@@ -51875,7 +51898,7 @@ var GLOBAL_LEADERBOARD_API = null;
                             if (!(l instanceof TrackLoadError))
                                 throw l;
                             a.show(e.get("Failed to load track"), e.get("Ok"), ( () => {
-                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                             }
                             ))
                         }
@@ -51883,7 +51906,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     }
                     )).catch(( () => {
                         a.show(e.get("Failed to load recordings"), e.get("Ok"), ( () => {
-                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                         }
                         ))
                     }
@@ -51893,12 +51916,12 @@ var GLOBAL_LEADERBOARD_API = null;
                     C.get(this, Pc, "f")?.dispose(),
                     C.set(this, Pc, null, "f"),
                     o.determinismState != Js.Ok ? a.show(e.get("Cannot load recordings due to non-determinism"), e.get("Ok"), ( () => {
-                        C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                        C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                     }
                     )) : l.then((l => {
                         d().then((d => {
                             d.hasStartingPoint() ? c(s, d, u, l) : a.show(e.get("Track is missing starting point"), e.get("Ok"), ( () => {
-                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                             }
                             ))
                         }
@@ -51906,7 +51929,7 @@ var GLOBAL_LEADERBOARD_API = null;
                             if (!(l instanceof TrackLoadError))
                                 throw l;
                             a.show(e.get("Failed to load track"), e.get("Ok"), ( () => {
-                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                             }
                             ))
                         }
@@ -51914,7 +51937,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     }
                     )).catch(( () => {
                         a.show(e.get("Failed to load recordings"), e.get("Ok"), ( () => {
-                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                         }
                         ))
                     }
@@ -51925,7 +51948,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     C.set(this, Pc, null, "f"),
                     d().then((d => {
                         d.hasStartingPoint() ? c(s, d, u, l) : a.show(e.get("Track is missing starting point"), e.get("Ok"), ( () => {
-                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                         }
                         ))
                     }
@@ -51933,14 +51956,14 @@ var GLOBAL_LEADERBOARD_API = null;
                         if (!(l instanceof TrackLoadError))
                             throw l;
                         a.show(e.get("Failed to load track"), e.get("Ok"), ( () => {
-                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f")
+                            C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f")
                         }
                         ))
                     }
                     ))
                 }
                 ;
-                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y), "f"),
+                C.set(this, Pc, new TrackInfoUI(C.get(this, kc, "f"),e,o,r,n,t,a,s,h,d,p,f,i,g,A,m,v,y,u), "f"),
                 C.get(this, vc, "m", Xc).call(this)
             }
             ))
@@ -52445,7 +52468,7 @@ var GLOBAL_LEADERBOARD_API = null;
 
                 const show = () => {
                     video.play().catch((e) => {
-                        console.error("Failed to play video:", e);
+                        // console.error("Failed to play video:", e);
                     });
 
                     canvas.classList.remove("hidden");
