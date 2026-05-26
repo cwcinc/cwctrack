@@ -74,15 +74,6 @@
     pointer-events: none;
 }
 
-.leaderboard-ui > .container > button.main > div > p.run-id-text {
-    position: absolute;
-    font-size: medium;
-    top: -11px;
-    right: 0px;
-    opacity: 20%;
-    user-select: all;
-}
-
 .leaderboard-ui > .total-players {
     user-select: all;
 }

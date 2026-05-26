@@ -55,7 +55,6 @@ test('track menu [Desert 5]', async ({ page }) => {
     await expect(firstOpponent).not.toHaveClass('button main selected');
     await expect(firstOpponent.locator('.position')).toHaveText('1st');
     await expect(firstOpponent.locator('.verified-state.verified')).toBeVisible();
-    await expect(firstOpponent.locator('.run-id-text')).toBeVisible();
   });
 
   await test.step('selecting opponent enables watch button', async () => {

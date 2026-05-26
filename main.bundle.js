@@ -49860,24 +49860,19 @@ var GLOBAL_LEADERBOARD_API = null;
             }
             const S = document.createElement("p");
             a == To.Y.Pending ? (S.innerHTML = '<img src="images/state_pending.svg">',
-            S.prepend(document.createTextNode(C.get(this, Zs, "f").get("Pending"))),
+            S.title = C.get(this, Zs, "f").get("Pending"),
             S.className = "verified-state pending") : a == To.Y.Verified ? (S.innerHTML = '<img src="images/state_verified.svg">',
-            S.prepend(document.createTextNode(C.get(this, Zs, "f").get("Verified"))),
+            S.title = C.get(this, Zs, "f").get("Verified"),
             S.className = "verified-state verified") : a == To.Y.InvalidDuplicate ? (S.innerHTML = '<img src="images/state_invalid.svg">',
-            S.prepend(document.createTextNode(C.get(this, Zs, "f").get("Duplicate"))),
+            S.title = C.get(this, Zs, "f").get("Duplicate"),
             S.className = "verified-state invalid") : (S.innerHTML = '<img src="images/state_invalid.svg">',
-            S.prepend(document.createTextNode(C.get(this, Zs, "f").get("Invalid"))),
+            S.title = C.get(this, Zs, "f").get("Invalid"),
             S.className = "verified-state invalid"),
+            S.prepend(document.createTextNode(date.toLocaleDateString() + " " + date.toLocaleTimeString(void 0, {
+                hour: "numeric",
+                minute: "2-digit"
+            }))),
             v.appendChild(S)
-
-            const runIdText = document.createElement("p");
-            const dateString = date.toLocaleDateString() + " " + date.toLocaleTimeString(void 0, {
-                    hour: "numeric",
-                    minute: "2-digit"
-                })
-            runIdText.textContent = dateString;
-            runIdText.className = "run-id-text";
-            v.appendChild(runIdText);
         }
         ,
         Eo = function e() {
