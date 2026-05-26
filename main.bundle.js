@@ -41913,6 +41913,7 @@ var GLOBAL_LEADERBOARD_API = null;
         _r = new WeakSet,
         m_ghostsVisible = new WeakMap,
         Va = function() {
+            // C.get(this, fo, "f")?.cancel();
             if (null == C.get(this, multiplayerInstanceInfo, "f"))
                 C.get(this, Kr, "f").call(this);
             else {
@@ -42268,12 +42269,29 @@ var GLOBAL_LEADERBOARD_API = null;
                 return;
             }
 
-            const e = C.get(this, primaryCar, "f").getPosition()
-              , t = C.get(this, xa, "f").map((e => e.car)).filter((e => null != e)).concat(Array.from(C.get(this, idToMultiplayerCarMap, "f").values()).map((e => e.car)));
-            for (const n of t) {
-                const t = n.getPosition().distanceTo(e)
-                  , i = Math.max(0, Math.min(maxGhostOpacitySetting, t / 5));
-                n.setOpacity(i)
+            const e = C.get(this, primaryCar, "f").getPosition();
+
+            for (const t of C.get(this, xa, "f")) {
+                if (null != t.car) {
+                    const distance = t.car.getPosition().distanceTo(e);
+                    const i = Math.max(0, Math.min(maxGhostOpacitySetting, distance / 5));
+                    t.car.setOpacity(i);
+                }
+            }
+            let t = !1;
+            for (const n of C.get(this, idToMultiplayerCarMap, "f").values()) {
+                const distance = n.car.getPosition().distanceTo(e)
+                const r = Math.max(0, Math.min(maxGhostOpacitySetting, distance / 5));
+                if (n.car.hasStarted()) {
+                    n.car.setOpacity(r);
+                    n.car.setVisible(!0);
+                } else if (t) {
+                    n.car.setVisible(!1);
+                } else {
+                    n.car.setOpacity(r);
+                    n.car.setVisible(!0);
+                    t = !0;
+                }
             }
         }
         ,
@@ -49562,8 +49580,6 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Es, "f").className = "button cancel",
                 C.get(this, Es, "f").addEventListener("click", ( () => {
                     n.playUIClick(),
-                    r.updateSettings(Array.from(C.get(this, Rs, "f"))),
-                    a.generateMeshes(),
                     o()
                 }
                 )),
