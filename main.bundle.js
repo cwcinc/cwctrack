@@ -52166,6 +52166,14 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Bc, "f").appendChild(t),
                 C.get(this, Gc, "f").push(t)
             }
+            const L = document.createElement("a");
+            L.className = "button right",
+            L.href = "https://www.kodub.com/privacy/polytrack",
+            L.target = "_blank",
+            L.innerHTML = '<img className="button-icon" src="images/paper.svg">',
+            L.appendChild(document.createTextNode(" " + C.get(this, yc, "f").get("Privacy Policy"))),
+            C.get(this, Bc, "f").appendChild(L),
+            C.get(this, Gc, "f").push(L);
             const I = document.createElement("a");
             I.className = "button right",
             I.href = "https://www.kodub.com/terms/polytrack",
@@ -52174,14 +52182,6 @@ var GLOBAL_LEADERBOARD_API = null;
             I.appendChild(document.createTextNode(" " + C.get(this, yc, "f").get("Terms of Service"))),
             C.get(this, Bc, "f").appendChild(I),
             C.get(this, Gc, "f").push(I);
-            const L = document.createElement("a");
-            L.className = "button right",
-            L.href = "https://www.kodub.com/privacy/polytrack",
-            L.target = "_blank",
-            L.innerHTML = '<img className="button-icon" src="images/paper.svg">',
-            L.appendChild(document.createTextNode(" " + C.get(this, yc, "f").get("Privacy Policy"))),
-            C.get(this, Bc, "f").appendChild(L),
-            C.get(this, Gc, "f").push(L)
         }
         ,
         Kc = function(e) {
