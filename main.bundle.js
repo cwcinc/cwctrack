@@ -1394,14 +1394,36 @@ var GLOBAL_LEADERBOARD_API = null;
             });
             var i, r, a, s, o, l, c, h, d = __webpack_require__(1635), THREE = __webpack_require__(4922);
             class p {
-                constructor(e) {
+                constructor(e, groundType=null) {
                     r.set(this, void 0),
                     a.set(this, void 0),
                     s.set(this, []),
                     o.set(this, 256),
                     l.set(this, new THREE.Vector3(0,1,0)),
-                    d.set(this, r, e, "f"),
-                    d.set(this, a, new THREE.InstancedMesh(d.get(i, i, "f", c),d.get(i, i, "f", h),d.get(this, o, "f")), "f"),
+                    d.set(this, r, e, "f");
+
+                    const mat = d.get(i, i, "f", h).clone();
+                    switch (groundType) {
+                        case "Desert":
+                        case 2:
+                            mat.color = new THREE.Color(0xffcc88);
+                            this.environment = "Desert";
+                            break;
+                        case "Winter":
+                        case 1:
+                            mat.color = new THREE.Color(0xffffff);
+                            this.environment = "Winter";
+                            break;
+                        case "Summer":
+                        case 0:
+                            mat.color = new THREE.Color(0xffffff);
+                            this.environment = "Summer";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    d.set(this, a, new THREE.InstancedMesh(d.get(i, i, "f", c),mat,d.get(this, o, "f")), "f"),
                     d.get(this, a, "f").frustumCulled = !1,
                     e.scene.add(d.get(this, a, "f")),
                     this.clear()
@@ -1430,7 +1452,21 @@ var GLOBAL_LEADERBOARD_API = null;
                 update(e) {
                     for (let t = d.get(this, s, "f").length - 1; t >= 0; --t) {
                         const n = d.get(this, s, "f")[t];
-                        n.vy += 15 * e,
+                        let vyMult = 15;
+                        switch (this.environment) {
+                            case "Desert":
+                                vyMult = -2;
+                                break;
+                            case "Winter":
+                                vyMult = 2;
+                                break;
+                            case "Summer":
+                                n.lifetime = 0;
+                                break;
+                            default:
+                                break;
+                        }
+                        n.vy += vyMult * e,
                         n.x += n.vx * e,
                         n.y += n.vy * e,
                         n.z += n.vz * e,
@@ -7520,11 +7556,11 @@ var GLOBAL_LEADERBOARD_API = null;
                 value: 70
             };
             const OrbitCamera = OrbitCam;
-            var T, M, _, C, R, P, I, L, U, z, N = n(1066);
-            class D {
-                constructor(e) {
+            var T, M, skidmarkMesh, C, R, P, I, L, U, skidmarkMaterial, SkidmarkDust = n(1066).A;
+            class Skidmark1 {
+                constructor(e, groundType=null) {
                     M.set(this, void 0),
-                    _.set(this, void 0),
+                    skidmarkMesh.set(this, void 0),
                     C.set(this, void 0),
                     R.set(this, void 0),
                     P.set(this, 1e3),
@@ -7535,15 +7571,65 @@ var GLOBAL_LEADERBOARD_API = null;
                     const t = new THREE.BufferGeometry;
                     l.set(this, C, new Float32Array(6 * l.get(this, P, "f") * 3), "f"),
                     l.set(this, R, new THREE.BufferAttribute(l.get(this, C, "f"),3), "f"),
-                    t.setAttribute("position", l.get(this, R, "f")),
-                    l.set(this, _, new THREE.Mesh(t,l.get(T, T, "f", z)), "f"),
-                    l.get(this, _, "f").frustumCulled = !1,
-                    l.get(this, M, "f").scene.add(l.get(this, _, "f"))
+                    t.setAttribute("position", l.get(this, R, "f"));
+
+                    // Normals all pointing up
+                    const normalArray = new Float32Array(6 * l.get(this, P, "f") * 3);
+                    for (let i = 1; i < normalArray.length; i += 3) {
+                        normalArray[i] = 1.0;
+                    }
+                    t.setAttribute("normal", new THREE.BufferAttribute(normalArray, 3));
+
+                    const mat = l.get(T, T, "f", skidmarkMaterial).clone();
+                    switch (groundType) {
+                        case "Desert":
+                        case 2:
+                            mat.color = new THREE.Color(0x96693b);
+                            this.environment = "Desert";
+                            break;
+                        case "Winter":
+                        case 1:
+                            mat.color = new THREE.Color(0xddddff);
+                            this.environment = "Winter";
+                            break;
+                        case "Summer":
+                        case 0:
+                            mat.color = new THREE.Color(0x28402a);
+                            this.environment = "Summer";
+                            break;
+                        default:
+                            this.environment = "Summer";
+                            break;
+                    }
+                    mat.side = THREE.DoubleSide;
+
+                    const prevOnBeforeCompile = mat.onBeforeCompile;
+                    mat.onBeforeCompile = (shader, renderer) => {
+                        if (prevOnBeforeCompile) prevOnBeforeCompile(shader, renderer);
+                        shader.fragmentShader = shader.fragmentShader.replace(
+                            "#include <normal_fragment_begin>",
+                            `#include <normal_fragment_begin>
+                            #ifdef DOUBLE_SIDED
+                                normal = normalize( vNormal );
+                            #endif`
+                        );
+                    };
+                    mat.customProgramCacheKey = () => "skidmark-no-bf-flip";
+
+                    l.get(this, M, "f").addMaterial(mat);
+
+                    l.set(this, skidmarkMesh, new THREE.Mesh(t,mat), "f"),
+                    l.get(this, skidmarkMesh, "f").frustumCulled = !1,
+                    l.get(this, skidmarkMesh, "f").renderOrder = 1,
+                    l.get(this, skidmarkMesh, "f").receiveShadow = true,
+                    l.get(this, M, "f").scene.add(l.get(this, skidmarkMesh, "f"))
                 }
+
                 dispose() {
-                    l.get(this, _, "f").geometry.dispose(),
-                    l.get(this, M, "f").scene.remove(l.get(this, _, "f"))
+                    l.get(this, skidmarkMesh, "f").geometry.dispose(),
+                    l.get(this, M, "f").scene.remove(l.get(this, skidmarkMesh, "f"))
                 }
+
                 clear() {
                     for (let e = 0; e < l.get(this, C, "f").length; ++e)
                         l.get(this, C, "f")[e] = 0;
@@ -7551,19 +7637,21 @@ var GLOBAL_LEADERBOARD_API = null;
                     l.set(this, I, 0, "f"),
                     this.break()
                 }
+
                 break() {
                     l.set(this, L, null, "f"),
                     l.set(this, U, null, "f")
                 }
+
                 spawn(e, t, n, i) {
                     var r, a;
                     const s = l.get(this, L, "f")
-                      , o = l.get(this, U, "f")
-                      , h = (new THREE.Vector3).addVectors(e, new THREE.Vector3(.172,-.3,0).applyQuaternion(t))
-                      , d = (new THREE.Vector3).addVectors(e, new THREE.Vector3(-.172,-.3,0).applyQuaternion(t))
-                      , u = (new THREE.Vector3).copy(h)
-                      , p = (new THREE.Vector3).copy(d)
-                      , f = (new THREE.Vector3).subVectors(h, n).dot(i);
+                    , o = l.get(this, U, "f")
+                    , h = (new THREE.Vector3).addVectors(e, new THREE.Vector3(.172,-.3,0).applyQuaternion(t))
+                    , d = (new THREE.Vector3).addVectors(e, new THREE.Vector3(-.172,-.3,0).applyQuaternion(t))
+                    , u = (new THREE.Vector3).copy(h)
+                    , p = (new THREE.Vector3).copy(d)
+                    , f = (new THREE.Vector3).subVectors(h, n).dot(i);
                     u.addScaledVector(i, -f);
                     const g = (new THREE.Vector3).subVectors(d, n).dot(i);
                     if (p.addScaledVector(i, -g),
@@ -7597,17 +7685,17 @@ var GLOBAL_LEADERBOARD_API = null;
                     l.set(this, U, p, "f")
                 }
             }
-            T = D,
+            T = Skidmark1,
             M = new WeakMap,
-            _ = new WeakMap,
+            skidmarkMesh = new WeakMap,
             C = new WeakMap,
             R = new WeakMap,
             P = new WeakMap,
             I = new WeakMap,
             L = new WeakMap,
             U = new WeakMap,
-            z = {
-                value: new THREE.MeshBasicMaterial({
+            skidmarkMaterial = {
+                value: new THREE.MeshLambertMaterial({
                     color: 1118481,
                     side: THREE.DoubleSide,
                     polygonOffset: !0,
@@ -7615,8 +7703,8 @@ var GLOBAL_LEADERBOARD_API = null;
                     polygonOffsetUnits: 0
                 })
             };
-            const B = D;
-            var G, F, localAudioManager, W, V, H, j, K, q, audioPanner, J, carOrbitCamera, carCockpitCamera, carBackwardsCamera, Z, $, ee, te, ne, ie, re, ae, se, oe, le, ce, he, de, ue, pe, m_positionListeners, fe, ge, me, Ae, ve, ye, nameTagMesh, we, xe, Se, ke, Ee, Te, Me, _e, Ce, Re, Pe, Ie, Le, skidAudioSources, ze, Ne, De, Be, Ge, Fe, Oe, setCarDisabled, renderNameTag, Ve, He, je, Ke, qe, Qe, Je, Xe, Ye, Ze, $e, et, playCollisionAudio, playSkidAudio, playHornAudio, it, rt, at, carDisabled, st = n(3476), ot = n(6633), lt = n(927);
+            const Skidmark = Skidmark1;
+            var G, F, localAudioManager, W, V, H, j, K, q, audioPanner, J, carOrbitCamera, carCockpitCamera, carBackwardsCamera, Z, $, ee, te, ne, ie, re, ae, se, oe, le, ce, he, de, ue, pe, m_positionListeners, fe, ge, me, Ae, ve, ye, nameTagMesh, we, xe, Se, ke, Ee, Te, Me, _e, Ce, Re, Pe, Ie, skidmarkArray, groundSkidmarkArray, skidAudioSources, wheelFrictionArray, wheelContactSurfaceArray, Ne, RoadSkidmarkDust, GroundSkidmarkDust, Be, Ge, Fe, Oe, setCarDisabled, renderNameTag, Ve, He, je, Ke, qe, Qe, Je, updateSkidmarkAudio, Ye, Ze, $e, et, playCollisionAudio, playSkidAudio, playHornAudio, it, rt, at, carDisabled, st = n(3476), ot = n(6633), lt = n(927);
             class VisualCar {
                 constructor(e, t, n, i, r, a, s, o, h, d, u) {
                     if (G.add(this),
@@ -7665,11 +7753,14 @@ var GLOBAL_LEADERBOARD_API = null;
                     Re.set(this, void 0),
                     Pe.set(this, void 0),
                     Ie.set(this, void 0),
-                    Le.set(this, []),
+                    skidmarkArray.set(this, []),
+                    groundSkidmarkArray.set(this, []),
                     skidAudioSources.set(this, null),
-                    ze.set(this, [.075, .075, .075, .075]),
+                    wheelFrictionArray.set(this, [.075, .075, .075, .075]),
+                    wheelContactSurfaceArray.set(this, [false, false, false, false]),
                     Ne.set(this, null),
-                    De.set(this, void 0),
+                    RoadSkidmarkDust.set(this, void 0),
+                    GroundSkidmarkDust.set(this, void 0),
                     Be.set(this, null),
                     Ge.set(this, void 0),
                     Fe.set(this, !1),
@@ -7684,8 +7775,10 @@ var GLOBAL_LEADERBOARD_API = null;
                     l.set(this, Ie, d, "f"),
                     l.set(this, Z, e, "f"),
                     l.set(this, $, u, "f"),
-                    d?.getSettingBoolean(st.A.ParticlesEnabled) ? l.set(this, De, new N.A(r), "f") : l.set(this, De, null, "f"),
-                    null != l.get(this, Re, "f") && null != l.get(this, Pe, "f") && l.set(this, Le, [new B(l.get(this, Ae, "f")), new B(l.get(this, Ae, "f")), new B(l.get(this, Ae, "f")), new B(l.get(this, Ae, "f"))], "f"),
+                    d?.getSettingBoolean(st.A.ParticlesEnabled) ? l.set(this, RoadSkidmarkDust, new SkidmarkDust(r), "f") : l.set(this, RoadSkidmarkDust, null, "f"),
+                    d?.getSettingBoolean(st.A.ParticlesEnabled) ? l.set(this, GroundSkidmarkDust, new SkidmarkDust(r, h.environment), "f") : l.set(this, GroundSkidmarkDust, null, "f"),
+                    null != l.get(this, Re, "f") && null != l.get(this, Pe, "f") && l.set(this, skidmarkArray, [new Skidmark(l.get(this, Ae, "f")), new Skidmark(l.get(this, Ae, "f")), new Skidmark(l.get(this, Ae, "f")), new Skidmark(l.get(this, Ae, "f"))], "f"),
+                    null != l.get(this, Re, "f") && null != l.get(this, Pe, "f") && l.set(this, groundSkidmarkArray, [new Skidmark(l.get(this, Ae, "f"), h.environment), new Skidmark(l.get(this, Ae, "f"), h.environment), new Skidmark(l.get(this, Ae, "f"), h.environment), new Skidmark(l.get(this, Ae, "f"), h.environment)], "f"),
                     l.set(this, carOrbitCamera, new OrbitCamera, "f"),
                     l.get(this, carOrbitCamera, "f").reset(t.position, t.quaternion),
                     l.get(this, carOrbitCamera, "f").setFixed(d?.getSettingFloat(st.A.OrbitCameraFixed)),
@@ -7820,10 +7913,14 @@ var GLOBAL_LEADERBOARD_API = null;
                     l.get(this, Ae, "f").scene.remove(l.get(this, carOrbitCamera, "f").camera),
                     l.get(this, Ae, "f").scene.remove(l.get(this, carCockpitCamera, "f").camera),
                     l.get(this, Ae, "f").scene.remove(l.get(this, carBackwardsCamera, "f").camera),
-                    l.get(this, De, "f")?.dispose();
-                    for (const e of l.get(this, Le, "f"))
+                    l.get(this, RoadSkidmarkDust, "f")?.dispose();
+                    l.get(this, GroundSkidmarkDust, "f")?.dispose();
+                    for (const e of l.get(this, skidmarkArray, "f"))
                         e.dispose();
-                    l.get(this, Le, "f").length = 0,
+                    for (const e of l.get(this, groundSkidmarkArray, "f"))
+                        e.dispose();
+                    l.get(this, skidmarkArray, "f").length = 0,
+                    l.get(this, groundSkidmarkArray, "f").length = 0,
                     null != l.get(this, nameTagMesh, "f") && (l.get(this, nameTagMesh, "f").geometry.dispose(),
                     l.get(this, nameTagMesh, "f").material.map?.dispose(),
                     l.get(this, nameTagMesh, "f").material.dispose(),
@@ -7992,8 +8089,11 @@ var GLOBAL_LEADERBOARD_API = null;
                     const i = .001;
                     if (t) {
                         l.set(this, Ne, null, "f"),
-                        l.get(this, De, "f")?.clear();
-                        for (const e of l.get(this, Le, "f"))
+                        l.get(this, RoadSkidmarkDust, "f")?.clear();
+                        l.get(this, GroundSkidmarkDust, "f")?.clear();
+                        for (const e of l.get(this, skidmarkArray, "f"))
+                            e.clear()
+                        for (const e of l.get(this, groundSkidmarkArray, "f"))
                             e.clear()
                     }
                     if ((null == l.get(this, Ne, "f") || l.get(this, Ne, "f") + 10 <= l.get(this, ie, "f").frames) && (l.set(this, Ne, l.get(this, ie, "f").frames, "f"),
@@ -8040,9 +8140,9 @@ var GLOBAL_LEADERBOARD_API = null;
                         return;
                     }
 
-                    l.get(this, G, "m", Xe).call(this);
-                    l.get(this, De, "f")?.update(e);
-                    
+                    l.get(this, G, "m", updateSkidmarkAudio).call(this);
+                    l.get(this, RoadSkidmarkDust, "f")?.update(e);
+                    l.get(this, GroundSkidmarkDust, "f")?.update(e);
                     if (null != l.get(this, nameTagMesh, "f")) {
                         if (this.multiplayerInstance?.gameMode == 2) {
                             l.get(this, nameTagMesh, "f").visible = !1;
@@ -8093,11 +8193,29 @@ var GLOBAL_LEADERBOARD_API = null;
                           , d = l.get(this, ie, "f").wheelSkidInfo[i];
                         if (l.get(this, xe, "f").morphTargetInfluences || (l.get(this, xe, "f").morphTargetInfluences = []),
                         l.get(this, xe, "f").morphTargetInfluences[i] = 2 * h + .06,
-                        e > 0 && l.get(this, Ie, "f")?.getSettingBoolean(st.A.SkidmarksEnabled) && i < l.get(this, Le, "f").length) {
-                            const e = l.get(this, ie, "f").wheelContact[i]
-                              , t = Math.min(1, Math.abs(a) / l.get(F, F, "f", le))
-                              , r = Math.pow(t, l.get(F, F, "f", ce)) * l.get(F, F, "f", he);
-                            null != e && d < r && 0 == l.get(this, ze, "f")[i] && l.get(this, Le, "f")[i].spawn(new THREE.Vector3(s.x,s.y,s.z), n, new THREE.Vector3(e.position.x,e.position.y,e.position.z), new THREE.Vector3(e.normal.x,e.normal.y,e.normal.z))
+                        e > 0 && l.get(this, Ie, "f")?.getSettingBoolean(st.A.SkidmarksEnabled) && i < l.get(this, skidmarkArray, "f").length) {
+                            const wheelOnGround = l.get(this, ie, "f").wheelContact[i]?.position.y < 0.001;
+                            const e = l.get(this, ie, "f").wheelContact[i];
+                            const t = Math.min(1, Math.abs(a) / l.get(F, F, "f", le));
+                            const r = Math.pow(t, l.get(F, F, "f", ce)) * l.get(F, F, "f", he);
+
+                            if (null != e && (wheelOnGround || d < r) && 0 == l.get(this, wheelFrictionArray, "f")[i]) {
+                                if (wheelOnGround) {
+                                    l.get(this, groundSkidmarkArray, "f")[i].spawn(
+                                        new THREE.Vector3(s.x, s.y, s.z),
+                                        n,
+                                        new THREE.Vector3(e.position.x, e.position.y, e.position.z),
+                                        new THREE.Vector3(e.normal.x, e.normal.y, e.normal.z)
+                                    );
+                                } else {
+                                    l.get(this, skidmarkArray, "f")[i].spawn(
+                                        new THREE.Vector3(s.x, s.y, s.z),
+                                        n,
+                                        new THREE.Vector3(e.position.x, e.position.y, e.position.z),
+                                        new THREE.Vector3(e.normal.x, e.normal.y, e.normal.z)
+                                    );
+                                }
+                            }
                         }
                     }
                     l.get(this, G, "m", it).call(this, l.get(this, ie, "f").brakeLightEnabled)
@@ -8262,11 +8380,14 @@ var GLOBAL_LEADERBOARD_API = null;
             Re = new WeakMap,
             Pe = new WeakMap,
             Ie = new WeakMap,
-            Le = new WeakMap,
+            skidmarkArray = new WeakMap,
+            groundSkidmarkArray = new WeakMap,
             skidAudioSources = new WeakMap,
-            ze = new WeakMap,
+            wheelFrictionArray = new WeakMap,
+            wheelContactSurfaceArray = new WeakMap,
             Ne = new WeakMap,
-            De = new WeakMap,
+            RoadSkidmarkDust = new WeakMap,
+            GroundSkidmarkDust = new WeakMap,
             Be = new WeakMap,
             Ge = new WeakMap,
             Fe = new WeakMap,
@@ -8448,19 +8569,47 @@ var GLOBAL_LEADERBOARD_API = null;
             Je = function(e) {
                 const t = this.getMatrix4();
                 for (let n = 0; n < 4; n++) {
-                    const i = l.get(F, F, "f", oe)[n].clone().add(new THREE.Vector3(0,-l.get(this, ie, "f").wheelSuspensionLength[n],0)).applyMatrix4(t)
-                      , r = null != l.get(this, ie, "f").wheelContact[n]
-                      , a = l.get(this, ie, "f").wheelDeltaRotation[n]
-                      , s = l.get(this, ie, "f").wheelSkidInfo[n]
-                      , o = Math.min(1, Math.abs(a) / l.get(F, F, "f", le))
-                      , h = Math.pow(o, l.get(F, F, "f", ce)) * l.get(F, F, "f", he);
-                    r && s < h ? (n < l.get(this, Le, "f").length && (l.get(this, ze, "f")[n] = Math.max(0, l.get(this, ze, "f")[n] - e)),
-                    0 == l.get(this, ze, "f")[n] && null != l.get(this, De, "f") && l.get(this, De, "f").spawn(i.x, i.y, i.z)) : (n < l.get(this, Le, "f").length && l.get(this, Ie, "f")?.getSettingBoolean(st.A.SkidmarksEnabled) && l.get(this, Le, "f")[n].break(),
-                    l.get(this, ze, "f")[n] = .075)
+                    const i = l.get(F, F, "f", oe)[n].clone()
+                        .add(new THREE.Vector3(0, -l.get(this, ie, "f").wheelSuspensionLength[n], 0))
+                        .applyMatrix4(t);
+                    const r = null != l.get(this, ie, "f").wheelContact[n];
+                    const a = l.get(this, ie, "f").wheelDeltaRotation[n];
+                    const s = l.get(this, ie, "f").wheelSkidInfo[n];
+                    const o = Math.min(1, Math.abs(a) / l.get(F, F, "f", le));
+                    const h = Math.pow(o, l.get(F, F, "f", ce)) * l.get(F, F, "f", he);
+
+                    const wheelOnGround = l.get(this, ie, "f").wheelContact[n]?.position.y < 0.001;
+                    const isSkidding = r && s < h;
+                    const onSand = r && wheelOnGround;
+                    const driftingOnTrack = isSkidding && !wheelOnGround;
+                    const shouldLeaveMark = onSand || driftingOnTrack;
+
+                    l.get(this, wheelContactSurfaceArray, "f")[n] = wheelOnGround;
+
+                    if (shouldLeaveMark) {
+                        if (n < l.get(this, skidmarkArray, "f").length) {
+                            l.get(this, wheelFrictionArray, "f")[n] = Math.max(0, l.get(this, wheelFrictionArray, "f")[n] - e);
+                        }
+                        if (0 == l.get(this, wheelFrictionArray, "f")[n] && null != l.get(this, RoadSkidmarkDust, "f")) {
+                            if (onSand) {
+                                l.get(this, GroundSkidmarkDust, "f")?.spawn(i.x, i.y, i.z);
+                            } else {
+                                l.get(this, RoadSkidmarkDust, "f").spawn(i.x, i.y, i.z);
+                            }
+                        }
+                    } else {
+                        if (n < l.get(this, skidmarkArray, "f").length && l.get(this, Ie, "f")?.getSettingBoolean(st.A.SkidmarksEnabled)) {
+                            l.get(this, skidmarkArray, "f")[n].break();
+                        }
+                        if (n < l.get(this, groundSkidmarkArray, "f").length && l.get(this, Ie, "f")?.getSettingBoolean(st.A.SkidmarksEnabled)) {
+                            l.get(this, groundSkidmarkArray, "f")[n].break();
+                        }
+                        l.get(this, wheelFrictionArray, "f")[n] = .075;
+                    }
                 }
             }
             ,
-            Xe = function() {
+            updateSkidmarkAudio = function() {
                 if (null != l.get(this, localAudioManager, "f") && null != l.get(this, localAudioManager, "f").context && null != l.get(this, localAudioManager, "f").destinationSfx) {
                     null == l.get(this, W, "f") && (l.set(this, W, l.get(this, localAudioManager, "f").context.createGain(), "f"),
                     l.get(this, W, "f").gain.value = l.get(this, V, "f"),
@@ -8658,23 +8807,38 @@ var GLOBAL_LEADERBOARD_API = null;
             ,
             playSkidAudio = function() {
                 if (null == l.get(this, skidAudioSources, "f") && null != l.get(this, localAudioManager, "f")) {
-                    const e = l.get(this, localAudioManager, "f").getBuffer("skidding");
-                    if (null != e && null != l.get(this, localAudioManager, "f").context) {
+                    const roadSkidBuffer = l.get(this, localAudioManager, "f").getBuffer("skidding");
+                    const groundSkidBuffer = l.get(this, localAudioManager, "f").getBuffer("tiresGravel");
+                    if (null != roadSkidBuffer && null != l.get(this, localAudioManager, "f").context) {
                         l.set(this, skidAudioSources, [], "f");
                         const t = 4;
                         for (let n = 0; n < t; ++n) {
-                            const i = l.get(this, localAudioManager, "f").context.createBufferSource();
-                            i.buffer = e,
-                            i.loop = !0,
-                            i.playbackRate.value = .5;
-                            const r = l.get(this, localAudioManager, "f").context.createGain();
-                            r.gain.value = 0,
-                            i.connect(r),
-                            r.connect(l.get(this, J, "f")[n]),
-                            i.start(0, n / t * 3.5 + .25 * Math.random()),
+                            const roadBufferSource = l.get(this, localAudioManager, "f").context.createBufferSource();
+                            roadBufferSource.buffer = roadSkidBuffer,
+                            roadBufferSource.loop = !0,
+                            roadBufferSource.playbackRate.value = 0.5;
+                            const roadGain = l.get(this, localAudioManager, "f").context.createGain();
+                            roadGain.gain.value = 0,
+                            roadBufferSource.connect(roadGain),
+                            roadGain.connect(l.get(this, J, "f")[n]),
+                            roadBufferSource.start(0, n / t * 3.5 + .25 * Math.random());
+
+                            const groundBufferSource = l.get(this, localAudioManager, "f").context.createBufferSource();
+                            groundBufferSource.buffer = groundSkidBuffer,
+                            groundBufferSource.loop = !0,
+                            groundBufferSource.playbackRate.value = 1;
+                            const groundGain = l.get(this, localAudioManager, "f").context.createGain();
+                            groundGain.gain.value = 0,
+                            groundBufferSource.connect(groundGain),
+                            groundGain.connect(l.get(this, J, "f")[n]),
+                            groundBufferSource.start(0, n / t * 3.5 + .25 * Math.random());
+
                             l.get(this, skidAudioSources, "f").push({
-                                source: i,
-                                gain: r
+                                source: roadBufferSource,
+                                gain: roadGain,
+
+                                sourceGround: groundBufferSource,
+                                gainGround: groundGain
                             })
                         }
                     }
@@ -8682,7 +8846,20 @@ var GLOBAL_LEADERBOARD_API = null;
                 if (null != l.get(this, skidAudioSources, "f"))
                     for (let e = 0; e < l.get(this, skidAudioSources, "f").length; ++e) {
                         const t = l.get(this, skidAudioSources, "f")[e];
-                        0 == l.get(this, ze, "f")[e] ? t.gain.gain.setTargetAtTime(.75 / 3.5, 0, .1) : t.gain.gain.setTargetAtTime(0, 0, .1)
+                        let enabledGain, disabledGain;
+                        if (l.get(this, wheelContactSurfaceArray, "f")[e]) {
+                            enabledGain = t.gainGround;
+                            disabledGain = t.gain;
+                        } else {
+                            enabledGain = t.gain;
+                            disabledGain = t.gainGround;
+                        }
+                        if (0 == l.get(this, wheelFrictionArray, "f")[e]) {
+                            enabledGain.gain.setTargetAtTime(.75 / 3.5, 0, .1);
+                        } else {
+                            enabledGain.gain.setTargetAtTime(0, 0, .1);
+                        }
+                        disabledGain.gain.setTargetAtTime(0, 0, .1);
                     }
             }
             ,
@@ -29603,7 +29780,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     let n;
                     let c = null;
                     if (2 == m.get(this, a, "f").getSettingInteger(k.A.ShadowQuality)) {
-                        switch (this.environment) {
+                        switch (this.environment) {     // Ground shadow color
                             case TrackEnvironment.Summer: c = new THREE.Color(2511171); break;
                             case TrackEnvironment.Winter: c = new THREE.Color(7904713); break;
                             case TrackEnvironment.Desert: c = new THREE.Color(7958351); break;
@@ -38020,7 +38197,7 @@ var GLOBAL_LEADERBOARD_API = null;
             d = new WeakSet,
             y = function(e) {
                 let t;
-                switch (e) {
+                switch (e) {    // Track ground color
                 case TrackEnvironment.Summer:
                     t = new THREE.Color(3495480);
                     break;
@@ -54018,7 +54195,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     return { colorArray, emissiveArray };
                 }
 
-                const o = async e => {
+                const gagsag = async e => {
                     if (t.addResource(),
                     C.get(this, ld, "f").has(e.id))
                         throw new Error("Track part types have same Id");
@@ -54146,7 +54323,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     n.physicsShapeVertices = new Float32Array(l.attributes.position.array),
                     t.loadedResource()
                 }
-                  , l = await Promise.all(TrackPartManager.allParts.map((e => o(e)))).then((async () => await C.get(this, od, "m", dd).call(this)))
+                  , l = await Promise.all(TrackPartManager.allParts.map((e => gagsag(e)))).then((async () => await C.get(this, od, "m", dd).call(this)))
                   , c = (e, t, n=null) => {
                     let i = C.get(this, cd, "f").get(e);
                     null == i && (i = new Map,
@@ -57945,6 +58122,7 @@ var GLOBAL_LEADERBOARD_API = null;
             audioLoader.load("kidscreaming", ["mods/kidscreaming.mp3"]),
             audioLoader.load("ohgod", ["mods/ohgod.mp3"]),
             audioLoader.load("skidding", ["audio/skidding.ogg", "audio/skidding.mp3"]),
+            audioLoader.load("tiresGravel", ["mods/tiresGravel.mp3"]),
             audioLoader.load("editor_edit", ["audio/editor_edit.ogg", "audio/editor_edit.mp3"]),
             audioLoader.load("checkpoint", ["audio/checkpoint.ogg", "audio/checkpoint.mp3"]),
             audioLoader.load("record", ["audio/record.ogg", "audio/record.mp3"]),
