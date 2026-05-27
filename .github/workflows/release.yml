@@ -1,10 +1,17 @@
-name: Build and release cwctrack
+name: Release
 on:
   push:
     tags: ['*']
+  workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   test:
@@ -12,8 +19,46 @@ jobs:
     permissions:
       contents: read
 
+  deploy-pages:
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set mod version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          sed -i.bak -E "s/MOD_VERSION = \"[^\"]*\";/MOD_VERSION = \"${VERSION}\";/" mods/kodub_mod_config.js
+          rm mods/kodub_mod_config.js.bak
+          grep MOD_VERSION mods/kodub_mod_config.js
+
+      - name: Stage site
+        run: |
+          mkdir site
+          cp package.json site/
+          cp *.bundle.js site/
+          cp forced_square.* site/
+          cp favicon.ico index.html style.css site/
+          cp polytrack_physics.wasm site/
+          cp manifest.json site/
+          cp -r mods models images lib audio tracks site/
+          [ -f CNAME ] && cp CNAME site/ || true
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
   asar:
     needs: test
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -23,7 +68,7 @@ jobs:
 
       - name: Install asar
         run: npm install -g @electron/asar
-        
+
       - name: Set mod version
         shell: bash
         run: |
@@ -54,6 +99,7 @@ jobs:
 
   build:
     needs: test
+    if: startsWith(github.ref, 'refs/tags/')
     strategy:
       fail-fast: false
       matrix:
@@ -80,7 +126,7 @@ jobs:
       - name: Use release proxy
         shell: bash
         run: cp mods/proxy.release.js mods/proxy.js
-        
+
       - name: Build with electron-builder
         run: npx electron-builder --publish never
 
@@ -97,6 +143,7 @@ jobs:
 
   release:
     needs: [asar, build]
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
