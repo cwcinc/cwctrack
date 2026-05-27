@@ -29013,16 +29013,51 @@ var GLOBAL_LEADERBOARD_API = null;
                     return null;
                 }
                 createThumbnail() {
-                    let minX = Infinity, minZ = Infinity, maxX = -Infinity, maxZ = -Infinity;
+                    let minX = Infinity, 
+                        minZ = Infinity, 
+                        maxX = -Infinity, 
+                        maxZ = -Infinity;
 
-                    this.forEachPart((x, _y, z, typeId, rotation, rotationAxis) => {
-                        TrackPartManager.getPart(typeId).tiles.rotated(rotation, rotationAxis).forEach((tx, _ty, tz) => {
-                            const gx = (x + tx - 2) >> 2;
-                            const gz = (z + tz - 2) >> 2;
+                    let bgColor;
+                    switch (this.environment) {
+                        case TrackEnvironment.Summer:
+                            bgColor = 0xFFFFFFFF;
+                            break;
+                        case TrackEnvironment.Winter:
+                            bgColor = 0xFFF7D8BE;
+                            break;
+                        case TrackEnvironment.Desert:
+                            bgColor = 0xFFAFE2ED;
+                            break;
+                    }
+                    const checkpointColor = 0xFF26C0E2;
+                    const startColor = 0xFFE08C33;
+                    const finishColor = 0xFF2929D1;
+
+                    const bgTiles = [];
+                    const checkpointTiles = [];
+                    const startTiles = [];
+                    const finishTiles = [];
+
+                    this.forEachPart((px, _py, pz, typeId, rotation, rotationAxis) => {
+                        const part = TrackPartManager.getPart(typeId);
+
+                        let overlay;
+                        if (part.startOffset != null) overlay = startTiles;
+                        else if (part.detector != null) {
+                            if (part.detector.type == TrackPartDetectorType.Checkpoint) overlay = checkpointTiles;
+                            else if (part.detector.type == TrackPartDetectorType.Finish) overlay = finishTiles;
+                        }
+
+                        part.tiles.rotated(rotation, rotationAxis).forEach((tx, _ty, tz) => {
+                            const gx = (px + tx - 2) >> 2;
+                            const gz = (pz + tz - 2) >> 2;
                             if (gx < minX) minX = gx;
                             if (gz < minZ) minZ = gz;
                             if (gx > maxX) maxX = gx;
                             if (gz > maxZ) maxZ = gz;
+                            bgTiles.push(gx, gz);
+                            if (overlay !== undefined) overlay.push(gx, gz);
                         });
                     });
 
@@ -29030,9 +29065,15 @@ var GLOBAL_LEADERBOARD_API = null;
 
                     const minSize = 10;
                     let w = maxX - minX + 1;
-                    if (w <= minSize) { const pad = (minSize - w + 1) >> 1; minX -= pad; maxX += pad; w = maxX - minX + 1; }
+                    if (w <= minSize) {
+                        const pad = Math.ceil((minSize - w) / 2);
+                        minX -= pad; maxX += pad; w = maxX - minX + 1;
+                    }
                     let h = maxZ - minZ + 1;
-                    if (h <= minSize) { const pad = (minSize - h + 1) >> 1; minZ -= pad; maxZ += pad; h = maxZ - minZ + 1; }
+                    if (h <= minSize) {
+                        const pad = Math.ceil((minSize - h) / 2);
+                        minZ -= pad; maxZ += pad; h = maxZ - minZ + 1;
+                    }
 
                     const cw = Math.min(1024, w);
                     const ch = Math.min(1024, h);
@@ -29042,37 +29083,21 @@ var GLOBAL_LEADERBOARD_API = null;
                     const context = canvas.getContext("2d");
                     if (!context) throw new Error("Failed to get canvas context");
 
-                    const buf = new ArrayBuffer(cw * ch * 4);
-                    const data32 = new Uint32Array(buf);
+                    const imageData = context.createImageData(cw, ch);
+                    const data32 = new Uint32Array(imageData.data.buffer);
 
-                    let trackColor;
-                    switch (this.environment) {
-                        case TrackEnvironment.Summer:  trackColor = 0xFFFFFFFF; break;
-                        case TrackEnvironment.Winter:  trackColor = 0xFFF7D8BE; break;
-                        case TrackEnvironment.Desert:  trackColor = 0xFFAFE2ED; break;
-                    }
-                    const startColor      = 0xFFE08C33;
-                    const checkpointColor = 0xFF26C0E2;
-                    const finishColor     = 0xFF2929D1;
-
-                    this.forEachPart((px, _py, pz, typeId, rotation, rotationAxis) => {
-                        const trackPartData = TrackPartManager.getPart(typeId);
-
-                        let color = trackColor;
-                        if (trackPartData.startOffset != null) color = startColor;
-                        else if (trackPartData.detector != null) {
-                            if (trackPartData.detector.type == TrackPartDetectorType.Checkpoint) color = checkpointColor;
-                            else if (trackPartData.detector.type == TrackPartDetectorType.Finish) color = finishColor;
-                        }
-
-                        trackPartData.tiles.rotated(rotation, rotationAxis).forEach((tx, _ty, tz) => {
-                            const x = ((px + tx - 2) >> 2) - minX;
-                            const z = ((pz + tz - 2) >> 2) - minZ;
+                    const drawLayer = (tiles, color) => {
+                        for (let i = 0; i < tiles.length; i += 2) {
+                            const x = tiles[i] - minX;
+                            const z = tiles[i + 1] - minZ;
                             data32[x + z * cw] = color;
-                        });
-                    });
+                        }
+                    };
+                    drawLayer(bgTiles, bgColor);
+                    drawLayer(checkpointTiles, checkpointColor);
+                    drawLayer(startTiles, startColor);
+                    drawLayer(finishTiles, finishColor);
 
-                    const imageData = new ImageData(new Uint8ClampedArray(buf), cw, ch);
                     context.putImageData(imageData, 0, 0);
                     this.m_storedMinX = minX;
                     this.m_storedMinZ = minZ;
