@@ -49392,6 +49392,25 @@ var GLOBAL_LEADERBOARD_API = null;
                 title: gs.getFromLanguage(C.get(this, Cs, "f"), "Enabled"),
                 value: "true"
             }], R.A.RealisticCrashingEnabled)
+
+            const exportAllTracksBookmarkletCode = `javascript: (() => {const tracks = [];for (let i = 0; i < localStorage.length; i++) {    const key = localStorage.key(i);    if (!key.includes("_prod_track")) {continue;}    const value = localStorage.getItem(key);    const data = JSON.parse(value);    tracks.push(data);}tracks.sort((a, b) => {return a.saveTime - b.saveTime});const joined = tracks.map(t => t.data).join(" ");if (document.hasFocus()) {navigator.clipboard.writeText(joined);    window.alert("All tracks copied!");} else {    const p = document.createElement('p');    p.style.zIndex = 1000;    p.style.position = "absolute";    p.style.width = "100%";    p.style.height = "100%";    p.textContent = joined;    document.body.prepend(p);};})();`;
+            C.get(this, ms, "m", Bs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Tools"));
+            {
+            const n = document.createElement("div");
+            n.className = "setting key-binding";
+            const i = document.createElement("p");
+            i.textContent = "Drag to bookmarks bar + click",
+            n.appendChild(i);
+            const r = document.createElement("div");
+            r.className = "button-wrapper",
+            n.appendChild(r);
+            const s = document.createElement("a");
+            s.className = "button",
+            s.textContent = "Export all tracks";
+            s.href = exportAllTracksBookmarkletCode;
+            r.appendChild(s);
+            C.get(this, ks, "f").appendChild(n);
+            }
         }
         ,
         Ds = function(e) {
