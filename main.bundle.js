@@ -8541,8 +8541,10 @@ var GLOBAL_LEADERBOARD_API = null;
                         e.source.playbackRate.setTargetAtTime(.3, 0, .15),
                         e.gain.gain.setTargetAtTime(0, 0, .15);
                 if (null != l.get(this, skidAudioSources, "f")) {
-                    for (const {source: e} of l.get(this, skidAudioSources, "f"))
-                        e.stop();
+                    for (const {source: source1, sourceGround: source2} of l.get(this, skidAudioSources, "f")) {
+                        source1.stop();
+                        source2.stop();
+                    }
                     l.set(this, skidAudioSources, null, "f")
                 }
             }
