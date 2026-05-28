@@ -7342,7 +7342,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 e[e.OrbitCameraFixed = 28] = "OrbitCameraFixed",
                 e[e.OrbitCameraFovMult = 29] = "OrbitCameraFovMult",
                 e[e.RealisticModeEnabled = 30] = "RealisticModeEnabled",
-                e[e.RealisticCrashingEnabled = 31] = "RealisticCrashingEnabled"
+                e[e.RealisticCrashingEnabled = 31] = "RealisticCrashingEnabled",
+                e[e.CarTrailSpacing = 32] = "CarTrailSpacing"
             }(i || (i = {}));
             const r = i
         }
@@ -7704,7 +7705,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 })
             };
             const Skidmark = Skidmark1;
-            var G, F, localAudioManager, W, V, H, j, K, q, audioPanner, J, carOrbitCamera, carCockpitCamera, carBackwardsCamera, Z, $, ee, te, ne, ie, re, ae, se, oe, le, ce, he, de, ue, pe, m_positionListeners, fe, ge, me, Ae, ve, ye, nameTagMesh, we, xe, Se, ke, Ee, Te, Me, _e, Ce, Re, Pe, Ie, skidmarkArray, groundSkidmarkArray, skidAudioSources, wheelFrictionArray, wheelContactSurfaceArray, Ne, RoadSkidmarkDust, GroundSkidmarkDust, Be, Ge, Fe, Oe, setCarDisabled, renderNameTag, Ve, He, je, Ke, qe, Qe, Je, updateSkidmarkAudio, Ye, Ze, $e, et, playCollisionAudio, playSkidAudio, playHornAudio, it, rt, at, carDisabled, st = n(3476), ot = n(6633), lt = n(927);
+            var G, F, localAudioManager, W, V, H, j, K, q, audioPanner, J, carOrbitCamera, carCockpitCamera, carBackwardsCamera, Z, $, ee, te, ne, ie, re, ae, se, oe, le, ce, he, de, ue, pe, m_positionListeners, fe, ge, me, Ae, ve, ye, nameTagMesh, carChassis, xe, Se, ke, Ee, Te, Me, _e, Ce, Re, Pe, Ie, skidmarkArray, groundSkidmarkArray, skidAudioSources, wheelFrictionArray, wheelContactSurfaceArray, Ne, RoadSkidmarkDust, GroundSkidmarkDust, Be, Ge, Fe, Oe, setCarDisabled, renderNameTag, Ve, He, je, Ke, qe, Qe, Je, updateSkidmarkAudio, Ye, Ze, $e, et, playCollisionAudio, playSkidAudio, playHornAudio, it, rt, at, carDisabled, st = n(3476), ot = n(6633), lt = n(927);
             class VisualCar {
                 constructor(e, t, n, i, r, a, s, o, h, d, u) {
                     if (G.add(this),
@@ -7741,7 +7742,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     ve.set(this, void 0),
                     ye.set(this, null),
                     nameTagMesh.set(this, null),
-                    we.set(this, void 0),
+                    carChassis.set(this, void 0),
                     xe.set(this, void 0),
                     Se.set(this, void 0),
                     ke.set(this, void 0),
@@ -7855,8 +7856,8 @@ var GLOBAL_LEADERBOARD_API = null;
                     l.set(this, _e, {
                         value: new THREE.Vector3(0,0,0)
                     }, "f"),
-                    l.set(this, we, F.models.chassis.clone(), "f"),
-                    l.get(this, G, "m", Ve).call(this, l.get(this, we, "f")),
+                    l.set(this, carChassis, F.models.chassis.clone(), "f"),
+                    l.get(this, G, "m", Ve).call(this, l.get(this, carChassis, "f")),
                     l.set(this, xe, F.models.suspension.clone(), "f"),
                     l.get(this, G, "m", Ve).call(this, l.get(this, xe, "f")),
                     l.set(this, Se, l.get(F, F, "m", Ke).call(F, l.get(this, Ce, "f").exhaust), "f"),
@@ -7869,9 +7870,9 @@ var GLOBAL_LEADERBOARD_API = null;
                     }
                     )), "f"),
                     l.set(this, ve, new THREE.Group, "f"),
-                    l.get(this, ve, "f").add(l.get(this, we, "f")),
+                    l.get(this, ve, "f").add(l.get(this, carChassis, "f")),
                     l.get(this, ve, "f").add(l.get(this, xe, "f")),
-                    l.get(this, we, "f").add(l.get(this, Se, "f"));
+                    l.get(this, carChassis, "f").add(l.get(this, Se, "f"));
                     for (const e of l.get(this, ke, "f"))
                         l.get(this, ve, "f").add(e);
 
@@ -7880,8 +7881,8 @@ var GLOBAL_LEADERBOARD_API = null;
                         light.position.set(xOffset, 0, 1.2);
                         light.target.position.set(3 * xOffset, -1, 10);
                         light.castShadow = true;
-                        l.get(this, we, "f").add(light);
-                        l.get(this, we, "f").add(light.target);
+                        l.get(this, carChassis, "f").add(light);
+                        l.get(this, carChassis, "f").add(light.target);
                         return light;
                     };
 
@@ -7949,7 +7950,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     l.get(this, m_positionListeners, "f").push(e)
                 }
                 getChassisMatrix() {
-                    return l.get(this, we, "f").matrix
+                    return l.get(this, carChassis, "f").matrix
                 }
                 getSpeedKmh() {
                     return l.get(this, ie, "f").speedKmh
@@ -8042,11 +8043,11 @@ var GLOBAL_LEADERBOARD_API = null;
                                 l.get(this, ve, "f").add(i),
                                 l.get(this, ke, "f")[t] = i
                             }
-                        e.exhaust != l.get(this, Ce, "f").exhaust && (l.get(this, we, "f").remove(l.get(this, Se, "f")),
+                        e.exhaust != l.get(this, Ce, "f").exhaust && (l.get(this, carChassis, "f").remove(l.get(this, Se, "f")),
                         l.get(this, Ae, "f").removeMaterial(l.get(this, Se, "f").material),
                         l.set(this, Se, l.get(F, F, "m", Ke).call(F, e.exhaust), "f"),
                         l.get(this, G, "m", Ve).call(this, l.get(this, Se, "f")),
-                        l.get(this, we, "f").add(l.get(this, Se, "f"))),
+                        l.get(this, carChassis, "f").add(l.get(this, Se, "f"))),
                         l.get(this, _e, "f").value = (new THREE.Vector3).setFromColor(e.secondaryColor),
                         l.get(this, ve, "f").traverse((t => {
                             if (t instanceof THREE.Mesh) {
@@ -8160,11 +8161,11 @@ var GLOBAL_LEADERBOARD_API = null;
                     }
                     const t = this.getMatrix4()
                       , n = this.getQuaternion();
-                    l.get(this, we, "f").matrixAutoUpdate = !1,
-                    l.get(this, we, "f").matrix.copy(t),
-                    l.get(this, we, "f").matrix.multiply((new THREE.Matrix4).makeTranslation(0, F.massOffset, 0)),
+                    l.get(this, carChassis, "f").matrixAutoUpdate = !1,
+                    l.get(this, carChassis, "f").matrix.copy(t),
+                    l.get(this, carChassis, "f").matrix.multiply((new THREE.Matrix4).makeTranslation(0, F.massOffset, 0)),
                     l.get(this, xe, "f").matrixAutoUpdate = !1,
-                    l.get(this, xe, "f").matrix.copy(l.get(this, we, "f").matrix);
+                    l.get(this, xe, "f").matrix.copy(l.get(this, carChassis, "f").matrix);
                     for (let i = 0; i < 4; i++) {
                         const r = null != l.get(this, ie, "f").wheelContact[i]
                           , a = l.get(this, ie, "f").wheelDeltaRotation[i];
@@ -8287,7 +8288,7 @@ var GLOBAL_LEADERBOARD_API = null;
                                 for (const e of t)
                                     e.side = THREE.FrontSide,
                                     e.shadowSide = THREE.FrontSide,
-                                    e.flatShading = true;  // <-- add this
+                                    e.flatShading = true;
                                 return e;
                             }
                             i.dispose();
@@ -8368,7 +8369,7 @@ var GLOBAL_LEADERBOARD_API = null;
             ve = new WeakMap,
             ye = new WeakMap,
             nameTagMesh = new WeakMap,
-            we = new WeakMap,
+            carChassis = new WeakMap,
             xe = new WeakMap,
             Se = new WeakMap,
             ke = new WeakMap,
@@ -10065,7 +10066,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 error: () => error,
                 DepthFormat: () => DepthFormat,
                 Layers: () => Layers,
-                MinEquation: () => MinEquation
+                MinEquation: () => MinEquation,
+                Float32BufferAttribute: () => Float32BufferAttribute
             });
             /**
  * @license
@@ -42045,7 +42047,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
             }
         }
-        var _r, Cr, Rr, Pr, Ir, Lr, Ur, primarySceneObject, Nr, Dr, Br, Gr, Fr, Or, Wr, Vr, Hr, jr, Kr, qr, Qr, hostingNewSessionCallback, Xr, Yr, Zr, drivingUIVisible, ea, ta, na, ia, ra, aa, sa, oa, la, ca, ha, da, ua, pa, fa, ga, ma, Aa, va, ya, ba, primaryCar, xa, multiplayerInstanceInfo, ka, Ea, Ta, Ma, _a, Ca, idToMultiplayerCarMap, Pa, Ia, La, Ua, za, Na, Da, Ba, Ga, Fa, Oa, Wa, Va, Ha, ja, cockpitCameraKeyDown, backwardsCameraKeyDown, backwardsCameraKeyUp, cockpitCameraKeyUp, Qa, Ja, Xa, Ya, Za, updateGhostOpacity, es, m_ghostsVisible;
+        var _r, Cr, Rr, Pr, Ir, Lr, Ur, primarySceneObject, Nr, Dr, Br, settingsManager, Fr, Or, Wr, Vr, Hr, jr, Kr, qr, Qr, hostingNewSessionCallback, Xr, Yr, Zr, drivingUIVisible, ea, ta, na, ia, ra, aa, sa, oa, la, ca, ha, da, ua, pa, fa, ga, ma, Aa, va, ya, ba, primaryCar, xa, multiplayerInstanceInfo, ka, Ea, Ta, Ma, _a, Ca, idToMultiplayerCarMap, Pa, Ia, La, Ua, za, Na, Da, Ba, Ga, Fa, Oa, Wa, Va, Ha, ja, cockpitCameraKeyDown, backwardsCameraKeyDown, backwardsCameraKeyUp, cockpitCameraKeyUp, Qa, Ja, Xa, Ya, Za, updateGhostOpacity, es, m_ghostsVisible;
         Cr = new WeakMap,
         Rr = new WeakMap,
         Pr = new WeakMap,
@@ -42056,7 +42058,7 @@ var GLOBAL_LEADERBOARD_API = null;
         Nr = new WeakMap,
         Dr = new WeakMap,
         Br = new WeakMap,
-        Gr = new WeakMap,
+        settingsManager = new WeakMap,
         Fr = new WeakMap,
         Or = new WeakMap,
         Wr = new WeakMap,
@@ -42143,14 +42145,14 @@ var GLOBAL_LEADERBOARD_API = null;
             if (C.get(this, Pa, "f")) return;
             if (C.get(this, primaryCar, "f").hasFinished()) return;
 
-            if (C.get(this, Gr, "f").getSettingBoolean(R.A.CockpitCameraToggle)) {
+            if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.CockpitCameraToggle)) {
                 if (C.get(this, primarySceneObject, "f").camera != C.get(this, primaryCar, "f").cameraCockpit) {
                     C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraCockpit);
                 } else {
                     C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraOrbit);
                 }
             } else {
-                if (C.get(this, Gr, "f").getSettingBoolean(R.A.DefaultCameraMode)) {
+                if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.DefaultCameraMode)) {
                     C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraOrbit);
                 } else {
                     C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraCockpit);
@@ -42161,9 +42163,9 @@ var GLOBAL_LEADERBOARD_API = null;
         cockpitCameraKeyUp = function() {
             if (C.get(this, Ba, "f").isEnabled) return;
             if (C.get(this, primaryCar, "f").hasFinished()) return;
-            if (C.get(this, Gr, "f").getSettingBoolean(R.A.CockpitCameraToggle)) return;
+            if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.CockpitCameraToggle)) return;
 
-            if (C.get(this, Gr, "f").getSettingBoolean(R.A.DefaultCameraMode)) {
+            if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.DefaultCameraMode)) {
                 C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraCockpit);
             } else {
                 C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraOrbit);
@@ -42175,7 +42177,7 @@ var GLOBAL_LEADERBOARD_API = null;
             if (C.get(this, Pa, "f")) return;
             if (C.get(this, primaryCar, "f").hasFinished()) return;
 
-            if (C.get(this, Gr, "f").getSettingBoolean(R.A.BackwardsCameraToggle)) {
+            if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.BackwardsCameraToggle)) {
                 if (C.get(this, primarySceneObject, "f").camera != C.get(this, primaryCar, "f").cameraBackwards) {
                     C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraBackwards);
                 } else {
@@ -42189,9 +42191,9 @@ var GLOBAL_LEADERBOARD_API = null;
         backwardsCameraKeyUp = function() {
             if (C.get(this, Ba, "f").isEnabled) return;
             if (C.get(this, primaryCar, "f").hasFinished()) return;
-            if (C.get(this, Gr, "f").getSettingBoolean(R.A.BackwardsCameraToggle)) return;
+            if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.BackwardsCameraToggle)) return;
 
-            if (C.get(this, Gr, "f").getSettingBoolean(R.A.DefaultCameraMode)) {
+            if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.DefaultCameraMode)) {
                 C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraCockpit);
             } else {
                 C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraOrbit);
@@ -42233,7 +42235,7 @@ var GLOBAL_LEADERBOARD_API = null;
             } else
                 a = null;
             // Primary controlled polycar instantiation
-            const s = new VisualCar(C.get(this, Cr, "f"),i,null,C.get(this, ya, "f"),C.get(this, primarySceneObject, "f"),C.get(this, Nr, "f"),C.get(this, Ir, "f"),C.get(this, Pr, "f"),C.get(this, Yr, "f"),C.get(this, Gr, "f"),a);
+            const s = new VisualCar(C.get(this, Cr, "f"),i,null,C.get(this, ya, "f"),C.get(this, primarySceneObject, "f"),C.get(this, Nr, "f"),C.get(this, Ir, "f"),C.get(this, Pr, "f"),C.get(this, Yr, "f"),C.get(this, settingsManager, "f"),a);
             s.multiplayerInstance = C.get(this, multiplayerInstanceInfo, "f");
             return s.notificationAudioEnabled = !0,
             s.addResetCallback(( () => {
@@ -42402,7 +42404,7 @@ var GLOBAL_LEADERBOARD_API = null;
         }
         ,
         Ya = function() {
-            if (C.get(this, Gr, "f").getSettingBoolean(R.A.GhostCarEnabled))
+            if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.GhostCarEnabled))
                 for (const e of C.get(this, xa, "f")) {
                     null != e.car && (e.car.dispose(),
                     e.car = null);
@@ -42445,7 +42447,7 @@ var GLOBAL_LEADERBOARD_API = null;
                         e.finishSpeedKmh = null
                     }
                     if (null == C.get(this, multiplayerInstanceInfo, "f")) {
-                        const n = new VisualCar(null,t,e.settings.recording,null,C.get(this, primarySceneObject, "f"),C.get(this, Nr, "f"),C.get(this, Ir, "f"),C.get(this, Pr, "f"),C.get(this, Yr, "f"),C.get(this, Gr, "f"),null);
+                        const n = new VisualCar(null,t,e.settings.recording,null,C.get(this, primarySceneObject, "f"),C.get(this, Nr, "f"),C.get(this, Ir, "f"),C.get(this, Pr, "f"),C.get(this, Yr, "f"),C.get(this, settingsManager, "f"),null);
                         n.setCarStyle(e.settings.carStyle),
                         n.audioVolume = C.get(this, Oa, "f"),
                         C.get(this, _r, "m", updateGhostOpacity).call(this),
@@ -42463,7 +42465,7 @@ var GLOBAL_LEADERBOARD_API = null;
         }
         ,
         updateGhostOpacity = function() {
-            const maxGhostOpacitySetting = C.get(this, Gr, "f")?.getSettingFloat(R.A.MaxGhostOpacity) ?? 1;
+            const maxGhostOpacitySetting = C.get(this, settingsManager, "f")?.getSettingFloat(R.A.MaxGhostOpacity) ?? 1;
             for (const e of C.get(this, xa, "f")) {
                 if (null != e.car) {
                     e.car.setCarDisabled(!C.get(this, m_ghostsVisible, "f"));
@@ -42530,6 +42532,10 @@ var GLOBAL_LEADERBOARD_API = null;
         ;
         const MainMultiplayerClass = class {
             constructor(e, t, n, i, r, a, s, o, l, c, h, d, u, p, f, g, m, A, v, y, b, w, x, S, k, E, T, hostNewSessionCallback) {
+                this.isEditorTest = !x;
+                if (this.isEditorTest) {
+                    this.testCarPositions = [];
+                }
                 if (_r.add(this),
                 Cr.set(this, void 0),
                 Rr.set(this, void 0),
@@ -42541,7 +42547,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 Nr.set(this, void 0),
                 Dr.set(this, void 0),
                 Br.set(this, void 0),
-                Gr.set(this, void 0),
+                settingsManager.set(this, void 0),
                 Fr.set(this, void 0),
                 Or.set(this, void 0),
                 Wr.set(this, void 0),
@@ -42610,7 +42616,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.set(this, Nr, o, "f"),
                 C.set(this, Dr, l, "f"),
                 C.set(this, Br, c, "f"),
-                C.set(this, Gr, d, "f"),
+                C.set(this, settingsManager, d, "f"),
                 C.set(this, Fr, u, "f"),
                 C.set(this, Or, p, "f"),
                 C.set(this, Wr, f, "f"),
@@ -42644,6 +42650,9 @@ var GLOBAL_LEADERBOARD_API = null;
                     checkpoints: [],
                     finishSpeedKmh: null
                 }))), "f"),
+
+                this.carHitboxTrailSpacing = d.getSettingFloat(R.A.CarTrailSpacing) * 3.5,
+
                 d.getSettingBoolean(R.A.GhostCarSoundsEnabled) ? C.set(this, Oa, .35, "f") : C.set(this, Oa, 0, "f"),
                 C.set(this, ya, new Bt(d), "f"),
                 C.get(this, ya, "f").addChangeCallback((e => {
@@ -42655,11 +42664,11 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Ba, "f").addToggleListener((e => {
                     e ? (C.get(this, ea, "f").isVisible = !1,
                     s.setCamera(C.get(this, Ba, "f").camera)) : (C.get(this, ea, "f").isVisible = C.get(this, drivingUIVisible, "f"),
-                    C.get(this, Gr, "f").getSettingBoolean(R.A.DefaultCameraMode) ? C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraCockpit) : C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraOrbit))
+                    C.get(this, settingsManager, "f").getSettingBoolean(R.A.DefaultCameraMode) ? C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraCockpit) : C.get(this, primarySceneObject, "f").setCamera(C.get(this, primaryCar, "f").cameraOrbit))
                 }
                 )),
                 u.setCursorHiddenWhenInactive(!0),
-                C.set(this, ma, new TouchControls(C.get(this, ya, "f"),C.get(this, Nr, "f"),C.get(this, Gr, "f"),
+                C.set(this, ma, new TouchControls(C.get(this, ya, "f"),C.get(this, Nr, "f"),C.get(this, settingsManager, "f"),
                 ( () => {
                     C.get(this, _r, "m", cockpitCameraKeyDown).call(this)
                 }
@@ -42683,12 +42692,12 @@ var GLOBAL_LEADERBOARD_API = null;
                 )), "f"),
                 C.get(this, ma, "f").isEnabled = C.get(this, Wr, "f").touchEnabled,
                 C.set(this, ea, new br, "f"),
-                C.set(this, ta, new ResetHintUI(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, Wr, "f"),C.get(this, Gr, "f")), "f"),
-                null != C.get(this, multiplayerInstanceInfo, "f") ? C.set(this, ia, new ur(C.get(this, ea, "f").element,C.get(this, Gr, "f")), "f") : C.set(this, na, new fi(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, Gr, "f")), "f"),
-                C.set(this, ra, new CheckpointUI(C.get(this, ea, "f").element,C.get(this, Pr, "f").getTotalNumberOfCheckpointIndices(),C.get(this, Gr, "f")), "f"),
-                C.set(this, aa, new Speedometer(C.get(this, ea, "f").element,C.get(this, Gr, "f")), "f"),
-                C.set(this, sa, new Ve.A(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, Gr, "f")), "f"),
-                C.set(this, la, new TopDrivingUI(C.get(this, ea, "f").element,C.get(this, Nr, "f"),C.get(this, Ur, "f"),C.get(this, Gr, "f"),C.get(this, Wr, "f"),C.get(this, Xr, "f"),C.get(this, multiplayerInstanceInfo, "f"),( () => {
+                C.set(this, ta, new ResetHintUI(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, Wr, "f"),C.get(this, settingsManager, "f")), "f"),
+                null != C.get(this, multiplayerInstanceInfo, "f") ? C.set(this, ia, new ur(C.get(this, ea, "f").element,C.get(this, settingsManager, "f")), "f") : C.set(this, na, new fi(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, settingsManager, "f")), "f"),
+                C.set(this, ra, new CheckpointUI(C.get(this, ea, "f").element,C.get(this, Pr, "f").getTotalNumberOfCheckpointIndices(),C.get(this, settingsManager, "f")), "f"),
+                C.set(this, aa, new Speedometer(C.get(this, ea, "f").element,C.get(this, settingsManager, "f")), "f"),
+                C.set(this, sa, new Ve.A(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, settingsManager, "f")), "f"),
+                C.set(this, la, new TopDrivingUI(C.get(this, ea, "f").element,C.get(this, Nr, "f"),C.get(this, Ur, "f"),C.get(this, settingsManager, "f"),C.get(this, Wr, "f"),C.get(this, Xr, "f"),C.get(this, multiplayerInstanceInfo, "f"),( () => {
                     C.get(this, _r, "m", Va).call(this)
                 }
                 ),( () => {
@@ -42830,7 +42839,7 @@ var GLOBAL_LEADERBOARD_API = null;
                             // Multiplayer player car creation
                             if (null == n) {
                                 n = {
-                                    car: new VisualCar(null,t,null,null,C.get(this, primarySceneObject, "f"),C.get(this, Nr, "f"),C.get(this, Ir, "f"),C.get(this, Pr, "f"),C.get(this, Yr, "f"),C.get(this, Gr, "f"),null),
+                                    car: new VisualCar(null,t,null,null,C.get(this, primarySceneObject, "f"),C.get(this, Nr, "f"),C.get(this, Ir, "f"),C.get(this, Pr, "f"),C.get(this, Yr, "f"),C.get(this, settingsManager, "f"),null),
                                     time: 0,
                                     resetCounter: 0,
                                     bufferedCarStates: []
@@ -42988,23 +42997,23 @@ var GLOBAL_LEADERBOARD_API = null;
                         }], "f")
                     }
                 }
-                const I = C.get(this, Gr, "f").getSettingBoolean(R.A.DefaultCameraMode);
+                const I = C.get(this, settingsManager, "f").getSettingBoolean(R.A.DefaultCameraMode);
                 if (C.set(this, primaryCar, C.get(this, _r, "m", Xa).call(this, I), "f"),
                 C.get(this, _r, "m", Ya).call(this),
                 window.addEventListener("keydown", C.set(this, Na, (e => {
                     if (!P.ip()) {
                         if (!C.get(this, Ba, "f").isEnabled && !C.get(this, _r, "m", Ha).call(this))
-                            if (C.get(this, Gr, "f").checkKeyBinding(e, KeyBind.VehicleCheckpointReset))
+                            if (C.get(this, settingsManager, "f").checkKeyBinding(e, KeyBind.VehicleCheckpointReset))
                                 e.repeat || null != C.get(this, ca, "f") || C.get(this, Pa, "f") || C.get(this, primaryCar, "f").hasStarted() && (C.get(this, _r, "m", ja).call(this) ? C.get(this, ya, "f").reset = !0 : (C.get(this, _r, "m", Qa).call(this),
                                 C.get(this, ya, "f").reset = !1)),
                                 e.preventDefault();
-                            else if (C.get(this, Gr, "f").checkKeyBinding(e, KeyBind.VehicleStartReset))
+                            else if (C.get(this, settingsManager, "f").checkKeyBinding(e, KeyBind.VehicleStartReset))
                                 e.repeat || null != C.get(this, ca, "f") || C.get(this, Pa, "f") || C.get(this, primaryCar, "f").hasStarted() && C.get(this, _r, "m", Qa).call(this),
                                 e.preventDefault();
-                            else if (C.get(this, Gr, "f").checkKeyBinding(e, KeyBind.VehicleCockpitCamera))
+                            else if (C.get(this, settingsManager, "f").checkKeyBinding(e, KeyBind.VehicleCockpitCamera))
                                 e.repeat || C.get(this, _r, "m", cockpitCameraKeyDown).call(this),
                                 e.preventDefault();
-                            else if (C.get(this, Gr, "f").checkKeyBinding(e, KeyBind.VehicleBackwardsCamera))
+                            else if (C.get(this, settingsManager, "f").checkKeyBinding(e, KeyBind.VehicleBackwardsCamera))
                                 e.repeat || C.get(this, _r, "m", backwardsCameraKeyDown).call(this),
                                 e.preventDefault();
                             else if (d.checkKeyBinding(e, KeyBind.ToggleUI))
@@ -43066,8 +43075,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
                 ), "f")),
                 window.addEventListener("keyup", C.set(this, Da, (e => {
-                    C.get(this, Gr, "f").checkKeyBinding(e, KeyBind.VehicleCockpitCamera) && C.get(this, _r, "m", cockpitCameraKeyUp).call(this),
-                    C.get(this, Gr, "f").checkKeyBinding(e, KeyBind.VehicleBackwardsCamera) && C.get(this, _r, "m", backwardsCameraKeyUp).call(this)
+                    C.get(this, settingsManager, "f").checkKeyBinding(e, KeyBind.VehicleCockpitCamera) && C.get(this, _r, "m", cockpitCameraKeyUp).call(this),
+                    C.get(this, settingsManager, "f").checkKeyBinding(e, KeyBind.VehicleBackwardsCamera) && C.get(this, _r, "m", backwardsCameraKeyUp).call(this)
                 }
                 ), "f")),
                 "official" == v)
@@ -43289,6 +43298,14 @@ var GLOBAL_LEADERBOARD_API = null;
                     C.get(this, _r, "m", updateGhostOpacity).call(this),
                     C.get(this, Ba, "f").update(e),
                     C.get(this, la, "f").setVisible(!C.get(this, primaryCar, "f").hasStarted() || C.get(this, primaryCar, "f").hasFinished() || !C.get(this, va, "f") || C.get(this, Wr, "f").touchEnabled || !C.get(this, Fr, "f").isCursorHidden || C.get(this, la, "f").hasFocus())
+                    
+                    if (this.isEditorTest && C.get(this, primaryCar, "f").hasStarted()) {
+                        const position = C.get(this, primaryCar, "f").getPosition();
+                        const lastPosition = this.testCarPositions.length > 0 ? this.testCarPositions[this.testCarPositions.length - 1].position : null;
+                        if (!lastPosition || position.distanceTo(lastPosition) > this.carHitboxTrailSpacing) {
+                            this.testCarPositions.push({position, quaternion: C.get(this, primaryCar, "f").getQuaternion()});
+                        }
+                    }
                 } else {
                     C.get(this, primaryCar, "f").isPaused = !0,
                     C.get(this, primaryCar, "f").audioVolume = 0,
@@ -49548,6 +49565,7 @@ var GLOBAL_LEADERBOARD_API = null;
             C.get(this, ms, "m", Bs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Modded")),
             C.get(this, ms, "m", Os).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Toggle Ghost"), KeyBind.ToggleGhost),
             C.get(this, ms, "m", Fs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Ghost Opacity"), R.A.MaxGhostOpacity),
+            C.get(this, ms, "m", Fs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Car Trail Spacing"), R.A.CarTrailSpacing),
             C.get(this, ms, "m", Gs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Italic Text"), [{
                 title: gs.getFromLanguage(C.get(this, Cs, "f"), "Off"),
                 value: "false"
@@ -56800,7 +56818,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 null != n && C.get(this, Mu, "m", Pu).call(this, n);
             }
             defaultSettings() {
-                return new Map([[R.A.ImperialUnitsEnabled, "false"], [R.A.ResetHintEnabled, "true"], [R.A.RealisticCrashingEnabled, "false"], [R.A.GhostCarEnabled, "true"], [R.A.DefaultCameraMode, "false"], [R.A.CockpitCameraToggle, "true"], [R.A.BackwardsCameraToggle, "false"], [R.A.Checkpoints, "bottom"], [R.A.Timer, "bottom"], [R.A.Speedometer, "bottom"], [R.A.Language, "en-US"], [R.A.ShadowQuality, "2"], [R.A.CloudsEnabled, "true"], [R.A.ParticlesEnabled, "true"], [R.A.OrbitCameraFixed, "0"], [R.A.OrbitCameraFovMult, "1"], [R.A.SkidmarksEnabled, "true"], [R.A.FogEnabled, "true"], [R.A.ItalicsEnabled, "true"], [R.A.RenderScale, "1"], [R.A.ScreenPixelDensity, "true"], [R.A.Antialiasing, "true"], [R.A.MasterVolume, "1"], [R.A.SoundEffectVolume, "1"], [R.A.MusicVolume, "1"], [R.A.CheckpointVolume, "1"], [R.A.MaxGhostOpacity, "1"], [R.A.SpeedometerDecimalPlaces, "0"], [R.A.RealisticModeEnabled, "false"], [R.A.GhostCarSoundsEnabled, "true"], [R.A.VibrationEnabled, "false"], [R.A.TouchSteeringSide, "true"]])
+                return new Map([[R.A.ImperialUnitsEnabled, "false"], [R.A.ResetHintEnabled, "true"], [R.A.RealisticCrashingEnabled, "false"], [R.A.GhostCarEnabled, "true"], [R.A.DefaultCameraMode, "false"], [R.A.CockpitCameraToggle, "true"], [R.A.BackwardsCameraToggle, "false"], [R.A.Checkpoints, "bottom"], [R.A.Timer, "bottom"], [R.A.Speedometer, "bottom"], [R.A.Language, "en-US"], [R.A.ShadowQuality, "2"], [R.A.CloudsEnabled, "true"], [R.A.ParticlesEnabled, "true"], [R.A.OrbitCameraFixed, "0"], [R.A.OrbitCameraFovMult, "1"], [R.A.SkidmarksEnabled, "true"], [R.A.FogEnabled, "true"], [R.A.ItalicsEnabled, "true"], [R.A.RenderScale, "1"], [R.A.ScreenPixelDensity, "true"], [R.A.Antialiasing, "true"], [R.A.MasterVolume, "1"], [R.A.SoundEffectVolume, "1"], [R.A.MusicVolume, "1"], [R.A.CheckpointVolume, "1"], [R.A.MaxGhostOpacity, "1"], [R.A.CarTrailSpacing, "1"], [R.A.SpeedometerDecimalPlaces, "0"], [R.A.RealisticModeEnabled, "false"], [R.A.GhostCarSoundsEnabled, "true"], [R.A.VibrationEnabled, "false"], [R.A.TouchSteeringSide, "true"]])
             }
             defaultKeyBindings() {
                 return new Map([
@@ -58250,10 +58268,11 @@ var GLOBAL_LEADERBOARD_API = null;
                                     throw new Error("Multiplayer connection lost should never be called from the editor")
                                 }
                                 ),( () => {
-                                    P.tU(),
+                                    P.tU();
+                                    const savedCarPositionArray = a.testCarPositions;
                                     a.dispose(!1),
                                     currentUpdater = c,
-                                    i()
+                                    i(savedCarPositionArray)
                                 }
                                 ),null,null,( () => {
                                     throw new Error("Multiplayer new session should never be called from the editor")

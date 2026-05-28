@@ -59,6 +59,9 @@ For app downloads and installation instructions, read the [latest release](https
 
 ### Editor
 
+- Car trail shown with accurate hitbox representation after testing in editor
+  - Decrease space between hitbox samples with the "Car Trail Spacing" setting
+
 - CWCTrack exclusive track code format that reduces code size by ~50%
 
 - Track setting to modify the creation date

@@ -31,6 +31,7 @@
           , f = n.n(g)
           , p = n(1113)
           , u = n.n(p)
+          , VisualCar = n(4078).A
           , editorStyles = n(6057).A
           , editorStylesConfig = {};
         editorStylesConfig.styleTagTransform = u(),
@@ -3113,6 +3114,7 @@
                         e.material.dispose()
                 }
                 if (get(this, editor_renderer, "f").scene.remove(get(this, editor_previewGroup, "f")),
+                this.disposeCarTrail(),
                 null != get(this, editor_tileIndicatorMesh, "f") && (get(this, editor_renderer, "f").scene.remove(get(this, editor_tileIndicatorMesh, "f")),
                 get(this, editor_tileIndicatorMesh, "f").dispose(),
                 get(this, editor_tileIndicatorGeometry, "f").dispose(),
@@ -3153,6 +3155,134 @@
                 window.removeEventListener("keyup", get(this, editor_onKeyUp, "f")),
                 window.removeEventListener("wheel", get(this, editor_onWheel, "f")),
                 window.removeEventListener("beforeunload", get(this, editor_onBeforeUnload, "f"))
+            }
+            loadCarTrail(savedCarPositionArray) {
+                this.disposeCarTrail();
+                
+                const TRAIL_MODE = "continuous";
+                if (!Array.isArray(savedCarPositionArray)) return;
+
+                const carVertices = VisualCar.models.collisionShapeVertices;
+                const flatVerts = Float32Array.from(carVertices.flat ? carVertices.flat() : carVertices);
+                const vertCount = flatVerts.length / 3;
+                const carTrailGroup = new THREE.Group();
+
+                if (TRAIL_MODE === "continuous") {
+                    const round = n => Math.round(n * 1e5) / 1e5;
+                    const vKey = i => `${round(flatVerts[i*3])},${round(flatVerts[i*3+1])},${round(flatVerts[i*3+2])}`;
+
+                    const indexToUnique = new Int32Array(vertCount);
+                    const seenV = new Map();
+                    for (let i = 0; i < vertCount; i++) {
+                        const k = vKey(i);
+                        if (!seenV.has(k)) seenV.set(k, seenV.size);
+                        indexToUnique[i] = seenV.get(k);
+                    }
+
+                    const readV = i => new THREE.Vector3(flatVerts[i*3], flatVerts[i*3+1], flatVerts[i*3+2]);
+                    const triNormals = [];
+                    for (let t = 0; t < vertCount; t += 3) {
+                        const a = readV(t), b = readV(t+1), c = readV(t+2);
+                        triNormals.push(b.sub(a).cross(c.sub(a)).normalize());
+                    }
+
+                    const edgeMap = new Map();
+                    for (let t = 0; t < vertCount; t += 3) {
+                        for (let e = 0; e < 3; e++) {
+                            const a = t + e, b = t + (e + 1) % 3;
+                            const ua = indexToUnique[a], ub = indexToUnique[b];
+                            const key = ua < ub ? `${ua}|${ub}` : `${ub}|${ua}`;
+                            let bucket = edgeMap.get(key);
+                            if (!bucket) { bucket = { a, b, tris: [] }; edgeMap.set(key, bucket); }
+                            bucket.tris.push(t / 3);
+                        }
+                    }
+
+                    const COPLANAR_EPS = 0.9995;
+                    const silhouetteEdges = [];
+                    for (const { a, b, tris } of edgeMap.values()) {
+                        let isCrease = tris.length === 1;
+                        for (let i = 0; i < tris.length && !isCrease; i++) {
+                            for (let j = i + 1; j < tris.length && !isCrease; j++) {
+                                if (Math.abs(triNormals[tris[i]].dot(triNormals[tris[j]])) < COPLANAR_EPS) isCrease = true;
+                            }
+                        }
+                        if (isCrease) silhouetteEdges.push([a, b]);
+                    }
+
+                    const tmpMatrix = new THREE.Matrix4();
+                    const tmpScale = new THREE.Vector3(1, 1, 1);
+                    const tmpVec = new THREE.Vector3();
+                    const frames = [];
+                    for (const { position, quaternion } of savedCarPositionArray) {
+                        if (!(position instanceof THREE.Vector3)) continue;
+                        tmpMatrix.compose(position, quaternion, tmpScale);
+                        const verts = new Float32Array(flatVerts.length);
+                        for (let i = 0; i < vertCount; i++) {
+                            tmpVec.set(flatVerts[i*3], flatVerts[i*3+1] + VisualCar.massOffset, flatVerts[i*3+2]).applyMatrix4(tmpMatrix);
+                            verts[i*3] = tmpVec.x; verts[i*3+1] = tmpVec.y; verts[i*3+2] = tmpVec.z;
+                        }
+                        frames.push(verts);
+                    }
+                    if (frames.length < 2) return;
+
+                    const push = (arr, frame, idx) => arr.push(frame[idx*3], frame[idx*3+1], frame[idx*3+2]);
+
+                    const tubePositions = [];
+                    const linePositions = [];
+                    for (let i = 0; i < frames.length; i++) {
+                        const A = frames[i];
+                        for (const [a, b] of silhouetteEdges) {
+                            push(linePositions, A, a);
+                            push(linePositions, A, b);
+                        }
+                        if (i === frames.length - 1) break;
+                        const B = frames[i + 1];
+                        for (const [a, b] of silhouetteEdges) {
+                            push(tubePositions, A, a); push(tubePositions, A, b); push(tubePositions, B, b);
+                            push(tubePositions, A, a); push(tubePositions, B, b); push(tubePositions, B, a);
+                        }
+                    }
+
+                    const tubeGeom = new THREE.BufferGeometry();
+                    tubeGeom.setAttribute("position", new THREE.Float32BufferAttribute(tubePositions, 3));
+                    carTrailGroup.add(new THREE.Mesh(tubeGeom, new THREE.MeshBasicMaterial({
+                        color: 0xffffff, transparent: true, opacity: 0.2,
+                        side: THREE.DoubleSide, depthWrite: false,
+                    })));
+
+                    const lineGeom = new THREE.BufferGeometry();
+                    lineGeom.setAttribute("position", new THREE.Float32BufferAttribute(linePositions, 3));
+                    carTrailGroup.add(new THREE.LineSegments(lineGeom, new THREE.LineBasicMaterial({
+                        color: 0x000000, transparent: true, opacity: 0.5, depthWrite: false,
+                    })));
+                } else {
+                    const baseGeom = new THREE.BufferGeometry();
+                    baseGeom.setAttribute("position", new THREE.Float32BufferAttribute(flatVerts, 3));
+                    const material = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
+                    for (const { position, quaternion } of savedCarPositionArray) {
+                        if (!(position instanceof THREE.Vector3)) continue;
+                        const m = new THREE.Mesh(baseGeom, material);
+                        m.position.copy(position);
+                        m.quaternion.copy(quaternion);
+                        carTrailGroup.add(m);
+                    }
+                }
+                get(this, editor_renderer, "f").scene.add(carTrailGroup);
+                this.carTrailGroup = carTrailGroup;
+            }
+
+            disposeCarTrail() {
+                if (!this.carTrailGroup) return;
+                this.carTrailGroup.traverse(obj => {
+                    if (obj.geometry) obj.geometry.dispose();
+                    if (obj.material) {
+                        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+                        for (const mat of mats) mat.dispose();
+                    }
+                });
+                get(this, editor_renderer, "f").scene.remove(this.carTrailGroup);
+                this.carTrailGroup = null;
             }
             getTrackMetadata() {
                 return {
@@ -3398,7 +3528,7 @@
         scene_renderer = new WeakMap,
         scene_editor = new WeakMap;
         const EditorScene = class {
-            constructor(t, e, n, s, o, a, r, h, l, c, d, g, f, p, u, m, v) {
+            constructor(t, e, n, s, o, a, r, h, l, c, d, g, f, p, u, m, loadIntoTrack) {
                 scene_track.set(this, void 0),
                 scene_waterRenderer.set(this, void 0),
                 scene_skyRenderer.set(this, void 0),
@@ -3419,9 +3549,10 @@
                 get(this, scene_editor, "f").setTestCallback(( () => {
                     get(this, scene_editor, "f").disable();
                     const t = get(this, scene_editor, "f").getTrackMetadata();
-                    v(t, get(this, scene_track, "f").getTrackData(), ( () => {
+                    loadIntoTrack(t, get(this, scene_track, "f").getTrackData(), ( (savedCarPositionArray) => {
                         get(this, scene_editor, "f").enable(),
-                        h.setCamera(get(this, scene_editor, "f").camera)
+                        h.setCamera(get(this, scene_editor, "f").camera);
+                        get(this, scene_editor, "f").loadCarTrail(savedCarPositionArray);
                     }
                     ))
                 }
