@@ -108,11 +108,11 @@ test('track menu [Desert 5]', async ({ page }) => {
   await test.step('minimap toggle', async () => {
     const minimap = page.locator('.track-preview-container');
     await expect(minimap).toBeVisible();
-    await expect(minimap).toHaveClass('track-preview-container');
-    await drivingToolbar.getByRole('button', { name: 'Minimap' }).click();
     await expect(minimap).toHaveClass('track-preview-container closed');
     await drivingToolbar.getByRole('button', { name: 'Minimap' }).click();
     await expect(minimap).toHaveClass('track-preview-container');
+    await drivingToolbar.getByRole('button', { name: 'Minimap' }).click();
+    await expect(minimap).toHaveClass('track-preview-container closed');
   });
 
   await test.step('exiting to track menu', async () => {
