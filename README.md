@@ -73,6 +73,10 @@ For app downloads and installation instructions, read the [latest release](https
 
 - Offroad Particles / Skidmarks
 
+- Live input visualizer
+  - Shows input visualization while driving, not just in replays
+  - Can be enabled in settings
+
 - Backwards camera keybind
   - Option to enable it on hold or toggle
 

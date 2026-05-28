@@ -7343,7 +7343,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 e[e.OrbitCameraFovMult = 29] = "OrbitCameraFovMult",
                 e[e.RealisticModeEnabled = 30] = "RealisticModeEnabled",
                 e[e.RealisticCrashingEnabled = 31] = "RealisticCrashingEnabled",
-                e[e.CarTrailSpacing = 32] = "CarTrailSpacing"
+                e[e.CarTrailSpacing = 32] = "CarTrailSpacing",
+                e[e.ShowInputVisualizer = 33] = "ShowInputVisualizer"
             }(i || (i = {}));
             const r = i
         }
@@ -41927,7 +41928,7 @@ var GLOBAL_LEADERBOARD_API = null;
         Ar = new WeakMap,
         vr = new WeakMap,
         yr = new WeakMap;
-        const br = class {
+        const GameUI = class {
             constructor() {
                 Ar.set(this, void 0),
                 vr.set(this, void 0),
@@ -42047,7 +42048,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
             }
         }
-        var _r, Cr, Rr, Pr, Ir, Lr, Ur, primarySceneObject, Nr, Dr, Br, settingsManager, Fr, Or, Wr, Vr, Hr, jr, Kr, qr, Qr, hostingNewSessionCallback, Xr, Yr, Zr, drivingUIVisible, ea, ta, na, ia, ra, aa, sa, oa, la, ca, ha, da, ua, pa, fa, ga, ma, Aa, va, ya, ba, primaryCar, xa, multiplayerInstanceInfo, ka, Ea, Ta, Ma, _a, Ca, idToMultiplayerCarMap, Pa, Ia, La, Ua, za, Na, Da, Ba, Ga, Fa, Oa, Wa, Va, Ha, ja, cockpitCameraKeyDown, backwardsCameraKeyDown, backwardsCameraKeyUp, cockpitCameraKeyUp, Qa, Ja, Xa, Ya, Za, updateGhostOpacity, es, m_ghostsVisible;
+        var _r, Cr, Rr, Pr, Ir, Lr, Ur, primarySceneObject, Nr, Dr, Br, settingsManager, Fr, Or, Wr, Vr, Hr, jr, Kr, qr, Qr, hostingNewSessionCallback, Xr, Yr, Zr, drivingUIVisible, ea, ta, inputVisualizer, na, ia, checkpointUI, aa, sa, oa, la, ca, ha, da, ua, pa, fa, ga, ma, Aa, va, ya, ba, primaryCar, xa, multiplayerInstanceInfo, ka, Ea, Ta, Ma, _a, Ca, idToMultiplayerCarMap, Pa, Ia, La, Ua, za, Na, Da, Ba, Ga, Fa, Oa, Wa, Va, Ha, ja, cockpitCameraKeyDown, backwardsCameraKeyDown, backwardsCameraKeyUp, cockpitCameraKeyUp, Qa, Ja, Xa, Ya, Za, updateGhostOpacity, es, m_ghostsVisible;
         Cr = new WeakMap,
         Rr = new WeakMap,
         Pr = new WeakMap,
@@ -42075,9 +42076,10 @@ var GLOBAL_LEADERBOARD_API = null;
         drivingUIVisible = new WeakMap,
         ea = new WeakMap,
         ta = new WeakMap,
+        inputVisualizer = new WeakMap,
         na = new WeakMap,
         ia = new WeakMap,
-        ra = new WeakMap,
+        checkpointUI = new WeakMap,
         aa = new WeakMap,
         sa = new WeakMap,
         oa = new WeakMap,
@@ -42536,7 +42538,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 if (this.isEditorTest) {
                     this.testCarPositions = [];
                 }
-                if (_r.add(this),
+                _r.add(this),
                 Cr.set(this, void 0),
                 Rr.set(this, void 0),
                 Pr.set(this, void 0),
@@ -42564,9 +42566,10 @@ var GLOBAL_LEADERBOARD_API = null;
                 drivingUIVisible.set(this, !0),
                 ea.set(this, void 0),
                 ta.set(this, void 0),
+                inputVisualizer.set(this, void 0),
                 na.set(this, null),
                 ia.set(this, null),
-                ra.set(this, void 0),
+                checkpointUI.set(this, void 0),
                 aa.set(this, void 0),
                 sa.set(this, void 0),
                 oa.set(this, null),
@@ -42691,10 +42694,13 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
                 )), "f"),
                 C.get(this, ma, "f").isEnabled = C.get(this, Wr, "f").touchEnabled,
-                C.set(this, ea, new br, "f"),
+                C.set(this, ea, new GameUI, "f");
+                if (C.get(this, settingsManager, "f").getSettingBoolean(R.A.ShowInputVisualizer)) {
+                    C.set(this, inputVisualizer, new InputVisualizer(C.get(this, ea, "f").element), "f")
+                }
                 C.set(this, ta, new ResetHintUI(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, Wr, "f"),C.get(this, settingsManager, "f")), "f"),
                 null != C.get(this, multiplayerInstanceInfo, "f") ? C.set(this, ia, new ur(C.get(this, ea, "f").element,C.get(this, settingsManager, "f")), "f") : C.set(this, na, new fi(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, settingsManager, "f")), "f"),
-                C.set(this, ra, new CheckpointUI(C.get(this, ea, "f").element,C.get(this, Pr, "f").getTotalNumberOfCheckpointIndices(),C.get(this, settingsManager, "f")), "f"),
+                C.set(this, checkpointUI, new CheckpointUI(C.get(this, ea, "f").element,C.get(this, Pr, "f").getTotalNumberOfCheckpointIndices(),C.get(this, settingsManager, "f")), "f"),
                 C.set(this, aa, new Speedometer(C.get(this, ea, "f").element,C.get(this, settingsManager, "f")), "f"),
                 C.set(this, sa, new Ve.A(C.get(this, ea, "f").element,C.get(this, Ur, "f"),C.get(this, settingsManager, "f")), "f"),
                 C.set(this, la, new TopDrivingUI(C.get(this, ea, "f").element,C.get(this, Nr, "f"),C.get(this, Ur, "f"),C.get(this, settingsManager, "f"),C.get(this, Wr, "f"),C.get(this, Xr, "f"),C.get(this, multiplayerInstanceInfo, "f"),( () => {
@@ -42778,8 +42784,8 @@ var GLOBAL_LEADERBOARD_API = null;
                     )), "f"),
                     C.get(this, ua, "f").show())
                 }
-                )), "f"),
-                null == C.get(this, multiplayerInstanceInfo, "f"))
+                )), "f");
+                if (null == C.get(this, multiplayerInstanceInfo, "f"))
                     C.get(this, la, "f").setRecord(C.get(this, Ua, "f"));
                 else
                     switch (C.get(this, multiplayerInstanceInfo, "f").gameMode) {
@@ -42805,11 +42811,11 @@ var GLOBAL_LEADERBOARD_API = null;
                 if (C.get(this, la, "f").setWatchButtonEnabled(C.get(this, xa, "f").length > 0 && null != C.get(this, qr, "f")),
                 C.get(this, Wr, "f").touchEnabled ? (C.get(this, na, "f")?.setOverridePosition(!0),
                 C.get(this, ia, "f")?.setOverridePosition(!0),
-                C.get(this, ra, "f").setOverridePosition(!0),
+                C.get(this, checkpointUI, "f").setOverridePosition(!0),
                 C.get(this, sa, "f").setOverridePosition(!0),
                 C.get(this, aa, "f").setOverridePosition(!0)) : (C.get(this, na, "f")?.setOverridePosition(null),
                 C.get(this, ia, "f")?.setOverridePosition(null),
-                C.get(this, ra, "f").setOverridePosition(null),
+                C.get(this, checkpointUI, "f").setOverridePosition(null),
                 C.get(this, sa, "f").setOverridePosition(null),
                 C.get(this, aa, "f").setOverridePosition(null)),
                 C.get(this, ma, "f").isEnabled = C.get(this, Wr, "f").touchEnabled,
@@ -42817,11 +42823,11 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Wr, "f").addChangeListener(C.set(this, Aa, (e => {
                     e ? (C.get(this, na, "f")?.setOverridePosition(!0),
                     C.get(this, ia, "f")?.setOverridePosition(!0),
-                    C.get(this, ra, "f").setOverridePosition(!0),
+                    C.get(this, checkpointUI, "f").setOverridePosition(!0),
                     C.get(this, sa, "f").setOverridePosition(!0),
                     C.get(this, aa, "f").setOverridePosition(!0)) : (C.get(this, na, "f")?.setOverridePosition(null),
                     C.get(this, ia, "f")?.setOverridePosition(null),
-                    C.get(this, ra, "f").setOverridePosition(null),
+                    C.get(this, checkpointUI, "f").setOverridePosition(null),
                     C.get(this, sa, "f").setOverridePosition(null),
                     C.get(this, aa, "f").setOverridePosition(null))
                 }
@@ -42955,7 +42961,7 @@ var GLOBAL_LEADERBOARD_API = null;
                         C.set(this, drivingUIVisible, !0, "f"),
                         C.get(this, ea, "f").isVisible = C.get(this, drivingUIVisible, "f"),
                         C.get(this, ma, "f").dispose(),
-                        C.get(this, ra, "f").dispose(),
+                        C.get(this, checkpointUI, "f").dispose(),
                         C.get(this, sa, "f").dispose(),
                         C.get(this, aa, "f").dispose(),
                         C.get(this, oa, "f")?.dispose(),
@@ -43177,12 +43183,15 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, ma, "f").dispose(),
                 C.get(this, Wr, "f").removeChangeListener(C.get(this, Aa, "f")),
                 C.get(this, ea, "f").dispose(),
-                C.get(this, ta, "f").dispose(),
+                C.get(this, ta, "f").dispose();
+                if (C.get(this, inputVisualizer, "f")) {
+                    C.get(this, inputVisualizer, "f").dispose();
+                }
                 C.get(this, na, "f")?.dispose(),
                 C.set(this, na, null, "f"),
                 C.get(this, ia, "f")?.dispose(),
                 C.set(this, ia, null, "f"),
-                C.get(this, ra, "f").dispose(),
+                C.get(this, checkpointUI, "f").dispose(),
                 C.get(this, aa, "f").dispose(),
                 C.get(this, sa, "f").dispose(),
                 C.get(this, oa, "f")?.dispose(),
@@ -43330,8 +43339,12 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, na, "f")?.update(a),
                 C.get(this, aa, "f").update(C.get(this, primaryCar, "f")),
                 C.get(this, sa, "f").update(C.get(this, primaryCar, "f")),
-                C.get(this, ra, "f").update(C.get(this, primaryCar, "f")),
-                
+                C.get(this, checkpointUI, "f").update(C.get(this, primaryCar, "f"));
+
+                if (C.get(this, inputVisualizer, "f")) {
+                    C.get(this, inputVisualizer, "f").update(C.get(this, primaryCar, "f").getControls());
+                }
+
                 C.get(this, la, "f").trackMinimap?.updatePlayerPos(C.get(this, primaryCar, "f").getPosition()),
                 // C.get(this, multiplayerInstanceInfo, "f")?.multiplayerConnection.m_voiceChat?.setHostPos(C.get(this, wa, "f").getPosition()),
                 // C.get(this, multiplayerInstanceInfo, "f")?.multiplayerConnection.m_voiceChat?.setHostQuat(C.get(this, wa, "f").getQuaternion()),
@@ -49614,6 +49627,13 @@ var GLOBAL_LEADERBOARD_API = null;
                 title: gs.getFromLanguage(C.get(this, Cs, "f"), "Enabled"),
                 value: "true"
             }], R.A.RealisticCrashingEnabled)
+            C.get(this, ms, "m", Gs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Live Input Visualizer"), [{
+                title: gs.getFromLanguage(C.get(this, Cs, "f"), "Off"),
+                value: "false"
+            }, {
+                title: gs.getFromLanguage(C.get(this, Cs, "f"), "On"),
+                value: "true"
+            }], R.A.ShowInputVisualizer);
 
             const exportAllTracksBookmarkletCode = `javascript: (() => {const tracks = [];for (let i = 0; i < localStorage.length; i++) {    const key = localStorage.key(i);    if (!key.includes("_prod_track")) {continue;}    const value = localStorage.getItem(key);    const data = JSON.parse(value);    tracks.push(data);}tracks.sort((a, b) => {return a.saveTime - b.saveTime});const joined = tracks.map(t => t.data).join(" ");if (document.hasFocus()) {navigator.clipboard.writeText(joined);    window.alert("All tracks copied!");} else {    const p = document.createElement('p');    p.style.zIndex = 1000;    p.style.position = "absolute";    p.style.width = "100%";    p.style.height = "100%";    p.textContent = joined;    document.body.prepend(p);};})();`;
             C.get(this, ms, "m", Bs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Tools"));
@@ -56818,7 +56838,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 null != n && C.get(this, Mu, "m", Pu).call(this, n);
             }
             defaultSettings() {
-                return new Map([[R.A.ImperialUnitsEnabled, "false"], [R.A.ResetHintEnabled, "true"], [R.A.RealisticCrashingEnabled, "false"], [R.A.GhostCarEnabled, "true"], [R.A.DefaultCameraMode, "false"], [R.A.CockpitCameraToggle, "true"], [R.A.BackwardsCameraToggle, "false"], [R.A.Checkpoints, "bottom"], [R.A.Timer, "bottom"], [R.A.Speedometer, "bottom"], [R.A.Language, "en-US"], [R.A.ShadowQuality, "2"], [R.A.CloudsEnabled, "true"], [R.A.ParticlesEnabled, "true"], [R.A.OrbitCameraFixed, "0"], [R.A.OrbitCameraFovMult, "1"], [R.A.SkidmarksEnabled, "true"], [R.A.FogEnabled, "true"], [R.A.ItalicsEnabled, "true"], [R.A.RenderScale, "1"], [R.A.ScreenPixelDensity, "true"], [R.A.Antialiasing, "true"], [R.A.MasterVolume, "1"], [R.A.SoundEffectVolume, "1"], [R.A.MusicVolume, "1"], [R.A.CheckpointVolume, "1"], [R.A.MaxGhostOpacity, "1"], [R.A.CarTrailSpacing, "1"], [R.A.SpeedometerDecimalPlaces, "0"], [R.A.RealisticModeEnabled, "false"], [R.A.GhostCarSoundsEnabled, "true"], [R.A.VibrationEnabled, "false"], [R.A.TouchSteeringSide, "true"]])
+                return new Map([[R.A.ImperialUnitsEnabled, "false"], [R.A.ResetHintEnabled, "true"], [R.A.RealisticCrashingEnabled, "false"], [R.A.ShowInputVisualizer, "false"], [R.A.GhostCarEnabled, "true"], [R.A.DefaultCameraMode, "false"], [R.A.CockpitCameraToggle, "true"], [R.A.BackwardsCameraToggle, "false"], [R.A.Checkpoints, "bottom"], [R.A.Timer, "bottom"], [R.A.Speedometer, "bottom"], [R.A.Language, "en-US"], [R.A.ShadowQuality, "2"], [R.A.CloudsEnabled, "true"], [R.A.ParticlesEnabled, "true"], [R.A.OrbitCameraFixed, "0"], [R.A.OrbitCameraFovMult, "1"], [R.A.SkidmarksEnabled, "true"], [R.A.FogEnabled, "true"], [R.A.ItalicsEnabled, "true"], [R.A.RenderScale, "1"], [R.A.ScreenPixelDensity, "true"], [R.A.Antialiasing, "true"], [R.A.MasterVolume, "1"], [R.A.SoundEffectVolume, "1"], [R.A.MusicVolume, "1"], [R.A.CheckpointVolume, "1"], [R.A.MaxGhostOpacity, "1"], [R.A.CarTrailSpacing, "1"], [R.A.SpeedometerDecimalPlaces, "0"], [R.A.RealisticModeEnabled, "false"], [R.A.GhostCarSoundsEnabled, "true"], [R.A.VibrationEnabled, "false"], [R.A.TouchSteeringSide, "true"]])
             }
             defaultKeyBindings() {
                 return new Map([
@@ -56939,7 +56959,7 @@ var GLOBAL_LEADERBOARD_API = null;
         Gu = new WeakMap,
         Fu = new WeakMap,
         Ou = new WeakMap;
-        const Wu = class {
+        const InputVisualizer = class {
             constructor(e) {
                 Nu.set(this, void 0),
                 Du.set(this, void 0),
@@ -57701,7 +57721,7 @@ var GLOBAL_LEADERBOARD_API = null;
             }
         }
         ;
-        var Yp, Zp, $p, ef, tf, nf, rf, af, sf, of, lf, cf, hf, df, uf, pf, ff, gf, spectatorCamera, Af, vf, yf, bf, wf, xf, Sf, kf, Ef, Tf, Mf, _f, Cf;
+        var Yp, Zp, $p, ef, tf, nf, rf, af, sf, of, lf, cf, hf, df, uf, pf, ff, gf, spectatorCamera, Af, vf, yf, inputVisualizer, checkpointUI, xf, Sf, kf, Ef, Tf, Mf, _f, Cf;
         Zp = new WeakMap,
         $p = new WeakMap,
         ef = new WeakMap,
@@ -57723,8 +57743,8 @@ var GLOBAL_LEADERBOARD_API = null;
         Af = new WeakMap,
         vf = new WeakMap,
         yf = new WeakMap,
-        bf = new WeakMap,
-        wf = new WeakMap,
+        inputVisualizer = new WeakMap,
+        checkpointUI = new WeakMap,
         xf = new WeakMap,
         Sf = new WeakMap,
         kf = new WeakMap,
@@ -57741,7 +57761,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
         }
         ;
-        const WorldUpdater = class {
+        const ReplayViewer = class {
             constructor(e, t, n, i, r, a, s, o, l, c, h, d, u) {
                 Yp.add(this),
                 Zp.set(this, void 0),
@@ -57765,8 +57785,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 Af.set(this, void 0),
                 vf.set(this, void 0),
                 yf.set(this, void 0),
-                bf.set(this, void 0),
-                wf.set(this, void 0),
+                inputVisualizer.set(this, void 0),
+                checkpointUI.set(this, void 0),
                 xf.set(this, void 0),
                 Sf.set(this, void 0),
                 kf.set(this, null),
@@ -57828,7 +57848,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     e ? o.setCamera(C.get(this, spectatorCamera, "f").camera) : C.get(this, cf, "f").getSettingBoolean(R.A.DefaultCameraMode) ? C.get(this, sf, "f").setCamera(C.get(this, uf, "f")[C.get(this, df, "f")].car.cameraCockpit) : C.get(this, sf, "f").setCamera(C.get(this, uf, "f")[C.get(this, df, "f")].car.cameraOrbit)
                 }
                 )),
-                C.set(this, Af, new br, "f");
+                C.set(this, Af, new GameUI, "f");
                 const g = C.get(this, uf, "f")[C.get(this, df, "f")]
                   , m = g.settings.time;
                 let A;
@@ -57843,8 +57863,8 @@ var GLOBAL_LEADERBOARD_API = null;
                         e.car.update(t);
                     const i = C.get(this, uf, "f")[C.get(this, df, "f")].car;
                     C.get(this, vf, "f").time = new yt.A(n),
-                    C.get(this, bf, "f").update(i.getControls()),
-                    C.get(this, wf, "f").update(i),
+                    C.get(this, inputVisualizer, "f").update(i.getControls()),
+                    C.get(this, checkpointUI, "f").update(i),
                     C.get(this, xf, "f").update(i),
                     C.get(this, Sf, "f").update(i)
                 }
@@ -57874,10 +57894,10 @@ var GLOBAL_LEADERBOARD_API = null;
                     )), "f")
                 }
                 ),A), "f"),
-                C.set(this, bf, new Wu(C.get(this, Af, "f").element), "f"),
-                C.set(this, wf, new CheckpointUI(C.get(this, Af, "f").element,C.get(this, $p, "f").getTotalNumberOfCheckpointIndices(),C.get(this, cf, "f")), "f"),
-                C.get(this, wf, "f").setOverridePosition(!1),
-                C.get(this, wf, "f").setBottomOffset(52),
+                C.set(this, inputVisualizer, new InputVisualizer(C.get(this, Af, "f").element), "f"),
+                C.set(this, checkpointUI, new CheckpointUI(C.get(this, Af, "f").element,C.get(this, $p, "f").getTotalNumberOfCheckpointIndices(),C.get(this, cf, "f")), "f"),
+                C.get(this, checkpointUI, "f").setOverridePosition(!1),
+                C.get(this, checkpointUI, "f").setBottomOffset(52),
                 C.set(this, xf, new Speedometer(C.get(this, Af, "f").element,C.get(this, cf, "f")), "f"),
                 C.get(this, xf, "f").setOverridePosition(!1),
                 C.get(this, xf, "f").setBottomOffset(52),
@@ -57937,8 +57957,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 C.get(this, Af, "f").dispose(),
                 C.get(this, vf, "f").dispose(),
                 C.get(this, yf, "f").dispose(),
-                C.get(this, bf, "f").dispose(),
-                C.get(this, wf, "f").dispose(),
+                C.get(this, inputVisualizer, "f").dispose(),
+                C.get(this, checkpointUI, "f").dispose(),
                 C.get(this, xf, "f").dispose(),
                 C.get(this, Sf, "f").dispose(),
                 C.get(this, kf, "f")?.dispose(),
@@ -57983,8 +58003,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
                 C.get(this, vf, "f").time = C.get(this, uf, "f")[C.get(this, df, "f")].car.getTime(),
                 C.get(this, vf, "f").loadedTime = n,
-                C.get(this, bf, "f").update(C.get(this, uf, "f")[C.get(this, df, "f")].car.getControls()),
-                C.get(this, wf, "f").update(C.get(this, uf, "f")[C.get(this, df, "f")].car),
+                C.get(this, inputVisualizer, "f").update(C.get(this, uf, "f")[C.get(this, df, "f")].car.getControls()),
+                C.get(this, checkpointUI, "f").update(C.get(this, uf, "f")[C.get(this, df, "f")].car),
                 C.get(this, xf, "f").update(C.get(this, uf, "f")[C.get(this, df, "f")].car),
                 C.get(this, Sf, "f").update(C.get(this, uf, "f")[C.get(this, df, "f")].car);
                 for (const e of C.get(this, uf, "f"))
@@ -58358,7 +58378,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 o.trigger(( () => {
                     P.pS(),
                     currentUpdater.dispose(),
-                    currentUpdater = new WorldUpdater(f,v,e,t,n,A,m,h,audioLoader,b,settingsManager,i,( (e, t, n, i) => {
+                    currentUpdater = new ReplayViewer(f,v,e,t,n,A,m,h,audioLoader,b,settingsManager,i,( (e, t, n, i) => {
                         W(e, t, n, i, null)
                     }
                     )),
