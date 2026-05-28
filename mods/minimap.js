@@ -7,7 +7,7 @@ class Minimap {
   static MULTIPLAYER_DOT_RADIUS = 3;
   static DOT_COLOR = "red";
 
-  constructor(soundManager, defaultClosed = false) {
+  constructor(soundManager, defaultClosed = true) {
     this.trackPreviewDiv = document.createElement("div");
     this.trackPreviewDiv.className = "track-preview-container";
 
@@ -15,6 +15,9 @@ class Minimap {
     this.minimapButton.className = "button";
     this.minimapButton.innerHTML = '<img class="button-icon" src="images/search.svg"> ';
     this.minimapButton.append(document.createTextNode("Minimap"));
+
+    this.lastTrackObject = null;
+
     this.isClosed = defaultClosed;
     if (this.isClosed) {
       this.trackPreviewDiv.classList.add("closed");
@@ -23,6 +26,9 @@ class Minimap {
       soundManager.playUIClick();
       this.trackPreviewDiv.classList.toggle("closed");
       this.isClosed = this.trackPreviewDiv.classList.contains("closed");
+      if (!this.isClosed) {
+        this.initTrackPreview(this.lastTrackObject);
+      }
     });
 
     this.playerMap = new Map();
@@ -45,6 +51,8 @@ class Minimap {
   }
 
   initTrackPreview(trackObject) {
+    if (!trackObject) return;
+    this.lastTrackObject = trackObject;
     if (this.isClosed) return;
 
     const trackData = trackObject.getTrackData();
