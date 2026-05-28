@@ -2155,6 +2155,7 @@
                 editor_categoryEntries.set(this, []),
                 editor_selectedCategory.set(this, null),
                 editor_isTyping.set(this, !1),
+                this.carTrailGroup = null;
 
                 this.editorMinimap = new Minimap(e, true);
                 this.editorMinimap.setShowPlayerDots(false);
@@ -2914,6 +2915,21 @@
 
                 this.editorMinimap.appendButton(b);
 
+                this.carTrailVisible = !0;
+                const toggleCarTrailButton = document.createElement("button");
+                toggleCarTrailButton.className = "button";
+                toggleCarTrailButton.innerHTML = '<img class="button-icon" src="images/customize.svg"> ';
+                toggleCarTrailButton.append(document.createTextNode(get(this, editor_localization, "f").get("Toggle Trail")));
+                toggleCarTrailButton.addEventListener("click", () => {
+                    get(this, editor_audioManager, "f").playUIClick();
+                    this.carTrailVisible = !this.carTrailVisible;
+                    if (this.carTrailGroup) {
+                        this.carTrailGroup.visible = this.carTrailVisible;
+                    }
+                    toggleCarTrailButton.classList.toggle("active", this.carTrailVisible);
+                });
+                b.appendChild(toggleCarTrailButton);
+
                 const C = document.createElement("button");
                 C.className = "button",
                 C.innerHTML = '<img class="button-icon" src="images/help.svg"> ',
@@ -3268,6 +3284,8 @@
                         carTrailGroup.add(m);
                     }
                 }
+                
+                carTrailGroup.visible = this.carTrailVisible;
                 get(this, editor_renderer, "f").scene.add(carTrailGroup);
                 this.carTrailGroup = carTrailGroup;
             }
