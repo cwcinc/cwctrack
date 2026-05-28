@@ -44,6 +44,7 @@ jobs:
           cp favicon.ico index.html style.css site/
           cp polytrack_physics.wasm site/
           cp manifest.json site/
+          cp og-preview.png site/
           cp -r mods models images lib audio tracks site/
           [ -f CNAME ] && cp CNAME site/ || true
 
