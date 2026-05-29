@@ -7344,7 +7344,8 @@ var GLOBAL_LEADERBOARD_API = null;
                 e[e.RealisticModeEnabled = 30] = "RealisticModeEnabled",
                 e[e.RealisticCrashingEnabled = 31] = "RealisticCrashingEnabled",
                 e[e.CarTrailSpacing = 32] = "CarTrailSpacing",
-                e[e.ShowInputVisualizer = 33] = "ShowInputVisualizer"
+                e[e.ShowInputVisualizer = 33] = "ShowInputVisualizer",
+                e[e.MaxThumbnailImportSize = 34] = "MaxThumbnailImportSize"
             }(i || (i = {}));
             const r = i
         }
@@ -29609,7 +29610,7 @@ var GLOBAL_LEADERBOARD_API = null;
             __webpack_require__.d(t, {
                 A: () => _
             });
-            var i, r, a, s, o, l, c, h, d, objsToRemove, p, f, g, m = __webpack_require__(1635), 
+            var i, r, a, s, o, partArray, c, h, d, objsToRemove, p, f, g, m = __webpack_require__(1635), 
             THREE = __webpack_require__(4922), 
             TrackDataModule = __webpack_require__(8438), 
             TrackPartDetectorType = __webpack_require__(2247).A, 
@@ -29652,7 +29653,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     s.set(this, void 0),
                     this.environment = TrackEnvironment.Summer,
                     o.set(this, new SunDirection),
-                    l.set(this, []),
+                    partArray.set(this, []),
                     c.set(this, new Map),
                     h.set(this, new Map),
                     d.set(this, {
@@ -29671,13 +29672,13 @@ var GLOBAL_LEADERBOARD_API = null;
                     m.set(this, o, e.clone(), "f")
                 }
                 clear() {
-                    m.get(this, l, "f").length = 0,
+                    m.get(this, partArray, "f").length = 0,
                     m.get(this, c, "f").clear(),
                     m.get(this, h, "f").clear(),
                     m.get(this, i, "m", p).call(this)
                 }
                 getPartsWithin(e, t, n, i, r, a) {
-                    return m.get(this, l, "f").filter((s => s.type.configuration.tiles.rotated(s.rotation, s.rotationAxis).some(( (o, l, c) => {
+                    return m.get(this, partArray, "f").filter((s => s.type.configuration.tiles.rotated(s.rotation, s.rotationAxis).some(( (o, l, c) => {
                         const h = s.x + o
                           , d = s.y + l
                           , u = s.z + c;
@@ -29717,7 +29718,7 @@ var GLOBAL_LEADERBOARD_API = null;
                       , g = new THREE.Vector3(e * TrackObject.partSize,t * TrackObject.partSize,n * TrackObject.partSize)
                       , v = (new THREE.Matrix4).compose(g, f, new THREE.Vector3(1,1,1))
                       , y = new TrackPart(e,t,n,r,a,o,p,v,d,u);
-                    m.get(this, l, "f").push(y);
+                    m.get(this, partArray, "f").push(y);
                     p.configuration.tiles.rotated(r, a).forEach(( (i, r, a) => {
                         const s = (e + i).toString() + "|" + (t + r).toString() + "|" + (n + a).toString();
                         if (t + r < 0)
@@ -29748,40 +29749,40 @@ var GLOBAL_LEADERBOARD_API = null;
                                 checkpointOrder: t.checkpointOrder,
                                 startOrder: t.startOrder
                             }),
-                            m.get(this, i, "m", f).call(this, m.get(this, l, "f").indexOf(t)),
+                            m.get(this, i, "m", f).call(this, m.get(this, partArray, "f").indexOf(t)),
                             --e
                         }
                     return r
                 }
-                deletePartsWithin(e, t, n, r, a, s) {
-                    const o = [];
-                    for (let c = 0; c < m.get(this, l, "f").length; ++c) {
-                        const h = m.get(this, l, "f")[c];
-                        h.type.configuration.tiles.rotated(h.rotation, h.rotationAxis).some(( (i, o, l) => {
-                            const c = h.x + i
-                              , d = h.y + o
-                              , u = h.z + l;
-                            return c >= e && c <= r && d >= t && d <= a && u >= n && u <= s
+                deletePartsWithin(minXBound, minYBound, minZBound, maxXBound, maxYBound, maxZBound) {
+                    const removedParts = [];
+                    for (let partIdx = 0; partIdx < m.get(this, partArray, "f").length; ++partIdx) {
+                        const part = m.get(this, partArray, "f")[partIdx];
+                        part.type.configuration.tiles.rotated(part.rotation, part.rotationAxis).some(( (x, y, z) => {
+                            const offsetX = part.x + x
+                              , offsetY = part.y + y
+                              , offsetZ = part.z + z;
+                            return offsetX >= minXBound && offsetX <= maxXBound && offsetY >= minYBound && offsetY <= maxYBound && offsetZ >= minZBound && offsetZ <= maxZBound
                         }
-                        )) && (o.push({
-                            id: h.type.configuration.id,
-                            x: h.x,
-                            y: h.y,
-                            z: h.z,
-                            rotation: h.rotation,
-                            rotationAxis: h.rotationAxis,
-                            color: h.color,
-                            checkpointOrder: h.checkpointOrder,
-                            startOrder: h.startOrder
+                        )) && (removedParts.push({
+                            id: part.type.configuration.id,
+                            x: part.x,
+                            y: part.y,
+                            z: part.z,
+                            rotation: part.rotation,
+                            rotationAxis: part.rotationAxis,
+                            color: part.color,
+                            checkpointOrder: part.checkpointOrder,
+                            startOrder: part.startOrder
                         }),
-                        m.get(this, i, "m", f).call(this, c),
-                        --c)
+                        m.get(this, i, "m", f).call(this, partIdx),
+                        --partIdx)
                     }
-                    return o
+                    return removedParts
                 }
                 deleteSpecificPart(e, t, n, r, a, s) {
-                    for (let o = 0; o < m.get(this, l, "f").length; ++o) {
-                        const c = m.get(this, l, "f")[o];
+                    for (let o = 0; o < m.get(this, partArray, "f").length; ++o) {
+                        const c = m.get(this, partArray, "f")[o];
                         if (c.type.configuration.id == e && c.x == t && c.y == n && c.z == r && c.rotation == a && c.rotationAxis == s)
                             return m.get(this, i, "m", f).call(this, o),
                             {
@@ -29823,7 +29824,7 @@ var GLOBAL_LEADERBOARD_API = null;
                     }
                     
                     const grouped = new Map();
-                    for (const block of m.get(this, l, "f")) {
+                    for (const block of m.get(this, partArray, "f")) {
                         let color = block.color;
                         if (color == TrackPartColorId.Default) color = n;
                         
@@ -29980,7 +29981,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 }
                 getTrackData() {
                     const e = new TrackDataModule.A(this.environment,m.get(this, o, "f"));
-                    for (const t of m.get(this, l, "f"))
+                    for (const t of m.get(this, partArray, "f"))
                         e.addPart(t.x, t.y, t.z, t.type.configuration.id, t.rotation, t.rotationAxis, t.color, t.checkpointOrder, t.startOrder);
                     return e
                 }
@@ -29999,7 +30000,7 @@ var GLOBAL_LEADERBOARD_API = null;
             a = new WeakMap,
             s = new WeakMap,
             o = new WeakMap,
-            l = new WeakMap,
+            partArray = new WeakMap,
             c = new WeakMap,
             h = new WeakMap,
             d = new WeakMap,
@@ -30012,10 +30013,10 @@ var GLOBAL_LEADERBOARD_API = null;
             }
             ,
             f = function(e) {
-                if (e < 0 || e >= m.get(this, l, "f").length)
+                if (e < 0 || e >= m.get(this, partArray, "f").length)
                     throw new Error("Track part index out of bounds");
-                const t = m.get(this, l, "f")[e];
-                m.get(this, l, "f").splice(e, 1);
+                const t = m.get(this, partArray, "f")[e];
+                m.get(this, partArray, "f").splice(e, 1);
                 t.type.configuration.tiles.rotated(t.rotation, t.rotationAxis).forEach(( (e, n, i) => {
                     const r = (t.x + e).toString() + "|" + (t.y + n).toString() + "|" + (t.z + i).toString()
                       , a = m.get(this, c, "f").get(r);
@@ -30048,7 +30049,7 @@ var GLOBAL_LEADERBOARD_API = null;
                   , t = 1 / 0
                   , n = -1 / 0
                   , i = -1 / 0;
-                for (const r of m.get(this, l, "f"))
+                for (const r of m.get(this, partArray, "f"))
                     e = Math.min(r.x, e),
                     t = Math.min(r.z, t),
                     n = Math.max(r.x, n),
@@ -49635,6 +49636,23 @@ var GLOBAL_LEADERBOARD_API = null;
                 value: "true"
             }], R.A.ShowInputVisualizer);
 
+            C.get(this, ms, "m", Gs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Thumbnail Import Size"), [{
+                title: gs.getFromLanguage(C.get(this, Cs, "f"), "Teeny"),
+                value: "32"
+            }, {
+                title: gs.getFromLanguage(C.get(this, Cs, "f"), "Small"),
+                value: "64"
+            }, {
+                title: gs.getFromLanguage(C.get(this, Cs, "f"), "Medium"),
+                value: "128"
+            }, {
+                title: gs.getFromLanguage(C.get(this, Cs, "f"), "Large"),
+                value: "256"
+            }, {
+                title: gs.getFromLanguage(C.get(this, Cs, "f"), "Ultra"),
+                value: "512"
+            }], R.A.MaxThumbnailImportSize);
+
             const exportAllTracksBookmarkletCode = `javascript: (() => {const tracks = [];for (let i = 0; i < localStorage.length; i++) {    const key = localStorage.key(i);    if (!key.includes("_prod_track")) {continue;}    const value = localStorage.getItem(key);    const data = JSON.parse(value);    tracks.push(data);}tracks.sort((a, b) => {return a.saveTime - b.saveTime});const joined = tracks.map(t => t.data).join(" ");if (document.hasFocus()) {navigator.clipboard.writeText(joined);    window.alert("All tracks copied!");} else {    const p = document.createElement('p');    p.style.zIndex = 1000;    p.style.position = "absolute";    p.style.width = "100%";    p.style.height = "100%";    p.textContent = joined;    document.body.prepend(p);};})();`;
             C.get(this, ms, "m", Bs).call(this, gs.getFromLanguage(C.get(this, Cs, "f"), "Tools"));
             {
@@ -56838,7 +56856,7 @@ var GLOBAL_LEADERBOARD_API = null;
                 null != n && C.get(this, Mu, "m", Pu).call(this, n);
             }
             defaultSettings() {
-                return new Map([[R.A.ImperialUnitsEnabled, "false"], [R.A.ResetHintEnabled, "true"], [R.A.RealisticCrashingEnabled, "false"], [R.A.ShowInputVisualizer, "false"], [R.A.GhostCarEnabled, "true"], [R.A.DefaultCameraMode, "false"], [R.A.CockpitCameraToggle, "true"], [R.A.BackwardsCameraToggle, "false"], [R.A.Checkpoints, "bottom"], [R.A.Timer, "bottom"], [R.A.Speedometer, "bottom"], [R.A.Language, "en-US"], [R.A.ShadowQuality, "2"], [R.A.CloudsEnabled, "true"], [R.A.ParticlesEnabled, "true"], [R.A.OrbitCameraFixed, "0"], [R.A.OrbitCameraFovMult, "1"], [R.A.SkidmarksEnabled, "true"], [R.A.FogEnabled, "true"], [R.A.ItalicsEnabled, "true"], [R.A.RenderScale, "1"], [R.A.ScreenPixelDensity, "true"], [R.A.Antialiasing, "true"], [R.A.MasterVolume, "1"], [R.A.SoundEffectVolume, "1"], [R.A.MusicVolume, "1"], [R.A.CheckpointVolume, "1"], [R.A.MaxGhostOpacity, "1"], [R.A.CarTrailSpacing, "1"], [R.A.SpeedometerDecimalPlaces, "0"], [R.A.RealisticModeEnabled, "false"], [R.A.GhostCarSoundsEnabled, "true"], [R.A.VibrationEnabled, "false"], [R.A.TouchSteeringSide, "true"]])
+                return new Map([[R.A.ImperialUnitsEnabled, "false"], [R.A.ResetHintEnabled, "true"], [R.A.RealisticCrashingEnabled, "false"], [R.A.ShowInputVisualizer, "false"], [R.A.GhostCarEnabled, "true"], [R.A.DefaultCameraMode, "false"], [R.A.CockpitCameraToggle, "true"], [R.A.BackwardsCameraToggle, "false"], [R.A.Checkpoints, "bottom"], [R.A.Timer, "bottom"], [R.A.Speedometer, "bottom"], [R.A.Language, "en-US"], [R.A.ShadowQuality, "2"], [R.A.MaxThumbnailImportSize, "128"], [R.A.CloudsEnabled, "true"], [R.A.ParticlesEnabled, "true"], [R.A.OrbitCameraFixed, "0"], [R.A.OrbitCameraFovMult, "1"], [R.A.SkidmarksEnabled, "true"], [R.A.FogEnabled, "true"], [R.A.ItalicsEnabled, "true"], [R.A.RenderScale, "1"], [R.A.ScreenPixelDensity, "true"], [R.A.Antialiasing, "true"], [R.A.MasterVolume, "1"], [R.A.SoundEffectVolume, "1"], [R.A.MusicVolume, "1"], [R.A.CheckpointVolume, "1"], [R.A.MaxGhostOpacity, "1"], [R.A.CarTrailSpacing, "1"], [R.A.SpeedometerDecimalPlaces, "0"], [R.A.RealisticModeEnabled, "false"], [R.A.GhostCarSoundsEnabled, "true"], [R.A.VibrationEnabled, "false"], [R.A.TouchSteeringSide, "true"]])
             }
             defaultKeyBindings() {
                 return new Map([

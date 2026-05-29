@@ -16,6 +16,13 @@ class Minimap {
     this.minimapButton.innerHTML = '<img class="button-icon" src="images/search.svg"> ';
     this.minimapButton.append(document.createTextNode("Minimap"));
 
+    const importArtButton = document.createElement("button");
+    importArtButton.className = "load-image-button hidden";
+    importArtButton.innerHTML = '<img class="button-icon" src="images/load.svg"> ';
+
+    this.trackPreviewDiv.appendChild(importArtButton);
+    this.importArtButton = importArtButton;
+
     this.lastTrackObject = null;
 
     this.isClosed = defaultClosed;
@@ -36,6 +43,120 @@ class Minimap {
     this.minX = 0;
     this.minZ = 0;
     this.showPlayerDots = true;
+  }
+
+  initImportArtCallback(MAX_SIZE, environment, callback) {
+    let blockColor;
+    switch (environment) {
+      case 0: // Summer
+        blockColor = [0xff, 0xff, 0xff];
+        break;
+      case 1: // Winter
+        blockColor = [0xbe, 0xd8, 0xf7];
+        break;
+      case 2: // Desert
+        blockColor = [0xed, 0xe2, 0xaf];
+        break;
+    }
+
+    const PALETTE = [
+      [0x11, 0x20, 0x52], // 0: dark blue
+      blockColor, // 1: white
+      [0x33, 0x8c, 0xe0], // 2: light blue
+      [0xe2, 0xc0, 0x26], // 3: yellow
+      [0xd1, 0x29, 0x29], // 4: red
+    ];
+
+    const ENABLE_DITHERING = true;
+    const ALPHA_THRESHOLD = 128;
+
+    // nearest palette index by squared Euclidean distance in RGB
+    const nearestColor = (r, g, b) => {
+      let best = 0, bestDist = Infinity;
+      for (let i = 0; i < PALETTE.length; i++) {
+        const [pr, pg, pb] = PALETTE[i];
+        const dr = r - pr, dg = g - pg, db = b - pb;
+        const dist = dr * dr + dg * dg + db * db;
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      }
+      return best;
+    };
+
+    this.importArtButton.classList.remove("hidden");
+
+    this.importArtButton.addEventListener("click", () => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            // scale down to fit within MAX_SIZE x MAX_SIZE, preserving aspect ratio
+            const scale = Math.min(1, MAX_SIZE / Math.max(img.width, img.height));
+            const w = Math.max(1, Math.round(img.width * scale));
+            const h = Math.max(1, Math.round(img.height * scale));
+
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.imageSmoothingEnabled = true; // averages pixels when downscaling
+            ctx.drawImage(img, 0, 0, w, h);
+            const data = ctx.getImageData(0, 0, w, h).data;
+
+            const rBuf = new Float32Array(w * h);
+            const gBuf = new Float32Array(w * h);
+            const bBuf = new Float32Array(w * h);
+            const aBuf = new Uint8ClampedArray(w * h);
+            for (let i = 0; i < w * h; i++) {
+              rBuf[i] = data[i * 4];
+              gBuf[i] = data[i * 4 + 1];
+              bBuf[i] = data[i * 4 + 2];
+              aBuf[i] = data[i * 4 + 3];
+            }
+
+            const blocks = [];
+            for (let y = 0; y < h; y++) {
+              for (let x = 0; x < w; x++) {
+                const idx = y * w + x;
+                if (aBuf[idx] < ALPHA_THRESHOLD) continue; // skip transparent pixels
+
+                const r = rBuf[idx], g = gBuf[idx], b = bBuf[idx];
+                const colorIndex = nearestColor(r, g, b);
+                blocks.push({ x, y, color: colorIndex });
+
+                if (ENABLE_DITHERING) {
+                  const [pr, pg, pb] = PALETTE[colorIndex];
+                  const er = r - pr, eg = g - pg, eb = b - pb;
+                  const spread = (dx, dy, f) => {
+                    const nx = x + dx, ny = y + dy;
+                    if (nx < 0 || nx >= w || ny < 0 || ny >= h) return;
+                    const ni = ny * w + nx;
+                    rBuf[ni] += er * f;
+                    gBuf[ni] += eg * f;
+                    bBuf[ni] += eb * f;
+                  };
+                  // Floyd–Steinberg distribution
+                  spread(1, 0, 7 / 16);
+                  spread(-1, 1, 3 / 16);
+                  spread(0, 1, 5 / 16);
+                  spread(1, 1, 1 / 16);
+                }
+              }
+            }
+
+            callback(blocks);
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    });
   }
 
   setShowPlayerDots(show) {
@@ -64,7 +185,9 @@ class Minimap {
     this.minX = trackData.m_storedMinX;
     this.minZ = trackData.m_storedMinZ;
 
-    this.trackPreviewDiv.innerHTML = "";
+    if (this.displayCanvas) {
+      this.displayCanvas.remove();
+    }
 
     this.displayCanvas = document.createElement("canvas");
     this.trackPreviewDiv.appendChild(this.displayCanvas);

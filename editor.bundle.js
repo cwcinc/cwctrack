@@ -33,6 +33,7 @@
           , u = n.n(p)
           , VisualCar = n(4078).A
           , editorStyles = n(6057).A
+          , SettingTypes = n(3476).A
           , editorStylesConfig = {};
         editorStylesConfig.styleTagTransform = u(),
         editorStylesConfig.setAttributes = d(),
@@ -2157,9 +2158,8 @@
                 editor_isTyping.set(this, !1),
                 this.carTrailGroup = null;
 
-                this.editorMinimap = new Minimap(e, true);
+                this.editorMinimap = new Minimap(e, false);
                 this.editorMinimap.setShowPlayerDots(false);
-                this.editorMinimap.initTrackPreview(o);
 
                 set(this, editor_localization, t, "f"),
                 set(this, editor_audioManager, e, "f"),
@@ -2916,6 +2916,69 @@
 
                 this.editorMinimap.appendButton(b);
 
+                // blocks is an array of {x, y, color}, color is 0 for none, 1 for white, 2 for light blue, 3 for yellow, and 4 for red 
+                const MAX_SIZE = get(this, editor_settingsManager, "f").getSettingInteger(SettingTypes.MaxThumbnailImportSize); // max size of the imported track in blocks (64x64)
+                this.editorMinimap.initImportArtCallback(
+                    MAX_SIZE,
+                    get(this, editor_track, "f").environment, 
+                    (blocks) => {
+                        const Z = 100;
+
+                        const partsRemoved = get(this, editor_track, "f").deletePartsWithin(0, Z, 0, MAX_SIZE * 4, Z, MAX_SIZE * 4);
+
+                        const partsAdded = [];
+                        for (const {x, y, color} of blocks) {
+                            let blockId;
+                            let cpId = null;
+                            let startId = null;
+                            switch (color) {
+                                case 1:
+                                    blockId = 25; // platform block
+                                    break;
+                                case 2:
+                                    blockId = 92; // start platform (93 for wide)
+                                    startId = 0;
+                                    break;
+                                case 3:
+                                    blockId = 75; // checkpoint (77 for wide)
+                                    cpId = 0;
+                                    break;
+                                case 4:
+                                    blockId = 76; // finish platform (78 for wide)
+                                    break;
+                                default:
+                                    continue; // skip if color is 0 or other
+                            }
+                            get(this, editor_track, "f").setPart(x * 4, Z, y * 4, blockId, 0, 0, 0, cpId, startId);
+                            partsAdded.push({
+                                id: blockId,
+                                x: x * 4,
+                                y: Z,
+                                z: y * 4,
+                                rotation: 0,
+                                rotationAxis: 0,
+                                color: 0,
+                                checkpointOrder: cpId,
+                                startOrder: startId
+                            });
+                        }
+
+                        if (partsAdded.length > 0 || partsRemoved.length > 0) {
+                            get(this, editor_undoStack, "f").push({
+                                removed: partsRemoved,
+                                added: partsAdded
+                            });
+                        }
+
+                        get(this, editor_redoStack, "f").length = 0;
+                        get(this, editor_undoButton, "f").disabled = 0 == get(this, editor_undoStack, "f").length;
+                        get(this, editor_redoButton, "f").disabled = 0 == get(this, editor_redoStack, "f").length;
+                        
+                        get(this, editor_track, "f").generateMeshes(),
+                        get(this, Ft, "m", refreshTrackAfterEdit).call(this);
+                    }
+                );
+
                 this.carTrailVisible = !0;
                 const toggleCarTrailButton = document.createElement("button");
                 toggleCarTrailButton.className = "button";
@@ -3576,6 +3639,7 @@
                     ))
                 }
                 ))
+                get(this, scene_editor, "f").editorMinimap.initTrackPreview(get(this, scene_track, "f"));
             }
             dispose() {
                 get(this, scene_editor, "f").dispose(),

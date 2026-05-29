@@ -44,6 +44,29 @@
     image-rendering: pixelated;
 }
 
+.track-preview-container > .load-image-button {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    border-radius: 2px;
+    border: none;
+    background-color: var(--button-color);
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.track-preview-container > .load-image-button > img {
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    vertical-align: top;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 .date-created {
     position: absolute;
     font-size: medium;
