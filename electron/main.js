@@ -98,6 +98,14 @@ app.whenReady().then(( () => {
         })
     }
     )),
-    browserWindow.loadFile("index.html")
+    browserWindow.loadFile("index.html");
+
+    const discordPresence = require('./discord-presence');
+    discordPresence.start().catch(() => {});
+
+    app.on('window-all-closed', () => {
+        discordPresence.stop();
+        app.quit();
+    });
 }
 ));
