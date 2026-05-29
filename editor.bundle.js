@@ -2159,6 +2159,7 @@
 
                 this.editorMinimap = new Minimap(e, true);
                 this.editorMinimap.setShowPlayerDots(false);
+                this.editorMinimap.initTrackPreview(o);
 
                 set(this, editor_localization, t, "f"),
                 set(this, editor_audioManager, e, "f"),
